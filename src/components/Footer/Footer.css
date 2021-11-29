@@ -1,0 +1,151 @@
+.footer {
+  height: 172px;
+  background-color: #F8F8F8;
+  padding: 79px 0 20px 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 426px) {
+  .footer {
+    height: 270px;
+    padding-bottom: 10px;
+  }
+}
+
+.footer__container {
+  margin: 0 70px;
+}
+
+@media screen and (max-width: 848px) {
+  .footer__container {
+    margin: 0 calc((100vw - 708px)/2);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer__container {
+    margin: 0 30px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .footer__container {
+    margin: 0 calc((100vw - 300px)/2);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .footer__container {
+    margin: 0 10px;
+  }
+}
+
+.footer__caption {
+  margin: 0 auto 20px;
+  text-align: center;
+  color: #A0A0A0;
+  font-size: 13px;
+  line-height: 1.23;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__caption {
+    margin-bottom: 21px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}
+
+.footer__line {
+  border-bottom: 1px solid #E8E8E8;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__line {
+    margin-bottom: 30px;
+  }
+
+}
+
+.footer__small-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__small-container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+.footer__copyright {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.23;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__copyright {
+    color: #A0A0A0;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}
+
+.footer__links {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__links {
+    flex-direction: column;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+}
+
+.footer__links-element {
+  margin-right: 20px;
+  line-height: 0;
+}
+
+.footer__links-element:last-of-type {
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__links-element {
+    margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .footer__links-element:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.footer__link {
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  font-size: 13px;
+  line-height: 1.23;
+  transition: opacity .5s;
+}
+
+.footer__link:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 426px) {
+  .footer__link {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

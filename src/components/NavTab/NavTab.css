@@ -1,0 +1,129 @@
+@media screen and (max-width: 1024px) {
+  .nav-tab_logged-in {
+    display: none;
+  }
+}
+
+.nav-tab__list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+ }
+
+ .nav-tab__link {
+  text-decoration: none;
+  color: black;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.29;
+  transition: opacity .5s;
+ }
+
+ .nav-tab__link:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+ .nav-tab__link_bold {
+  font-weight: 500;
+ }
+
+ .nav-tab__link_type_registration {
+  margin-right: 30px;
+  font-size: 12px;
+  line-height: 1.33;
+ }
+
+ @media screen and (max-width: 426px) {
+  .nav-tab__link_type_registration {
+    margin-right: 14px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}
+
+ .nav-tab__link_type_films {
+  margin-right: 20px;
+ }
+
+ .nav-tab__link_type_saved-films {
+   margin-right: 50px;
+ }
+
+ .nav-tab__link_type_account {
+   margin-right: 17px;
+   line-height: 1.14;
+ }
+
+ .nav-tab__account-button {
+   height: 30px;
+   width: 26px;
+   padding: 0;
+   border: 0;
+   border-radius: 4px;
+   background-color: #F4F4F4;
+   background-image: url(../../images/icons/account_icon.svg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: 11.5px 14px;
+   transition: opacity .5s;
+ }
+
+ .nav-tab__account-button:hover {
+  opacity: .6;
+  cursor: pointer;
+ }
+
+ .nav-tab__sign-in-button {
+  height: 32px;
+  width: 76px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background-color: #3456F3;
+  color: #FFF;
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 500;
+  transition: opacity .5s;
+ }
+
+.nav-tab__sign-in-button:hover {
+ opacity: .8;
+ cursor: pointer;
+}
+
+ @media screen and (max-width: 426px) {
+  .nav-tab__sign-in-button {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}
+
+ .nav-tab__nav-button {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .nav-tab__nav-button {
+    display: block;
+    height: 44px;
+    width: 44px;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    background-image: url(../../images/icons/nav_icon.svg);
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .nav-tab__nav-button {
+    height: 43px;
+    width: 40px;
+  }
+}

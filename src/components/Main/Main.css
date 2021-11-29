@@ -1,0 +1,27 @@
+.main__header {
+  margin: 0 70px 75px;
+}
+
+@media screen and (max-width: 848px) {
+  .main__header {
+    margin: 0 calc((100vw - 708px)/2) 140px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main__header {
+    margin: 0 30px 70px;
+  }
+}
+
+@media screen and (max-width: 352px) {
+  .main__header {
+    margin: 0 calc((100vw - 292px)/2) 70px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .main__header {
+    margin: 0 14px 70px;
+  }
+}

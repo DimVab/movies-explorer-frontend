@@ -1,0 +1,158 @@
+.menu {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 67.7vw;
+    background-color: #FAFAFA;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 159px 90px 92px;
+    box-sizing: border-box;
+  }
+
+  .menu::before {
+    content: '1223242455335';
+    position: absolute;
+    top: 0;
+    left: -32.3vw;
+    height: 100vh;
+    width: 32.3vw;
+    background-color: #000;
+    opacity: .3;
+  }
+
+}
+
+@media screen and (max-width: 560px) {
+  .menu {
+    width: 100vw;
+    padding: 144px 10px 48px;
+  }
+
+  .menu::before {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .menu_opened {
+    display: flex;
+  }
+}
+
+.menu__close-icon {
+  height: 22px;
+  width: 22px;
+  background-image: url(../../images/icons/close_icon.svg);
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  position: absolute;
+  top: 4.15%;
+  right: 4.15%;
+}
+
+@media screen and (max-width: 560px) {
+  .menu__close-icon {
+    top: 4.2%;
+    right: 4.2%;
+  }
+}
+
+.menu__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__account-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__list-item {
+  margin-bottom: 28px;
+  transition: opacity .5s;
+}
+
+.menu__list-item:hover {
+  opacity: .6;
+  cursor: pointer;
+ }
+
+.menu__list-item:last-of-type {
+  margin-bottom: 0;
+}
+
+.menu__list-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+@media screen and (max-width: 525px) {
+  .menu__list-item {
+    margin-bottom: 24px;
+  }
+}
+
+.menu__account-item {
+  margin-right: 17px;
+}
+
+.menu__account-link {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.14;
+  transition: opacity .5s;
+}
+
+.menu__account-link:hover {
+  opacity: .6;
+  cursor: pointer;
+ }
+
+.menu__account-button {
+  height: 30px;
+  width: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background-color: #F4F4F4;
+  background-image: url(../../images/icons/account_icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 11.5px 14px;
+  transition: opacity .5s;
+}
+
+.menu__account-button:hover {
+  opacity: .6;
+  cursor: pointer;
+ }
+
+.menu__underline {
+  border-bottom: 2px solid #000;
+  position: relative;
+  top: 4px;
+}
