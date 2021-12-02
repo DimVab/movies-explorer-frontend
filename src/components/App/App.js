@@ -8,10 +8,10 @@ function App() {
 
   return (
     <><Routes>
-      <Route path="/" element={<Main loggedIn={true} />}/>
+      <Route path="/" element={<Main loggedIn={false} />}/>
     </Routes>
 
-    <Menu isOpened={true} currentPage="menu" /></>
+    <Menu isOpened={false} currentPage="menu" /></>
   );
 }
 

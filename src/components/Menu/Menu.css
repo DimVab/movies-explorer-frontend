@@ -4,7 +4,7 @@
 
 @media screen and (max-width: 1024px) {
   .menu {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     height: 100vh;
@@ -18,7 +18,7 @@
   }
 
   .menu::before {
-    content: '1223242455335';
+    content: '';
     position: absolute;
     top: 0;
     left: -32.3vw;

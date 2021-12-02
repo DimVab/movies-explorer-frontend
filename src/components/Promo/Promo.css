@@ -1,0 +1,124 @@
+.promo {
+  min-height: 424px;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px) {
+  .promo {
+    min-height: 634px;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .promo {
+    min-height: 536px;
+  }
+}
+
+.promo__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1024px) {
+  .promo__container {
+    min-height: 282px;
+    align-items: center;
+  }
+}
+
+.promo__heading {
+  width: 50vw;
+  max-width: 640px;
+  margin: 0 0 36px;
+  font-size: 50px;
+  line-height: 1.16;
+}
+
+@media screen and (max-width: 1024px) {
+  .promo__heading {
+    width: 100%;
+    max-width: 745px;
+    margin-bottom: 22px;
+    text-align: center;
+    font-size: 40px;
+    line-height: 1.25;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .promo__heading {
+    max-width: 510px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .promo__heading {
+    width: 100%;
+    max-width: 380px;
+    margin-bottom: 24px;
+    font-size: 30px;
+    line-height: 1.27;
+  }
+}
+
+.promo__subheading {
+  width: 310px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.23;
+  opacity: .5;
+}
+
+@media screen and (max-width: 1024px) {
+  .promo__subheading {
+    width: 260px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+.promo__button {
+  width: 131px;
+  border: 1px solid rgba(0, 0, 0, .6);
+  border-radius: 3px;
+  padding: 10px 20px;
+}
+
+.promo__button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.promo__link {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  transition: opacity .5s;
+  color: #000;
+  text-decoration: none;
+}
+
+.promo__image {
+  width: 310px;
+  height: 304px;
+}
+
+@media screen and (max-width: 1024px) {
+  .promo__image {
+    margin-bottom: 48px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .promo__image {
+    height: 206px;
+    width: 210px;
+    margin-bottom: 44px;
+  }
+}

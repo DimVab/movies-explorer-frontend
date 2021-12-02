@@ -5,6 +5,14 @@
   align-items: center;
 }
 
+.header__link {
+  transition: opacity .5s;
+}
+
+.header__link:hover {
+  opacity: .8;
+}
+
 .header__logo {
   height: 38px;
   width: 38px;
