@@ -1,15 +1,19 @@
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Promo from '../Promo/Promo';
+import AboutProject from '../AboutProject/AboutProject';
 
 function Main ({ loggedIn }) {
 
   return(
-    <main className="main">
-      <Header location="main" loggedIn={loggedIn} />
+    <>
+    <Header bgColor="grey" loggedIn={loggedIn} />
+    <main>
       <Promo />
-      <Footer />
+      <AboutProject />
     </main>
+    <Footer />
+    </>
   );
 }
 

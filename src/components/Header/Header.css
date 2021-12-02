@@ -1,8 +1,37 @@
 .header {
   height: 74px;
+  padding: 0 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media screen and (max-width: 848px) {
+  .header {
+    padding: 0 calc((100vw - 708px)/2);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 352px) {
+  .header {
+    padding: 0 calc((100vw - 292px)/2);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .header {
+    padding: 0 14px;
+  }
+}
+
+.header_bg-color_grey {
+  background-color: #DDDEE3;
 }
 
 .header__link {

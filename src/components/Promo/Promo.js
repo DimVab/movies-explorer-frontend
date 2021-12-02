@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import promoImage from '../../images/web-globe.png';
+import promoImage from '../../images/web-globe.svg';
 
 function Promo () {
 
   return(
-    <section className="promo main__promo">
+    <section className="promo">
       <div className="promo__container">
         <header>
           <h1 className="promo__heading">Учебный проект студента факультета Веб-разработки.</h1>
