@@ -1,9 +1,9 @@
 function Aboutroject () {
 
   return(
-    <section className="about-project main__about-project">
-      <h2 className="about-project__heading">О проекте</h2>
-      <div className="about-project__line"></div>
+    <section className="section about-project">
+      <h2 className="section__heading">О проекте</h2>
+      <div className="section__line"></div>
       <div className="about-project__articles">
         <article className="article">
           <h3 className="article__thesis">Дипломный проект включал 5 этапов</h3>

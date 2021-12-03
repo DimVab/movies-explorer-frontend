@@ -15,7 +15,7 @@
   }
 }
 
-.about-project__heading {
+.section__heading {
   font-size: 22px;
   line-height: 1.23;
   letter-spacing: -0.04em;
@@ -23,20 +23,20 @@
 }
 
 @media screen and (max-width: 425px) {
-  .about-project__heading {
+  .section__heading {
     font-size: 18px;
     line-height: 1.22;
     margin-bottom: 28px;
   }
 }
 
-.about-project__line {
+.section__line {
   border-bottom: 1px solid #000;
   margin-bottom: 70px;
 }
 
 @media screen and (max-width: 425px) {
-  .about-project__line {
+  .section__line {
     margin-bottom: 60px;
   }
 }
@@ -107,7 +107,7 @@
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 425px) {
   .article__description {
     font-size: 11px;
     line-height: 1.45;
