@@ -1,0 +1,9 @@
+.about-me {
+  padding-top: 66px;
+}
+
+@media screen and (max-width: 425px) {
+  .about-me {
+    padding-top: 60px;
+  }
+}

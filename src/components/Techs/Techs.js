@@ -1,14 +1,12 @@
 function Techs () {
 
   return(
-    <section className="techs">
-      <h2 className="section__heading">Технологии</h2>
-      <div className="section__line section__line_in_techs"></div>
+    <div className="techs">
       <article className="article techs__article">
-          <h3 className="article__thesis article__thesis_size_b">7 технологий</h3>
-          <p className="article__description article__description_type_compressed">
-            На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
-          </p>
+        <h3 className="article__name article__name_size_b">7 технологий</h3>
+        <p className="article__description article__description_type_compressed">
+          На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
+        </p>
       </article>
       <ul className="techs__technologies-list">
         <li className="techs__technology">HTML</li>
@@ -19,7 +17,7 @@ function Techs () {
         <li className="techs__technology">Express.js</li>
         <li className="techs__technology">MongoDB</li>
       </ul>
-    </section>
+    </div>
   );
 }
 
