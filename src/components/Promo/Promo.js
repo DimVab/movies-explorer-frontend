@@ -14,7 +14,7 @@ function Promo () {
           <Link to="/" className="promo__link">Узнать больше</Link>
         </button>
       </div>
-      <img className="promo__image" src={promoImage} alt="Изображение глобуса, в котором океаны заполнены словами 'WEB', а континенты - пустые пространства" className="promo__image"/>
+      <img className="promo__image" src={promoImage} alt="Изображение глобуса, в котором океаны заполнены словами 'WEB', а континенты - пустые пространства"/>
     </section>
   );
 }
