@@ -34,6 +34,10 @@
   background-color: #DDDEE3;
 }
 
+.header_bg-color_light {
+  background-color: #FAFAFA;
+}
+
 .header__link {
   transition: opacity .5s;
 }

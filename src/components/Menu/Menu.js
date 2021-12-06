@@ -11,12 +11,12 @@ function Menu({ isOpened, currentPage }) {
           {currentPage === "menu" && <div className="menu__underline"></div>}
         </li>
         <li className="menu__list-item">
-          <NavLink to="/films" className="menu__list-link">Фильмы</NavLink>
-          {currentPage === "films" && <div className="menu__underline"></div>}
+          <NavLink to="/movies" className="menu__list-link">Фильмы</NavLink>
+          {currentPage === "movies" && <div className="menu__underline"></div>}
         </li>
         <li className="menu__list-item">
-          <NavLink to="/saved-films" className="menu__list-link">Сохранённые фильмы</NavLink>
-          {currentPage === "saved-films" && <div className="menu__underline"></div>}
+          <NavLink to="/saved-movies" className="menu__list-link">Сохранённые фильмы</NavLink>
+          {currentPage === "saved-movies" && <div className="menu__underline"></div>}
         </li>
       </ul>
       <ul className="menu__account-links">

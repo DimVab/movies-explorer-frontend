@@ -6,8 +6,8 @@ function NavTab ({ loggedIn }) {
        ? <>
         <nav className="nav-tab nav-tab_logged-in">
           <ul className="nav-tab__list">
-            <li><NavLink to="/films" className="nav-tab__link nav-tab__link_bold nav-tab__link_type_films">Фильмы</NavLink></li>
-            <li><NavLink to="/saved-films" className="nav-tab__link nav-tab__link_type_saved-films">Сохранённые фильмы</NavLink></li>
+            <li><NavLink to="/movies" className="nav-tab__link nav-tab__link_bold nav-tab__link_type_movies">Фильмы</NavLink></li>
+            <li><NavLink to="/saved-movies" className="nav-tab__link nav-tab__link_type_saved-movies">Сохранённые фильмы</NavLink></li>
             <li><NavLink to="/profile" className="nav-tab__link nav-tab__link_bold nav-tab__link_type_account">Аккаунт</NavLink></li>
             <li><NavLink to="/profile"><button className="nav-tab__account-button" type="button" aria-label="Аккаунт"></button></NavLink></li>
           </ul>
