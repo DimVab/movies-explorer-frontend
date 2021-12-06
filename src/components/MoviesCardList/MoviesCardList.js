@@ -1,36 +1,30 @@
 import React from 'react';
 import Preloader from '../Preloader/Preloader';
+import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList ({ isLoading }) {
+import url from '../../images/test.png';
 
+
+function MoviesCardList ({ isLoading, isSaved }) {
+
+  // временный массив
+  const movies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   return(
     <>{isLoading ? <Preloader />
     : <ul className="movies-card-list">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
-        <li>11</li>
-        <li>12</li>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
-        <li>11</li>
-        <li>12</li>
+        {movies.map((movie) => {
+          return(
+            <MoviesCard
+            isSaved={isSaved}
+            isMarked={false}
+            name="Правильные пацаны"
+            duration="184"
+            imageUrl={url}
+            description="Фильм про мафию"
+          />
+          )
+        })}
       </ul>
   }</>
   );

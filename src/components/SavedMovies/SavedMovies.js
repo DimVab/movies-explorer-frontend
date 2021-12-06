@@ -4,22 +4,19 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies ({ loggedIn, isLoading }) {
+function SavedMovies ({ loggedIn, isLoading }) {
 
   return(
     <>
     <Header bgColor="light" loggedIn={loggedIn} />
-    <main className="movies">
+    <main className="saved-movies">
       <SearchForm />
       <FilterCheckbox />
-      <section>
-        <MoviesCardList isLoading={isLoading} isSaved={false} />
-        <button className="movies__button" type="button">Ещё</button>
-      </section>
+      <MoviesCardList isLoading={isLoading} isSaved={true} />
     </main>
     <Footer />
     </>
   );
 }
 
-export default Movies;
+export default SavedMovies;

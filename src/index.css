@@ -14,8 +14,9 @@
 @import url(./components/Techs/Techs.css);
 @import url(./components/AboutMe/AboutMe.css);
 @import url(./components/Portfolio/Portfolio.css);
-/* страница Movies */
+/* страницы Movies и SavedMovies */
 @import url(./components/Movies/Movies.css);
+@import url(./components/SavedMovies/SavedMovies.css);
 @import url(./components/SearchForm/SearchForm.css);
 @import url(./components/FilterCheckbox/FilterCheckbox.css);
 @import url(./components/MoviesCardList/MoviesCardList.css);
