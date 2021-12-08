@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
+function Profile ({ loggedIn, userInfo, reqError, reqErrorText, openMenu }) {
 
   const [onEdit, setEdit] = React.useState(false);
 
@@ -16,7 +16,7 @@ function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
 
   return(
     <>
-    <Header bgColor="light" loggedIn={loggedIn} />
+    <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
     <main className="profile">
       <h2 className="profile__name">Привет, {userInfo.name}</h2>
       <form className="profile__form">

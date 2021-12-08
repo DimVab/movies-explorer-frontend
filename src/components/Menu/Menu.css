@@ -58,6 +58,12 @@
   position: absolute;
   top: 4.15%;
   right: 4.15%;
+  transition: opacity .5s;
+}
+
+.menu__close-icon:hover {
+  opacity: .8;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 560px) {

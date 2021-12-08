@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import promoImage from '../../images/web-globe.svg';
 
 function Promo () {

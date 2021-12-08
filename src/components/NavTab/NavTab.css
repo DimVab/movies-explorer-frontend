@@ -118,6 +118,12 @@
     border: 0;
     background-color: transparent;
     background-image: url(../../images/icons/nav_icon.svg);
+    transition: opacity .5s;
+  }
+
+  .nav-tab__nav-button:hover {
+    opacity: .8;
+    cursor: pointer;
   }
 }
 

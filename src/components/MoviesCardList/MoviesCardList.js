@@ -13,16 +13,17 @@ function MoviesCardList ({ isLoading, isSaved, allMovies }) {
   return(
     <>{isLoading ? <Preloader />
     : <><ul className="movies-card-list">
-        {movies.map((movie) => {
+        {movies.map((movie, i) => {
           return(
-            <li><MoviesCard
+            <MoviesCard
               isSaved={isSaved}
               isMarked={false}
               name="Бесконечный марафон"
               duration="135"
               imageUrl={url}
               description="Фильм про бег и жизнь"
-            /></li>
+              key={i}
+            />
           )
         })}
       </ul>

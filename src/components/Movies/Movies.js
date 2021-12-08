@@ -4,11 +4,11 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies ({ loggedIn, isLoading, allMovies }) {
+function Movies ({ loggedIn, isLoading, allMovies, openMenu }) {
 
   return(
     <>
-    <Header bgColor="light" loggedIn={loggedIn} />
+    <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
     <main className="movies">
       <SearchForm />
       <FilterCheckbox />

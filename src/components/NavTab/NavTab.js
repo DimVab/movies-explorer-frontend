@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-function NavTab ({ loggedIn }) {
+function NavTab ({ loggedIn, openMenu }) {
   return(
        <>{loggedIn
        ? <>
@@ -12,7 +12,7 @@ function NavTab ({ loggedIn }) {
             <li><NavLink to="/profile"><button className="nav-tab__account-button" type="button" aria-label="Аккаунт"></button></NavLink></li>
           </ul>
         </nav>
-        <button className="nav-tab__nav-button" type="button" aria-label="Навигация"></button>
+        <button className="nav-tab__nav-button" type="button" aria-label="Навигация" onClick={openMenu}></button>
       </>
       : <>
         <nav className="nav-tab">

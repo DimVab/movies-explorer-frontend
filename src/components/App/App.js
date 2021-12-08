@@ -15,6 +15,11 @@ function App() {
   const [isLoading, loadCards] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
 
+
+  function handleOpenMenu () {
+    isOpened ? openMenu(false) : openMenu(true);
+  }
+
   return (
     <><Switch>
       <Route exact path="/sign-up">
@@ -41,16 +46,17 @@ function App() {
         />
       </Route>
       <Route exact path="/">
-        <Main loggedIn={loggedIn} />
+        <Main loggedIn={loggedIn} openMenu={handleOpenMenu} />
       </Route>
       <Route exact path="/movies">
-        <Movies loggedIn={loggedIn} isLoading={isLoading} allMovies="15" />
+        <Movies openMenu={handleOpenMenu} loggedIn={loggedIn} isLoading={isLoading} allMovies="15" />
       </Route>
       <Route exact path="/saved-movies">
-        <SavedMovies loggedIn={true} />
+        <SavedMovies openMenu={handleOpenMenu} loggedIn={true} />
       </Route>
       <Route exact path="/profile">
         <Profile
+          openMenu={handleOpenMenu}
           loggedIn={loggedIn}
           userInfo={userInfo}
           reqError={true}
@@ -62,7 +68,7 @@ function App() {
       </Route>
     </Switch>
 
-    <Menu isOpened={isOpened} currentPage="menu" /></>
+    <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></>
   );
 }
 

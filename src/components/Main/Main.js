@@ -7,11 +7,11 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
-function Main ({ loggedIn }) {
+function Main ({ loggedIn, openMenu }) {
 
   return(
     <>
-    <Header bgColor="grey" loggedIn={loggedIn} />
+    <Header bgColor="grey" loggedIn={loggedIn} openMenu={openMenu} />
     <main>
       <Promo />
       <Section theme="light" heading="О проекте">
