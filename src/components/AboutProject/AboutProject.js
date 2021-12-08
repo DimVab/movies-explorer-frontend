@@ -17,14 +17,16 @@ function Aboutroject () {
         </article>
       </div>
       <table className="about-project__table">
-        <tr className="about-project__table-row">
-          <td className="about-project__table-cell about-project__table-cell_style_blue">1 неделя</td>
-          <td className="about-project__table-cell about-project__table-cell_style_grey">4 недели</td>
-        </tr>
-        <tr className="about-project__table-row about-project__table-row_type_sides">
-          <td className="about-project__table-cell about-project__table-cell_style_transparent">Back-end</td>
-          <td className="about-project__table-cell about-project__table-cell_style_transparent">Front-End</td>
-        </tr>
+        <tbody className="about-project__table">
+          <tr className="about-project__table-row">
+            <td className="about-project__table-cell about-project__table-cell_style_blue">1 неделя</td>
+            <td className="about-project__table-cell about-project__table-cell_style_grey">4 недели</td>
+          </tr>
+          <tr className="about-project__table-row about-project__table-row_type_sides">
+            <td className="about-project__table-cell about-project__table-cell_style_transparent">Back-end</td>
+            <td className="about-project__table-cell about-project__table-cell_style_transparent">Front-End</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   );
