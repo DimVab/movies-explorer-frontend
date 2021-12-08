@@ -123,6 +123,11 @@
   opacity: .8;
 }
 
+.sign__form-button:disabled {
+  color: #C2C2C2;
+  background-color: #F4F4F4;
+}
+
 @media screen and (max-width: 525px) {
   .sign__form-button {
     width: 260px;

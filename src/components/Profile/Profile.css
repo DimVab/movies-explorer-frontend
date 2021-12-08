@@ -136,6 +136,11 @@
   opacity: .8;
 }
 
+.profile__save-button:disabled {
+  color: #C2C2C2;
+  background-color: #F4F4F4;
+}
+
 @media screen and (max-width: 525px) {
   .profile__save-button {
     width: 260px;
