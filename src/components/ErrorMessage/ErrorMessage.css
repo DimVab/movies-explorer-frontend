@@ -1,0 +1,26 @@
+.error-message {
+  display: none;
+  margin: 0;
+  text-align: center;
+  color: #FF004C;
+  font-size: 11px;
+  line-height: 1.18;
+}
+
+.error-message_visible {
+  display: block;
+}
+
+.error-message_type_request {
+  margin-bottom: 20px;
+}
+
+.error-message_type_sign-validation {
+  position: absolute;
+  bottom: -22px;
+}
+
+.error-message_type_profile-validation {
+  position: absolute;
+  bottom: -18px;
+}

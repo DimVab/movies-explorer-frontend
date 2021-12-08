@@ -51,12 +51,14 @@
 .profile__form-field {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .profile__form-line {
   width: 410px;
   border-bottom: 1px solid #E8E8E8;
-  margin: 16px 0 17px;
+  margin: 22px 0;
+  /* здесь margin-bottom увеличен с 16 и 17px до 22px по сравнению с макетом, чтобы сообщения ошибок валидации могли помещаться, не соприкасаясь с другими элементами */
 }
 
 @media screen and (max-width: 525px) {

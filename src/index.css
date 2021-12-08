@@ -26,4 +26,4 @@
 /* страницы логина, регистрации и авторизации */
 @import url(./components/Profile/Profile.css);
 @import url(./components/Sign/Sign.css);
-@import url(./components/RequestError/RequestError.css);
+@import url(./components/ErrorMessage/ErrorMessage.css);

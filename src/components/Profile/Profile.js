@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../Header/Header';
-import RequestError from '../RequestError/RequestError';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
 
@@ -9,6 +9,10 @@ function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
   function editProfile () {
     onEdit ? setEdit(false) : setEdit(true);
   }
+
+    // временные переменные:
+    const validationMessage = "Здесь могла бы быть ваша ошибка";
+    const validationError = true;
 
   return(
     <>
@@ -20,15 +24,17 @@ function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
           <div className="profile__form-field">
             <p className="profile__form-field-name">Имя</p>
             <input className="profile__form-input" value={userInfo.name} type="text" name="userName" minLength="2" maxLength="30" required disabled={!onEdit} />
+            <ErrorMessage error={validationError} errorText={validationMessage} type="profile-validation" />
           </div>
           <div className="profile__form-line"></div>
           <div className="profile__form-field">
             <p className="profile__form-field-name">E-mail</p>
             <input className="profile__form-input" value={userInfo.email} type="email" name="userEmail" minLength="2" maxLength="30" required disabled={!onEdit} />
+            <ErrorMessage error={validationError} errorText={validationMessage} type="profile-validation" />
           </div>
         </div>
         {onEdit ? <div>
-          < RequestError reqError={reqError} reqErrorText={reqErrorText} />
+          <ErrorMessage error={reqError} errorText={reqErrorText} type="request" />
           <input className="profile__save-button" type="submit" value="Сохранить" />
         </div>
         : <div><input className="profile__button" type="button"  value="Редактировать" onClick={editProfile} />

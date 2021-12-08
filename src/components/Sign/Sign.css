@@ -69,7 +69,9 @@
 }
 
 .sign__form-field {
-  margin-bottom: 20px;
+  position: relative;
+  margin-bottom: 25px;
+  /* здесь margin-bottom увеличен с 20 до 25px по сравнению с макетом, чтобы сообщения ошибок валидации могли помещаться, не соприкасаясь с другими элементами */
 }
 
 .sign__form-field:last-of-type {
