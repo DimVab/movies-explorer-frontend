@@ -10,7 +10,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
 
-  const [loggedIn, sign] = React.useState(true);
+  const [loggedIn, sign] = React.useState(false);
   const [isOpened, openMenu] = React.useState(false);
   const [isLoading, loadCards] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
@@ -18,10 +18,27 @@ function App() {
   return (
     <><Switch>
       <Route exact path="/sign-up">
-        <Sign />
+        <Sign
+          isRegister={true}
+          greetingText="Добро пожаловать!"
+          reqError={false}
+          reqErrorText="Ошибка запроса"
+          buttonText="Зарегистрироваться"
+          link="/sign-in"
+          redirectText="Уже зарегистрированы?"
+          linkText="Войти"
+        />
       </Route>
       <Route exact path="/sign-in">
-        <Sign />
+        <Sign
+          greetingText="Рады видеть!"
+          reqError={false}
+          reqErrorText="Ошибка запроса"
+          buttonText="Войти"
+          link="/sign-up"
+          redirectText="Ещё не зарегистрированы?"
+          linkText="Регистрация"
+        />
       </Route>
       <Route exact path="/">
         <Main loggedIn={loggedIn} />
