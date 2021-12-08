@@ -1,4 +1,4 @@
-import avatar from '../../images/unknown.png';
+import avatar from '../../images/student.jpeg';
 
 function AboutMe () {
 
