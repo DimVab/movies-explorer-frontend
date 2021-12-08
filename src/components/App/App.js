@@ -21,7 +21,7 @@ function App() {
         <Sign
           isRegister={true}
           greetingText="Добро пожаловать!"
-          reqError={false}
+          reqError={true}
           reqErrorText="Ошибка запроса"
           buttonText="Зарегистрироваться"
           link="/sign-in"
@@ -32,7 +32,7 @@ function App() {
       <Route exact path="/sign-in">
         <Sign
           greetingText="Рады видеть!"
-          reqError={false}
+          reqError={true}
           reqErrorText="Ошибка запроса"
           buttonText="Войти"
           link="/sign-up"
@@ -50,7 +50,12 @@ function App() {
         <SavedMovies loggedIn={true} isLoading={isLoading} />
       </Route>
       <Route exact path="/profile">
-        <Profile loggedIn={loggedIn} userInfo={userInfo} />
+        <Profile
+          loggedIn={loggedIn}
+          userInfo={userInfo}
+          reqError={true}
+          reqErrorText="Ошибка запроса"
+        />
       </Route>
       <Route path="*">
         <NotFoundPage />

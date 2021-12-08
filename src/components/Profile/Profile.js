@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from '../Header/Header';
+import RequestError from '../RequestError/RequestError';
 
-function Profile ({ loggedIn, userInfo }) {
+function Profile ({ loggedIn, userInfo, reqError, reqErrorText }) {
 
   const [onEdit, setEdit] = React.useState(false);
 
@@ -26,9 +27,12 @@ function Profile ({ loggedIn, userInfo }) {
             <input className="profile__form-input" value={userInfo.email} type="email" name="userEmail" minLength="2" maxLength="30" required disabled={!onEdit} />
           </div>
         </div>
-        {onEdit ? <input className="profile__save-button" type="submit" value="Сохранить" />
-        : <><input className="profile__button" type="button"  value="Редактировать" onClick={editProfile} />
-        <input className="profile__button profile__button_color_pink" type="submit" value="Выйти из аккаунта" /></>
+        {onEdit ? <div>
+          < RequestError reqError={reqError} reqErrorText={reqErrorText} />
+          <input className="profile__save-button" type="submit" value="Сохранить" />
+        </div>
+        : <div><input className="profile__button" type="button"  value="Редактировать" onClick={editProfile} />
+        <input className="profile__button profile__button_color_pink" type="submit" value="Выйти из аккаунта" /></div>
         }
       </form>
     </main>

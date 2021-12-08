@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import headerLogo from '../../images/icons/logo.svg';
+import RequestError from '../RequestError/RequestError';
 
 function Sign ({ loggedIn, greetingText, isRegister, reqError, reqErrorText, buttonText,  redirectText, linkText, link }) {
 
@@ -30,7 +31,7 @@ function Sign ({ loggedIn, greetingText, isRegister, reqError, reqErrorText, but
           </div>
         </div>
         <div>
-          <p className={`sign__request-error-text ${reqError && "sign__request-error-text_visible"}`}>{reqErrorText}</p>
+          < RequestError reqError={reqError} reqErrorText={reqErrorText} />
           <input className="sign__form-button" type="submit" value={buttonText} />
           <div className="sign__redirect-container">
             <p className="sign__redirect-text">{redirectText}</p>

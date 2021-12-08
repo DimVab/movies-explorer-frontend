@@ -171,16 +171,3 @@
     line-height: 1.25;
   }
 }
-
-.sign__request-error-text {
-  display: none;
-  margin: 0 0 20px;
-  text-align: center;
-  color: #FF004C;
-  font-size: 11px;
-  line-height: 1.18;
-}
-
-.sign__request-error-text_visible {
-  display: block;
-}
