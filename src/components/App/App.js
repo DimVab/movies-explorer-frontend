@@ -10,7 +10,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
 
-  const [loggedIn, sign] = React.useState(false);
+  const [loggedIn, sign] = React.useState(true);
   const [isOpened, openMenu] = React.useState(false);
   const [isLoading, loadCards] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
@@ -44,10 +44,10 @@ function App() {
         <Main loggedIn={loggedIn} />
       </Route>
       <Route exact path="/movies">
-        <Movies loggedIn={loggedIn} isLoading={isLoading} />
+        <Movies loggedIn={loggedIn} isLoading={isLoading} allMovies="15" />
       </Route>
       <Route exact path="/saved-movies">
-        <SavedMovies loggedIn={true} isLoading={isLoading} />
+        <SavedMovies loggedIn={true} />
       </Route>
       <Route exact path="/profile">
         <Profile

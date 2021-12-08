@@ -60,7 +60,7 @@
 }
 
 .portfolio__link-name:hover {
-  opacity: .6;
+  opacity: .7;
   cursor: pointer;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .portfolio__link-icon:hover {
-  opacity: .6;
+  opacity: .8;
   cursor: pointer;
 }
 

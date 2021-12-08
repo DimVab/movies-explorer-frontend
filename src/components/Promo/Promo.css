@@ -89,9 +89,11 @@
 
 .promo__button {
   width: 131px;
+  background-color: transparent;
   border: 1px solid rgba(0, 0, 0, .6);
   border-radius: 3px;
   padding: 10px 20px;
+  transition: opacity .5s;
 }
 
 .promo__button:hover {

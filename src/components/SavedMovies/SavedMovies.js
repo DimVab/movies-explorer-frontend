@@ -4,7 +4,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ loggedIn, isLoading }) {
+function SavedMovies ({ loggedIn }) {
 
   return(
     <>
@@ -12,7 +12,7 @@ function SavedMovies ({ loggedIn, isLoading }) {
     <main className="saved-movies">
       <SearchForm />
       <FilterCheckbox />
-      <MoviesCardList isLoading={isLoading} isSaved={true} />
+      <MoviesCardList isLoading={false} isSaved={true} allMovies={undefined} />
     </main>
     <Footer />
     </>

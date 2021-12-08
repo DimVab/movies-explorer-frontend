@@ -23,7 +23,7 @@
  }
 
  .nav-tab__link:hover {
-  opacity: .6;
+  opacity: .7;
   cursor: pointer;
 }
 
@@ -73,7 +73,7 @@
  }
 
  .nav-tab__account-button:hover {
-  opacity: .6;
+  opacity: .8;
   cursor: pointer;
  }
 
