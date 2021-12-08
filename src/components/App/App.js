@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState} from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Sign from '../Sign/Sign';
 import Main from '../Main/Main';
@@ -10,10 +10,10 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
 
-  const [loggedIn, sign] = React.useState(true);
-  const [isOpened, openMenu] = React.useState(false);
-  const [isLoading, loadCards] = React.useState(false);
-  const [userInfo, setUserInfo] = React.useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
+  const [loggedIn, sign] = useState(true);
+  const [isOpened, openMenu] = useState(false);
+  const [isLoading, loadCards] = useState(false);
+  const [userInfo, setUserInfo] = useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
 
 
   function handleOpenMenu () {

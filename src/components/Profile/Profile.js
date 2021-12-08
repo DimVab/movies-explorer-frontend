@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState} from 'react';
 import Header from '../Header/Header';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function Profile ({ loggedIn, userInfo, reqError, reqErrorText, openMenu }) {
 
-  const [onEdit, setEdit] = React.useState(false);
+  const [onEdit, setEdit] = useState(false);
 
   function editProfile () {
     onEdit ? setEdit(false) : setEdit(true);

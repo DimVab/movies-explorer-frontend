@@ -1,12 +1,12 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function Menu({ isOpened, openMenu }) {
 
-  const [currentPage, setCurrentPage] = React.useState(window.location.pathname);
+  const [currentPage, setCurrentPage] = useState(window.location.pathname);
   const pathname = window.location.pathname;
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCurrentPage(window.location.pathname);
   }, [pathname]);
 
