@@ -7,15 +7,15 @@ import Footer from '../Footer/Footer';
 function SavedMovies ({ loggedIn, openMenu }) {
 
   return(
-    <>
+    <div className="saved-movies">
     <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
-    <main className="saved-movies">
+    <main className="saved-movies__container">
       <SearchForm />
       <FilterCheckbox />
       <MoviesCardList isLoading={false} isSaved={true} allMovies={undefined} />
     </main>
     <Footer />
-    </>
+    </div>
   );
 }
 

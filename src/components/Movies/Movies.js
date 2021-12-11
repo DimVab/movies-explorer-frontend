@@ -7,9 +7,9 @@ import Footer from '../Footer/Footer';
 function Movies ({ loggedIn, isLoading, allMovies, openMenu }) {
 
   return(
-    <>
+    <div className="movies">
     <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
-    <main className="movies">
+    <main className="movies-container">
       <SearchForm />
       <FilterCheckbox />
       <section>
@@ -17,7 +17,7 @@ function Movies ({ loggedIn, isLoading, allMovies, openMenu }) {
       </section>
     </main>
     <Footer />
-    </>
+    </div>
   );
 }
 
