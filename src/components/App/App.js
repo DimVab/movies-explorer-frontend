@@ -21,7 +21,7 @@ function App() {
   }
 
   return (
-    <><Switch>
+    <div className="app"><Switch>
       <Route exact path="/sign-up">
         <Sign
           isRegister={true}
@@ -68,7 +68,7 @@ function App() {
       </Route>
     </Switch>
 
-    <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></>
+    <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></div>
   );
 }
 
