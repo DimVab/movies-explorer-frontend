@@ -27,7 +27,7 @@ function MoviesCardList ({ isLoading, isSaved, allMovies }) {
           )
         })}
       </ul>
-      {movies.length < allMovies && <button className="movies-card-list__button" type="button">Ещё</button>}
+      {movies.length < allMovies && movies.length > 0 && <button className="movies-card-list__button" type="button">Ещё</button>}
       </>
     }</>
   );
