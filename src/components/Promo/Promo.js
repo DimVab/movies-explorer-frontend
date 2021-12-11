@@ -10,7 +10,7 @@ function Promo () {
           <p className="promo__subheading">Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
         </header>
         <button className="promo__button" type="button">
-          <a href="#123" className="promo__link">Узнать больше</a>
+          <a href="#about-project" className="promo__link">Узнать больше</a>
         </button>
       </div>
       <img className="promo__image" src={promoImage} alt="Изображение глобуса, в котором океаны заполнены словами 'WEB', а континенты - пустые пространства"/>
