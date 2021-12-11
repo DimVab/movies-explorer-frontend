@@ -75,6 +75,17 @@
 
 @media screen and (max-width: 767px) {
   .techs__technologies-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 366px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .techs__technologies-list {
+    width: auto;
+    display: grid;
     grid-template-columns: repeat(2, max-content);
     grid-auto-rows: 57px;
     justify-content: center;
