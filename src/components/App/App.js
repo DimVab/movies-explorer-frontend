@@ -1,5 +1,6 @@
 import { useState} from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import Sign from '../Sign/Sign';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -10,7 +11,8 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
 
-  const [loggedIn, sign] = useState(true);
+// переменные состояния
+  const [loggedIn, sign] = useState(false);
   const [isOpened, openMenu] = useState(false);
   const [isLoading, loadCards] = useState(false);
   const [userInfo, setUserInfo] = useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
@@ -34,13 +36,13 @@ function App() {
           linkText="Войти"
         />
       </Route>
-      <Route exact path="/sign-in">
+      <Route exact path="/signin">
         <Sign
           greetingText="Рады видеть!"
           reqError={true}
           reqErrorText="Ошибка запроса"
           buttonText="Войти"
-          link="/sign-up"
+          link="/signup"
           redirectText="Ещё не зарегистрированы?"
           linkText="Регистрация"
         />
