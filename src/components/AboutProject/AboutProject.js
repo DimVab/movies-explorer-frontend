@@ -3,15 +3,15 @@ function Aboutroject () {
   return(
     <div className="about-project" id="123">
       <div className="about-project__articles">
-        <article className="article">
-          <h3 className="article__name">Дипломный проект включал 5 этапов</h3>
-          <p className="article__description">
+        <article className="about-project__article">
+          <h3 className="about-project__article-name">Дипломный проект включал 5 этапов</h3>
+          <p className="about-project__article-description">
             Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
           </p>
         </article>
         <article className="article">
-          <h3 className="article__name">На выполнение диплома ушло 5 недель</h3>
-          <p className="article__description">
+          <h3 className="about-project__article-name">На выполнение диплома ушло 5 недель</h3>
+          <p className="about-project__article-description">
             У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
           </p>
         </article>

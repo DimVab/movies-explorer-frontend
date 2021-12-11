@@ -30,7 +30,7 @@
   }
 }
 
-.article__name {
+.about-project__article-name {
   margin: 0 0 26px;
   font-size: 20px;
   line-height: 1.2;
@@ -38,34 +38,34 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .article__name {
+  .about-project__article-name {
     margin-bottom: 22px;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .article__name {
+  .about-project__article-name {
     font-size: 18px;
     line-height: 1.22;
     margin-bottom: 16px;
   }
 }
 
-.article__description {
+.about-project__article-description {
   margin: 0;
   font-size: 14px;
   line-height: 1.43;
 }
 
 @media screen and (max-width: 1024px) {
-  .article__description {
+  .about-project__article-description {
     font-size: 12px;
     line-height: 1.5;
   }
 }
 
 @media screen and (max-width: 425px) {
-  .article__description {
+  .about-project__article-description {
     font-size: 11px;
     line-height: 1.45;
   }

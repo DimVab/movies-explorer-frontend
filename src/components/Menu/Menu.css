@@ -152,7 +152,7 @@
   transition: opacity .5s;
 }
 
-.menu__account-button:hover {
+.menu__account-button: {
   opacity: .7;
   cursor: pointer;
  }
