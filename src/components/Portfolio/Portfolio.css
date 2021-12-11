@@ -66,11 +66,18 @@
 
 .portfolio__line {
   border-bottom: 1px solid #E8E8E8;
-  margin-top: 19px;
+  margin-top: 9px;
+}
+
+@media screen and (max-width: 525px) {
+  .portfolio__line {
+    margin-top: 19px;
+  }
 }
 
 .portfolio__link-icon {
   margin: 0;
+  padding-right: 2px;
   font-size: 30px;
   line-height: 2;
   letter-spacing: -0.04em;
