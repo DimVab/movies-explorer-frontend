@@ -18,8 +18,8 @@ function MoviesCardList ({ isLoading, isSaved, allMovies }) {
             <MoviesCard
               isSaved={isSaved}
               isMarked={false}
-              name="Бесконечный марафон"
-              duration="135"
+              name="33 слова о дизайне"
+              duration="107"
               imageUrl={url}
               description="Фильм про бег и жизнь"
               key={i}

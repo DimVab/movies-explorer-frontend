@@ -38,12 +38,12 @@
 .sign__header-logo {
   height: 38px;
   width: 38px;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 @media screen and (max-width: 525px) {
   .sign__header-logo {
-    margin-bottom: 50px;
+    margin-bottom: 46px;
   }
 }
 
@@ -79,7 +79,7 @@
 }
 
 .sign__form-field-name {
-  margin: 0 0 10px;
+  margin: 0 0 9px;
   color: #A0A0A0;
   font-size: 10px;
   line-height: 1.2;
@@ -108,7 +108,7 @@
 
 .sign__form-button {
   width: 396px;
-  padding: 13px 0 15px;
+  padding: 13px 2px 15px 0;
   background-color: #3456F3;
   border: none;
   border-radius: 3px;
@@ -136,6 +136,7 @@
     margin-bottom: 14px;
     font-size: 12px;
     line-height: 1.25;
+    padding-top: 15px;
   }
 }
 

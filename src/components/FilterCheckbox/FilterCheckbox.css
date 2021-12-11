@@ -1,6 +1,6 @@
 .filter-checkbox {
   display: flex;
-  padding: 33px 0 48px;
+  padding: 34px 0 48px;
 }
 
 @media screen and (max-width: 1024px) {
@@ -37,10 +37,11 @@
 .filter-checkbox__button-visible {
   display: flex;
   align-items: center;
+  box-sizing: border-box;
   width: 34px;
   height: 14px;
   padding: 2px;
-  margin-right: 14px;
+  margin-right: 16px;
   background-color: #EBEBEB;
   border-radius: 20px;
   transition: opacity .5s;
@@ -55,7 +56,7 @@
   .filter-checkbox__button-visible {
     order: 1;
     margin-right: 0;
-    margin-left: 16px;
+    margin-left: 17px;
   }
 }
 
@@ -84,4 +85,11 @@
 .filter-checkbox__label:hover {
   opacity: .8;
   cursor: pointer;
+}
+
+@media screen and (max-width: 425px) {
+  .filter-checkbox__label {
+    font-size: 11px;
+    line-height: 1.64;
+  }
 }

@@ -7,12 +7,13 @@
 
 @media screen and (max-width: 425px) {
   .search-form {
-    padding-bottom: 9px;
+    padding: 0 4px 9px;
   }
 }
 
 .search-form__submit {
   padding: 8px 12px;
+  margin-right: 1px; /* для выравнивания по PixelPerfect */
   border: none;
   border-radius: 48px;
   background-color: #3456F3;

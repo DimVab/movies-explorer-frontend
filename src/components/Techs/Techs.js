@@ -13,7 +13,7 @@ function Techs () {
         <li className="techs__technology">React</li>
         <li className="techs__technology">Git</li>
         <li className="techs__technology">Express.js</li>
-        <li className="techs__technology">MongoDB</li>
+        <li className="techs__technology">mongoDB</li>
       </ul>
     </div>
   );

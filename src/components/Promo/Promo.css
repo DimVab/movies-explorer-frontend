@@ -9,7 +9,7 @@
 @media screen and (max-width: 1024px) {
   .promo {
     min-height: 634px;
-    padding: 140px 44px 76px;
+    padding: 138px 44px 77px;
     flex-direction: column-reverse;
     justify-content: flex-end;
     align-items: center;
@@ -19,7 +19,7 @@
 @media screen and (max-width: 425px) {
   .promo {
     min-height: 536px;
-    padding: 70px 10px 30px;
+    padding: 66px 10px 30px;
   }
 }
 
@@ -31,7 +31,7 @@
 
 @media screen and (max-width: 1024px) {
   .promo__container {
-    min-height: 282px;
+    min-height: 287px;
     align-items: center;
   }
 }
@@ -90,12 +90,14 @@
 }
 
 .promo__button {
-  width: 131px;
+  width: 129px;
   background-color: transparent;
   border: 1px solid rgba(0, 0, 0, .6);
   border-radius: 3px;
-  padding: 10px 20px;
+  padding: 9px 18px;
   transition: opacity .5s;
+  font-size: 12px;
+  line-height: 1.33;
   font-weight: 500;
 }
 
