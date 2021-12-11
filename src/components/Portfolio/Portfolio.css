@@ -6,7 +6,7 @@
   font-weight: 400;
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 550px) {
   .portfolio__heading {
     color: #A0A0A0;
     margin-bottom: 40px;
@@ -52,7 +52,7 @@
   }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 550px) {
   .portfolio__link-name {
     font-size: 18px;
     line-height: 1.56;
@@ -69,7 +69,7 @@
   margin-top: 9px;
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 550px) {
   .portfolio__line {
     margin-top: 19px;
   }
@@ -96,7 +96,7 @@
   }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 550px) {
   .portfolio__link-icon {
     font-size: 18px;
     line-height: 1.56;

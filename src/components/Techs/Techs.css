@@ -20,6 +20,7 @@
   line-height: 1.16;
   margin: 0 0 26px;
   letter-spacing: -0.04em;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 1024px) {

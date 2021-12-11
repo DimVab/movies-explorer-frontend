@@ -42,12 +42,13 @@
   margin: 0 0 36px;
   font-size: 50px;
   line-height: 1.16;
+  font-weight: 400;
 }
 
 @media screen and (max-width: 1024px) {
   .promo__heading {
     width: 100%;
-    max-width: 745px;
+    max-width: 680px;
     margin-bottom: 22px;
     text-align: center;
     font-size: 40px;
@@ -57,17 +58,18 @@
 
 @media screen and (max-width: 767px) {
   .promo__heading {
-    max-width: 510px;
+    max-width: 680px;
   }
 }
 
 @media screen and (max-width: 525px) {
   .promo__heading {
     width: 100%;
-    max-width: 380px;
+    max-width: 350px;
     margin-bottom: 24px;
     font-size: 30px;
     line-height: 1.27;
+    letter-spacing: -0.04em;
   }
 }
 
@@ -94,6 +96,7 @@
   border-radius: 3px;
   padding: 10px 20px;
   transition: opacity .5s;
+  font-weight: 500;
 }
 
 .promo__button:hover {
