@@ -79,7 +79,7 @@
   cursor: pointer;
  }
 
- .nav-tab__sign-in-button {
+ .nav-tab__signin-button {
   height: 32px;
   width: 76px;
   padding: 0;
@@ -93,13 +93,13 @@
   transition: opacity .5s;
  }
 
-.nav-tab__sign-in-button:hover {
+.nav-tab__signin-button:hover {
  opacity: .8;
  cursor: pointer;
 }
 
  @media screen and (max-width: 426px) {
-  .nav-tab__sign-in-button {
+  .nav-tab__signin-button {
     width: 54px;
     height: 26px;
     font-size: 10px;

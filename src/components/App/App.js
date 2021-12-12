@@ -31,7 +31,7 @@ function App() {
           reqError={true}
           reqErrorText="Ошибка запроса"
           buttonText="Зарегистрироваться"
-          link="/sign-in"
+          link="/signin"
           redirectText="Уже зарегистрированы?"
           linkText="Войти"
         />
