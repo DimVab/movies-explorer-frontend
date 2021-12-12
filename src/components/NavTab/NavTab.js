@@ -17,8 +17,8 @@ function NavTab ({ loggedIn, openMenu }) {
       : <>
         <nav className="nav-tab">
           <ul className="nav-tab__list">
-            <li><NavLink to="/sign-up" className="nav-tab__link nav-tab__link_bold nav-tab__link_type_registration">Регистрация</NavLink></li>
-            <li><NavLink to="/sign-in"><button className="nav-tab__sign-in-button" type="button">Войти</button></NavLink></li>
+            <li><NavLink to="/signup" className="nav-tab__link nav-tab__link_bold nav-tab__link_type_registration">Регистрация</NavLink></li>
+            <li><NavLink to="/signin"><button className="nav-tab__sign-in-button" type="button">Войти</button></NavLink></li>
           </ul>
         </nav>
       </>

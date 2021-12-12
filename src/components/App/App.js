@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="app"><Switch>
-      <Route exact path="/sign-up">
+      <Route exact path="/signup">
         <Sign
           isRegister={true}
           greetingText="Добро пожаловать!"
