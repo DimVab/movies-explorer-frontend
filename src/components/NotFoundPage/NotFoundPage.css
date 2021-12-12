@@ -1,0 +1,88 @@
+.not-found-page {
+  box-sizing: border-box;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFF;
+  padding: 246px 0 60px;
+}
+
+@media screen and (max-width: 1024px) {
+  .not-found-page {
+    height: 1024px;
+    padding: 408px 0 222px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .not-found-page {
+    height: 780px;
+    padding: 329px 0 30px;
+  }
+}
+
+.not-found-page__heading {
+  margin: 0;
+  text-align: center;
+  font-size: 140px;
+  line-height: 1.21;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1024px) {
+  .not-found-page__heading {
+    margin-bottom: 5px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .not-found-page__heading {
+    margin-bottom: 10px;
+    font-size: 80px;
+  }
+}
+
+.not-found-page__text {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .not-found-page__text {
+    display: block;
+    text-align: center;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.19;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .not-found-page__text {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}
+
+.not-found-page__link {
+  background-color: transparent;
+  color: #3456F3;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  line-height: 1.21;
+  transition: opacity .5s;
+}
+
+.not-found-page__link:hover {
+  opacity: .7;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 425px) {
+  .not-found-page__link {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

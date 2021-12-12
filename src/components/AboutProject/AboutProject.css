@@ -1,0 +1,134 @@
+.about-project {
+  padding-top: 69px;
+}
+
+@media screen and (max-width: 425px) {
+  .about-project {
+    padding-top: 60px;
+  }
+}
+
+.about-project__articles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-bottom: 110px;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-project__articles {
+    gap: 30px;
+    margin-bottom: 93px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about-project__articles {
+    grid-template-columns: 1fr;
+    gap: 56px;
+    margin-bottom: 60px;
+  }
+}
+
+.about-project__article-name {
+  margin: 0 0 26px;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-project__article-name {
+    margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .about-project__article-name {
+    font-size: 18px;
+    line-height: 1.22;
+    margin-bottom: 16px;
+  }
+}
+
+.about-project__article-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-project__article-description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .about-project__article-description {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}
+
+.about-project__table {
+  display: block;
+}
+
+.about-project__table-row {
+  height: 36px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 0;
+}
+
+.about-project__table-row_type_sides {
+  height: fit-content;
+}
+
+@media screen and (max-width: 1024px) {
+  .about-project__table-row {
+    grid-template-columns: 1fr 3.77fr;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .about-project__table-row {
+    height: 35px;
+    grid-template-columns: 1fr 1.84fr;
+  }
+
+  .about-project__table-row_type_sides {
+    height: fit-content;
+  }
+}
+
+.about-project__table-cell {
+  text-align: center;
+  padding: 9px 0;
+  font-size: 14px;
+  line-height: 1.21;
+}
+
+@media screen and (max-width: 425px) {
+  .about-project__table-cell {
+    font-size: 11px;
+    line-height: 1.18;
+    padding: 11px 0;
+  }
+}
+
+.about-project__table-cell_style_blue {
+  background-color: #3456F3;
+  color: #FFF;
+}
+
+.about-project__table-cell_style_grey {
+  background-color: #F2F2F2;
+}
+
+.about-project__table-cell_style_transparent {
+  color: #A0A0A0;
+  padding: 10px 0 0;
+}

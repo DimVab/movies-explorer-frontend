@@ -1,0 +1,24 @@
+.movies {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  align-items: end;
+  background-color: #FAFAFA;
+}
+
+.movies-container {
+  padding: 70px 70px 80px;
+  background-color: #FAFAFA;
+}
+
+@media screen and (max-width: 1024px) {
+  .movies-container {
+    padding: 80px 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .movies-container {
+    padding: 83px 10px 71px;
+  }
+}

@@ -1,0 +1,24 @@
+.saved-movies {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  align-items: end;
+  background-color: #FAFAFA;
+}
+
+.saved-movies__container {
+  padding: 70px 70px 140px;
+  background-color: #FAFAFA;
+}
+
+@media screen and (max-width: 1024px) {
+  .saved-movies__container {
+    padding: 80px 30px 140px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .saved-movies__container {
+    padding: 84px 10px 131px;
+  }
+}

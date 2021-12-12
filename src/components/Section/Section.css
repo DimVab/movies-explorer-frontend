@@ -1,0 +1,61 @@
+.section {
+  padding: 110px 70px;
+}
+
+.section_type_thechs {
+  padding: 100px 70px;
+}
+
+.section_type_about-me {
+  padding: 110px 70px 125px;
+}
+
+@media screen and (max-width: 1024px) {
+  .section {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .section {
+    padding: 70px 18px;
+  }
+
+  .section_type_about-me {
+    padding: 70px 14px;
+  }
+}
+
+.section_bg-theme_light {
+  background-color: #FAFAFA;
+}
+
+.section_bg-theme_light-gray {
+  background-color: #F5F5F5;
+}
+
+.section__heading {
+  font-size: 22px;
+  line-height: 1.23;
+  letter-spacing: -0.04em;
+  margin: 0 0 23px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1048px) {
+  .section__heading {
+    margin-bottom: 21px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .section__heading {
+    font-size: 18px;
+    line-height: 1.22;
+    margin-bottom: 28px;
+  }
+}
+
+.section__line {
+  border-bottom: 1px solid #000;
+}

@@ -1,0 +1,150 @@
+.profile {
+  min-height: 626px;
+  box-sizing: border-box;
+  background-color: #FAFAFA;
+  padding: 74px 0 70px;
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  justify-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile {
+    min-height: 950px;
+    padding: 236px 0 269px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .profile {
+    min-height: 706px;
+    padding: 70px 0 40px;
+  }
+}
+
+.profile__name {
+  font-size: 24px;
+  line-height: 1.21;
+  font-weight: 500;
+  margin: 0 0 123px;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile__name {
+    margin-bottom: 96px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .profile__name {
+    margin-bottom: 80px;
+  }
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile__form-field {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.profile__form-line {
+  width: 410px;
+  border-bottom: 1px solid #E8E8E8;
+  margin: 22px 0;
+  /* здесь margin-bottom увеличен с 16 и 17px до 22px по сравнению с макетом, чтобы сообщения ошибок валидации могли помещаться, не соприкасаясь с другими элементами */
+}
+
+@media screen and (max-width: 525px) {
+  .profile__form-line {
+    width: 260px;
+  }
+}
+
+.profile__form-field-name {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.18;
+  font-weight: 500;
+}
+
+.profile__form-input {
+  min-width: 220px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: #000;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.18;
+}
+
+.profile__form-input:focus {
+  outline: none;
+}
+
+.profile__button {
+  display: block;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  font-size: 13px;
+  line-height: 1.23;
+  transition: opacity .7s;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 525px) {
+  .profile__button {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}
+
+.profile__button:first-of-type {
+  margin-bottom: 16px;
+}
+
+.profile__button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.profile__button_color_pink {
+  color: #EE3465;
+}
+
+.profile__save-button {
+  width: 410px;
+  padding: 13px 0 15px;
+  background-color: #3456F3;
+  border: none;
+  border-radius: 3px;
+  color: #FFF;
+  font-size: 14px;
+  line-height: 1.21;
+  font-weight: 500;
+  transition: opacity .7s;
+}
+
+.profile__save-button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+.profile__save-button:disabled {
+  color: #C2C2C2;
+  background-color: #F4F4F4;
+}
+
+@media screen and (max-width: 525px) {
+  .profile__save-button {
+    width: 260px;
+  }
+}
