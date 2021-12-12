@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Sign from '../Sign/Sign';
@@ -12,11 +12,10 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 function App() {
 
 // переменные состояния
-  const [loggedIn, sign] = useState(false);
+  const [loggedIn, sign] = useState(true);
   const [isOpened, openMenu] = useState(false);
   const [isLoading, loadCards] = useState(false);
   const [userInfo, setUserInfo] = useState({ name: 'Дмитрий', email: 'pochta@mail.ru'});
-
 
   function handleOpenMenu () {
     isOpened ? openMenu(false) : openMenu(true);
@@ -51,7 +50,7 @@ function App() {
         <Main loggedIn={loggedIn} openMenu={handleOpenMenu} />
       </Route>
       <Route exact path="/movies">
-        <Movies openMenu={handleOpenMenu} loggedIn={loggedIn} isLoading={isLoading} allMovies="15" />
+        <Movies openMenu={handleOpenMenu} loggedIn={loggedIn} isLoading={isLoading} />
       </Route>
       <Route exact path="/saved-movies">
         <SavedMovies openMenu={handleOpenMenu} loggedIn={true} />

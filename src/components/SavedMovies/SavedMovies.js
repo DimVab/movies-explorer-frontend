@@ -12,7 +12,7 @@ function SavedMovies ({ loggedIn, openMenu }) {
     <main className="saved-movies__container">
       <SearchForm />
       <FilterCheckbox />
-      <MoviesCardList isLoading={false} isSaved={true} allMovies={undefined} />
+      <MoviesCardList isLoading={false} isSaved={true} movies='0' />
     </main>
     <Footer />
     </div>
