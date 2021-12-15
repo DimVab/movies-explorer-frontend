@@ -28,16 +28,18 @@ function App() {
 
   function handleRegister(name, email, password) {
     mainApi.register(name, email, password)
-      .then((res) => {
-        setLoginStatus(true);
-        history.push('./movies');
+      .then(() => {
         console.log("Регистрация прошла успешно");
-        // возможно, стоит сделать какой-то попап, показывающий успешность регистрации
+      })
+      .then(() => {
+        handleAuthorize(email, password);
       })
       .catch((err) => {
-        if (err.status === "409") {
-          console.log(`${err}. Такой email уже занят`);
-        } else console.log(`${err}. Email или пароль не прошли валидацию на сервере при регистрации`);
+        if (err === "409") {
+          console.log(`Ошибка ${err}: такой email уже занят`);
+        } else { 
+          console.log(`Ошибка ${err}: email или пароль не прошли валидацию на сервере при регистрации`);
+        }
       });
   }
 
@@ -49,7 +51,7 @@ function App() {
         console.log("Авторизация прошла успешно");
       })
       .catch((err) => {
-        console.log(`${err}: неверный email или пароль`);
+        console.log(`Ошиюка ${err}: неверный email или пароль`);
       });
   }
 
