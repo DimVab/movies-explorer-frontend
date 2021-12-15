@@ -4,11 +4,11 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ loggedIn, openMenu }) {
+function SavedMovies ({ openMenu }) {
 
   return(
     <div className="saved-movies">
-    <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
+    <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="saved-movies__container">
       <SearchForm />
       <FilterCheckbox />

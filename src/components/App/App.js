@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Switch, Route, useHistory } from 'react-router-dom';
+
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import Sign from '../Sign/Sign';
 import Main from '../Main/Main';
@@ -17,10 +19,16 @@ function App() {
   const [loggedIn, setLoginStatus] = useState(false);
   const [isOpened, openMenu] = useState(false);
   const [isLoading, loadCards] = useState(false);
-  const [userInfo, setUserInfo] = useState({ name: '', email: ''});
+  const [userInfo, setUserInfo] = useState({});
+  const [onEdit, setEdit] = useState(false);
   const [reqErrorText, setReqErrorText] = useState('');
 
   const history = useHistory();
+
+  useEffect(() => {
+    // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
+    getUserInfo();
+  }, []);
 
   function handleOpenMenu () {
     isOpened ? openMenu(false) : openMenu(true);
@@ -50,6 +58,9 @@ function App() {
         history.push('./movies');
         console.log("Авторизация прошла успешно");
       })
+      .then(() => {
+        getUserInfo();
+      })
       .catch((err) => {
         console.log(`Ошиюка ${err}: неверный email или пароль`);
       });
@@ -73,7 +84,7 @@ function App() {
       setUserInfo({ name: user.name, email: user.email});
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Необходима авторизация');
     });
   }
 
@@ -83,66 +94,74 @@ function App() {
       setUserInfo({name: newUserInfo.name, email: newUserInfo.email});
       console.log('Данные о пользователе изменены успешно');
       console.log(newUserInfo);
+      setEdit(false);
     })
     .catch((err) => {
-      console.log(err);
+      if (err === "409") {
+        console.log(`Ошибка ${err}: такой email уже занят`);
+      } else { 
+        console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
+      }
     });
   }
 
   return (
-    <div className="app"><Switch>
-      <Route exact path="/signup">
-        <Sign
-          isRegister={true}
-          greetingText="Добро пожаловать!"
-          reqError={true}
-          reqErrorText={reqErrorText}
-          buttonText="Зарегистрироваться"
-          link="/signin"
-          redirectText="Уже зарегистрированы?"
-          linkText="Войти"
-          onSubmit={handleRegister}
-        />
-      </Route>
-      <Route exact path="/signin">
-        <Sign
-          greetingText="Рады видеть!"
-          reqError={true}
-          reqErrorText={reqErrorText}
-          buttonText="Войти"
-          link="/signup"
-          redirectText="Ещё не зарегистрированы?"
-          linkText="Регистрация"
-          onSubmit={handleAuthorize}
-        />
-      </Route>
-      <Route exact path="/">
-        <Main loggedIn={loggedIn} openMenu={handleOpenMenu} />
-      </Route>
-      <Route exact path="/movies">
-        <Movies openMenu={handleOpenMenu} loggedIn={loggedIn} isLoading={isLoading} />
-      </Route>
-      <Route exact path="/saved-movies">
-        <SavedMovies openMenu={handleOpenMenu} loggedIn={true} />
-      </Route>
-      <Route exact path="/profile">
-        <Profile
-          getUserInfo={getUserInfo}
-          openMenu={handleOpenMenu}
-          loggedIn={loggedIn}
-          userInfo={userInfo}
-          reqError={true}
-          reqErrorText="Ошибка запроса"
-          handleEditProfile={handleEditProfile}
-          handleSignOut={handleSignOut}
-        />
-      </Route>
-      <Route path="*">
-        <NotFoundPage />
-      </Route>
-    </Switch>
+    <CurrentUserContext.Provider value={userInfo}>
+      <div className="app"><Switch>
+        <Route exact path="/signup">
+          <Sign
+            isRegister={true}
+            greetingText="Добро пожаловать!"
+            reqError={true}
+            reqErrorText={reqErrorText}
+            buttonText="Зарегистрироваться"
+            link="/signin"
+            redirectText="Уже зарегистрированы?"
+            linkText="Войти"
+            onSubmit={handleRegister}
+          />
+        </Route>
+        <Route exact path="/signin">
+          <Sign
+            greetingText="Рады видеть!"
+            reqError={true}
+            reqErrorText={reqErrorText}
+            buttonText="Войти"
+            link="/signup"
+            redirectText="Ещё не зарегистрированы?"
+            linkText="Регистрация"
+            onSubmit={handleAuthorize}
+          />
+        </Route>
+        <Route exact path="/">
+          <Main loggedIn={loggedIn} openMenu={handleOpenMenu} />
+        </Route>
+        <Route exact path="/movies">
+          <Movies openMenu={handleOpenMenu} isLoading={isLoading} />
+        </Route>
+        <Route exact path="/saved-movies">
+          <SavedMovies openMenu={handleOpenMenu} />
+        </Route>
+        <Route exact path="/profile">
+          <Profile
+            onEdit={onEdit}
+            setEdit={setEdit}
+            getUserInfo={getUserInfo}
+            openMenu={handleOpenMenu}
+            reqError={true}
+            reqErrorText="Ошибка запроса"
+            handleEditProfile={handleEditProfile}
+            handleSignOut={handleSignOut}
+          />
+        </Route>
+        <Route path="*">
+          <NotFoundPage />
+        </Route>
+      </Switch>
 
-    <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></div>
+      <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></div>
+
+    </CurrentUserContext.Provider>
   );
 }
 

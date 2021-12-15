@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 
 import getMovies from '../../utils/MoviesApi';
 
-function Movies ({ loggedIn, isLoading, movies, openMenu }) {
+function Movies ({ isLoading, openMenu }) {
 
   const [localMovies, setLocalMovies] = useState([]);
 
@@ -21,7 +21,7 @@ function Movies ({ loggedIn, isLoading, movies, openMenu }) {
 
   return(
     <div className="movies">
-    <Header bgColor="light" loggedIn={loggedIn} openMenu={openMenu} />
+    <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="movies-container">
       <SearchForm />
       <FilterCheckbox />
