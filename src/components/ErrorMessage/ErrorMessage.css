@@ -1,14 +1,10 @@
 .error-message {
-  display: none;
+  display: block;
   margin: 0;
   text-align: center;
   color: #FF004C;
   font-size: 11px;
   line-height: 1.18;
-}
-
-.error-message_visible {
-  display: block;
 }
 
 .error-message_type_request {

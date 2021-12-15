@@ -18,6 +18,7 @@ class MainApi {
   authorize(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         "email": email,
@@ -29,7 +30,7 @@ class MainApi {
   
   logout() {
     return fetch(`${this._baseUrl}/signout`, {
-      method: 'GET',
+      method: 'POST',
       credentials: 'include',
       headers: this._headers,
       })
@@ -48,7 +49,7 @@ class MainApi {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
       })
       .then(this._handleResponse);
   }
@@ -91,7 +92,7 @@ class MainApi {
 }
   
 const mainApi = new MainApi ({
-  baseUrl: 'https://api.movies-explorer.vab.nomoredomains.work',
+  baseUrl: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
   }

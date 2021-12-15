@@ -1,7 +1,7 @@
-function Profile ({ error, type, errorText }) {
+function Profile ({ type, errorText }) {
 
   return(
-    <p className={`error-message ${error && "error-message_visible"} error-message_type_${type}`}>{errorText}</p>
+    <p className={`error-message error-message_type_${type}`}>{errorText}</p>
   );
 }
 
