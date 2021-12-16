@@ -37,6 +37,15 @@ class MainApi {
       .then(this._handleResponse);
   }
 
+  checkToken() {
+    return fetch(`${this._baseUrl}/users/identify`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      })
+      .then(this._handleResponse);
+  }
+
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
     method: 'GET',

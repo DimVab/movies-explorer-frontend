@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -27,7 +27,15 @@ function App() {
 
   useEffect(() => {
     // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
-    getUserInfo();
+    mainApi.checkToken()
+      .then((res) => {
+        console.log('ОК');
+        setLoginStatus(true);
+        getUserInfo();
+      })
+      .catch((err) => {
+        console.log('Необходима авторизация');
+      });
   }, []);
 
   function handleOpenMenu () {
@@ -84,7 +92,7 @@ function App() {
       setUserInfo({ name: user.name, email: user.email});
     })
     .catch((err) => {
-      console.log('Необходима авторизация');
+      console.log(err);
     });
   }
 
@@ -104,6 +112,7 @@ function App() {
       }
     });
   }
+
 
   return (
     <CurrentUserContext.Provider value={userInfo}>
@@ -134,7 +143,7 @@ function App() {
           />
         </Route>
         <Route exact path="/">
-          <Main loggedIn={loggedIn} openMenu={handleOpenMenu} />
+          <Main loggedIn={loggedIn} openMenu={handleOpenMenu}/>
         </Route>
         <Route exact path="/movies">
           <Movies openMenu={handleOpenMenu} isLoading={isLoading} />
