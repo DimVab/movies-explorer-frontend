@@ -6,8 +6,6 @@ import url from '../../images/test.png';
 
 function MoviesCardList ({ isLoading, isSaved, movies }) {
 
-  // временный массив
-
   return(
     <>{isLoading ? <Preloader />
     : <><ul className="movies-card-list">
@@ -26,7 +24,7 @@ function MoviesCardList ({ isLoading, isSaved, movies }) {
           )
         })}
       </ul>
-      {/* {movies.length > Allmovies.length > 0 && <button className="movies-card-list__button" type="button">Ещё</button>} */}
+      {movies.length > 0 && <button className="movies-card-list__button" type="button">Ещё</button>}
       </>
     }</>
   );

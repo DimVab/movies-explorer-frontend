@@ -79,6 +79,11 @@ function App() {
     mainApi.logout()
     .then(() => {
       setLoginStatus(false);
+      localStorage.removeItem('showShortMovies');
+      localStorage.removeItem('shortMovies');
+      localStorage.removeItem('keyword');
+      localStorage.removeItem('movies');
+      fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");
     })
@@ -120,7 +125,6 @@ function App() {
     localStorage.removeItem('movies');
     getMovies()
       .then((movies) => {
-        console.log(movies);
         return movies.filter((movie) => {
           return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
         });
@@ -131,12 +135,10 @@ function App() {
           console.log('Ничего не найдено');
           return;
          }
-        console.log(filteredMovies);
         localStorage.setItem('movies', JSON.stringify(filteredMovies));
-         fillMoviesStorage(filteredMovies);
+        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
     });
   }
-
 
   return (
     <CurrentUserContext.Provider value={userInfo}>

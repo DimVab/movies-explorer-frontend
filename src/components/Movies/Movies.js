@@ -8,7 +8,9 @@ import Footer from '../Footer/Footer';
 function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage }) {
 
   useEffect(() => {
-    if (localStorage.getItem('movies')) {
+    if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
+      fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
+    } else if (localStorage.getItem('movies')) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
     }
   }, []);
@@ -18,7 +20,7 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
     <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="movies-container">
       <SearchForm findMovies={findMovies} />
-      <FilterCheckbox />
+      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} moviesStorage={moviesStorage} findMovies={findMovies} />
       <section>
         <MoviesCardList isLoading={isLoading} isSaved={false} movies={moviesStorage} />
       </section>
