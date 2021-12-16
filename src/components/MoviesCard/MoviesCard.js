@@ -15,7 +15,7 @@ function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description 
         </div>
         <button className={`movies-card__button ${isSaved ? "movies-card__button_saved" : `${isMarked ? "movies-card__button_marked" : "movies-card__button_unsaved"}`} `} type="button" aria-label={`${isSaved || isMarked ? "Удалить из списка сохранённых фильмов" : "Добавить в список сохранённых фильмов"}`}></button>
       </div>
-      <img className="movies-card__image" src={imageUrl} alt={description}/>
+      <img className="movies-card__image" src={`https://api.nomoreparties.co${imageUrl}`} alt={description}/>
     </li>
   );
 }

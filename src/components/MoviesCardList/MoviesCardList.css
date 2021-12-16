@@ -1,7 +1,7 @@
 .movies-card-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: max-content;
+  grid-auto-rows: calc((100vw - 48px - 140px)/3*0.7445);
   row-gap: 30px;
   column-gap: 24px;
   justify-content: center;
@@ -13,6 +13,7 @@
 @media screen and (max-width: 1024px) {
   .movies-card-list {
     grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: calc((100vw - 30px - 60px)/2*0.761);
     row-gap: 36px;
     column-gap: 30px;
   }
@@ -20,6 +21,7 @@
 
 @media screen and (max-width: 720px) {
   .movies-card-list {
+    grid-auto-rows: calc((100vw - 15px - 60px)/2*0.761);
     row-gap: 18px;
     column-gap: 15px;
   }
@@ -28,6 +30,7 @@
 @media screen and (max-width: 525px) {
   .movies-card-list {
     grid-template-columns: 1fr;
+    grid-auto-rows: calc((100vw - 60px)*0.7866);
     row-gap: 32px;
     padding-top: 40px;
   }
@@ -35,6 +38,7 @@
 
 @media screen and (max-width: 425px) {
   .movies-card-list {
+    grid-auto-rows: calc((100vw - 20px)*0.7866);
     row-gap: 16px;
   }
 }

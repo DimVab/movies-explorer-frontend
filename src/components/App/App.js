@@ -12,16 +12,18 @@ import Menu from '../Menu/Menu';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 import mainApi from '../../utils/MainApi';
+import getMovies from '../../utils/MoviesApi';
 
 function App() {
 
 // переменные состояния
   const [loggedIn, setLoginStatus] = useState(false);
   const [isOpened, openMenu] = useState(false);
-  const [isLoading, loadCards] = useState(false);
+  const [isLoading, setLoadingStatus] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [onEdit, setEdit] = useState(false);
   const [reqErrorText, setReqErrorText] = useState('');
+  const [moviesStorage, fillMoviesStorage] = useState([]);
 
   const history = useHistory();
 
@@ -29,7 +31,6 @@ function App() {
     // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
     mainApi.checkToken()
       .then((res) => {
-        console.log('ОК');
         setLoginStatus(true);
         getUserInfo();
       })
@@ -113,6 +114,29 @@ function App() {
     });
   }
 
+  function findMovies (keyword) {
+    setLoadingStatus(true);
+    fillMoviesStorage([]);
+    localStorage.removeItem('movies');
+    getMovies()
+      .then((movies) => {
+        console.log(movies);
+        return movies.filter((movie) => {
+          return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
+        });
+      })
+      .then((filteredMovies) => {
+        setLoadingStatus(false);
+        if (filteredMovies.length === 0) {
+          console.log('Ничего не найдено');
+          return;
+         }
+        console.log(filteredMovies);
+        localStorage.setItem('movies', JSON.stringify(filteredMovies));
+         fillMoviesStorage(filteredMovies);
+    });
+  }
+
 
   return (
     <CurrentUserContext.Provider value={userInfo}>
@@ -146,7 +170,13 @@ function App() {
           <Main loggedIn={loggedIn} openMenu={handleOpenMenu}/>
         </Route>
         <Route exact path="/movies">
-          <Movies openMenu={handleOpenMenu} isLoading={isLoading} />
+          <Movies
+            openMenu={handleOpenMenu}
+            isLoading={isLoading}
+            findMovies={findMovies}
+            moviesStorage={moviesStorage}
+            fillMoviesStorage={fillMoviesStorage}
+          />
         </Route>
         <Route exact path="/saved-movies">
           <SavedMovies openMenu={handleOpenMenu} />

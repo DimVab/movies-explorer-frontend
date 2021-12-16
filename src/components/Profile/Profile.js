@@ -56,7 +56,7 @@ function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEdi
           <div className="profile__form-line"></div>
           <div className="profile__form-field">
             <p className="profile__form-field-name">E-mail</p>
-            <input className="profile__form-input" type="email" name="email" minLength="2" maxLength="30" required disabled={!onEdit} value={onEdit ? profileData.email :userInfo.email} onChange={handleChange} />
+            <input className="profile__form-input" type="email" name="email" minLength="2" maxLength="30" required disabled={!onEdit} value={onEdit ? profileData.email : userInfo.email} onChange={handleChange} />
             <ErrorMessage error={validationError} errorText={validationMessage} type="profile-validation" />
           </div>
         </div>
