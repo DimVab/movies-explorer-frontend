@@ -10,6 +10,12 @@
   list-style: none;
 }
 
+@media screen and (min-width: 1281px) {
+  .movies-card-list {
+    grid-auto-rows: 271px;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .movies-card-list {
     grid-template-columns: repeat(2, 1fr);
