@@ -166,7 +166,12 @@ function App() {
         localStorage.setItem('savedMovies', JSON.stringify(movies));
       if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
         fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
-        console.log(savedMovies);
+        if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
+          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
+          console.log('Здесь');
+        }
+      } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
       } else {
         fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
       }

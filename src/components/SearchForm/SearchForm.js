@@ -31,7 +31,6 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')));
 
       // если включён фильтр короткометражек
-      // TODO
       if (localStorage.getItem('showShortSavedMovies')) {
         localStorage.setItem('filteredShortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredSavedMovies'))
           .filter((movie) => {
