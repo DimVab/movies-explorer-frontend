@@ -140,9 +140,18 @@ function App() {
         if (filteredMovies.length === 0) {
           console.log('Ничего не найдено');
           return;
-         }
+        }
         localStorage.setItem('movies', JSON.stringify(filteredMovies));
         fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+        // если включён фильтр короткометражек
+        if (localStorage.getItem('showShortMovies')) {
+          localStorage.setItem('shortMovies', JSON.stringify(filteredMovies
+            .filter((movie) => {
+              return movie.duration <= 40;
+            })
+          ));
+          fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
+        }
       })
       .catch((err) => {
         console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
