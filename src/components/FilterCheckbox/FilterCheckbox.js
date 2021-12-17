@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function FilterCheckbox ({ moviesStorage, fillMoviesStorage, findMovies }) {
+function FilterCheckbox ({ fillMoviesStorage }) {
 
   const [isChecked, check] = useState(false);
 

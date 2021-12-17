@@ -78,7 +78,19 @@ class MainApi {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        "country" : data.country,
+        "director" : data.director,
+        "duration" : data.duration,
+        "year" : data.year,
+        "description" : data.description,
+        "image" : `https://api.nomoreparties.co${data.image.url}`,
+        "trailer" : data.trailerLink,
+        "nameRU" : data.nameRU,
+        "nameEN" : data.nameEN,
+        "thumbnail" : `https://api.nomoreparties.co${data.image.url}`,
+        "movieId" : data.id,
+      })
       })
       .then(this._handleResponse);
   }

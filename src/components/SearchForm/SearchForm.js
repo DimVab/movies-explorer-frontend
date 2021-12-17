@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 
-function SearchForm ({ findMovies }) {
+function SearchForm ({ findMovies, type, fillSavedMoviesStorage }) {
 
   useEffect(() => {
-    if (localStorage.getItem('keyword')) {
-      setKeyword(localStorage.getItem('keyword'));
+    if (type === 'movies' && localStorage.getItem('moviesKeyword')) {
+      setKeyword(localStorage.getItem('moviesKeyword'));
+    }
+    if (type === 'savedMovies' && localStorage.getItem('savedMoviesKeyword')) {
+      setKeyword(localStorage.getItem('savedMoviesKeyword'));
     }
   }, []);
 
@@ -12,8 +15,18 @@ function SearchForm ({ findMovies }) {
 
   function handleSubmit (e) {
     e.preventDefault();
-    localStorage.setItem('keyword', keyword);
-    findMovies(keyword);
+    if (type === 'movies') {
+      localStorage.setItem('moviesKeyword', keyword);
+      findMovies(keyword);
+    }
+    if (type === 'savedMovies') {
+      localStorage.setItem('savedMoviesKeyword', keyword);
+      fillSavedMoviesStorage(localStorage.getItem('savedMovies')
+      .filter((movie) => {
+        return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
+      }));
+      // возможно стоит сохранять результат поиска в локальном хранилище, но это не точно
+    }
   }
 
   function handleChange (e) {

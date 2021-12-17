@@ -24,6 +24,7 @@ function App() {
   const [onEdit, setEdit] = useState(false);
   const [reqErrorText, setReqErrorText] = useState('');
   const [moviesStorage, fillMoviesStorage] = useState([]);
+  const [savedMovies, fillSavedMoviesStorage] = useState([]);
 
   const history = useHistory();
 
@@ -81,8 +82,10 @@ function App() {
       setLoginStatus(false);
       localStorage.removeItem('showShortMovies');
       localStorage.removeItem('shortMovies');
-      localStorage.removeItem('keyword');
+      localStorage.removeItem('moviesKeyword');
+      localStorage.removeItem('savedMoviesKeyword');
       localStorage.removeItem('movies');
+      localStorage.removeItem('savedMovies');
       fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");
@@ -137,7 +140,49 @@ function App() {
          }
         localStorage.setItem('movies', JSON.stringify(filteredMovies));
         fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
-    });
+      })
+      .catch((err) => {
+        console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
+      });
+  }
+
+  function getSavedMovies () {
+    mainApi.getSavedMovies()
+      .then((movies) => {
+        localStorage.setItem('savedMovies', JSON.stringify(movies));
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')));
+      })
+      .catch((err) => {
+        console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
+      });
+  }
+
+  function saveMovie (movie) {
+    mainApi.addMovie(movie)
+      .then((res) => {
+        console.log('Фильм успешно сохранён');
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Не получилось сохранить фильм');
+      });
+  }
+
+  function deleteMovie (movie) {
+    mainApi.removeMovie(movie._id)
+      .then(() => {
+        localStorage.setItem('savedMovies', JSON.stringify(JSON.parse(localStorage.getItem('savedMovies'))
+          .filter((savedMovie) => {
+            return savedMovie._id !== movie._id;
+          })
+        ));
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')));
+        console.log('Фильм успешно удалён');
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Не получилось удалить фильм');
+      });
   }
 
   return (
@@ -178,10 +223,17 @@ function App() {
             findMovies={findMovies}
             moviesStorage={moviesStorage}
             fillMoviesStorage={fillMoviesStorage}
+            saveMovie={saveMovie}
           />
         </Route>
         <Route exact path="/saved-movies">
-          <SavedMovies openMenu={handleOpenMenu} />
+          <SavedMovies 
+            openMenu={handleOpenMenu} 
+            getSavedMovies={getSavedMovies} 
+            savedMovies={savedMovies}
+            fillSavedMoviesStorage={fillSavedMoviesStorage}
+            deleteMovie={deleteMovie}
+          />
         </Route>
         <Route exact path="/profile">
           <Profile

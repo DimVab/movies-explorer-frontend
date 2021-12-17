@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage }) {
+function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage, saveMovie }) {
 
   useEffect(() => {
     if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
@@ -19,10 +19,10 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
     <div className="movies">
     <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="movies-container">
-      <SearchForm findMovies={findMovies} />
-      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} moviesStorage={moviesStorage} findMovies={findMovies} />
+      <SearchForm findMovies={findMovies} type="movies" />
+      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} />
       <section>
-        <MoviesCardList isLoading={isLoading} isSaved={false} movies={moviesStorage} />
+        <MoviesCardList isLoading={isLoading} isSaved={false} movies={moviesStorage} saveMovie={saveMovie} />
       </section>
     </main>
     <Footer />
