@@ -164,17 +164,23 @@ function App() {
     mainApi.getSavedMovies()
       .then((movies) => {
         localStorage.setItem('savedMovies', JSON.stringify(movies));
-      if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
-        if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
-          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
-          console.log('Здесь');
+        // 1. если включён фильтр по короткометражкам
+        if (localStorage.getItem('showShortSavedMovies')) {
+          // 1.1 если был поиск по символам
+          if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
+            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
+          } else {
+            // 1.2 если не было поиска
+            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
+          }
+        // 2. если фильтр НЕ включён
+        } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+          // 2.1 если был поиск по символам
+          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
+        } else {
+          // 2.2 если не было поиска
+          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
         }
-      } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
-      } else {
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
-      }
       })
       .catch((err) => {
         console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
