@@ -8,6 +8,9 @@ import Footer from '../Footer/Footer';
 function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie }) {
 
   useEffect(() => {
+    if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+      fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')));
+    }
     getSavedMovies();
   }, []);
 

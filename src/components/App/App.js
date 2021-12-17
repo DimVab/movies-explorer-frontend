@@ -89,6 +89,8 @@ function App() {
       localStorage.removeItem('movies');
       localStorage.removeItem('savedMovies');
       localStorage.removeItem('shortSavedMovies');
+      localStorage.removeItem('filteredSavedMovies');
+      localStorage.removeItem('filteredShortSavedMovies');
       fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");

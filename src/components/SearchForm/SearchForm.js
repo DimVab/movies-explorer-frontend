@@ -20,12 +20,26 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
       findMovies(keyword);
     }
     if (type === 'savedMovies') {
+
       localStorage.setItem('savedMoviesKeyword', keyword);
-      fillMoviesStorage(localStorage.getItem('savedMovies')
-      .filter((movie) => {
-        return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
-      }));
-      // возможно стоит сохранять результат поиска в локальном хранилище, но это не точно
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(
+        JSON.parse(localStorage.getItem('savedMovies'))
+          .filter((movie) => {
+            return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
+          })
+      ));
+      fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')));
+
+      // если включён фильтр короткометражек
+      // TODO
+      if (localStorage.getItem('showShortSavedMovies')) {
+        localStorage.setItem('filteredShortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredSavedMovies'))
+          .filter((movie) => {
+            return movie.duration <= 40;
+          })
+        ));
+        fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')));
+      }
     }
   }
 
@@ -36,7 +50,7 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
   return(
     <>
       <form className="search-form" onSubmit={handleSubmit}>
-        <input className="search-form__input" placeholder="Фильм" type="text" name="movie" maxLength="50" required value={keyword} onChange={handleChange}/>
+        <input className="search-form__input" placeholder="Фильм" type="text" name="movie" maxLength="50" required={type === "movies"} value={keyword} onChange={handleChange}/>
         <input type="submit" className="search-form__submit" value="Найти"/>
       </form>
     </>
