@@ -152,7 +152,12 @@ function App() {
     mainApi.getSavedMovies()
       .then((movies) => {
         localStorage.setItem('savedMovies', JSON.stringify(movies));
+      if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')));
+        console.log(savedMovies);
+      } else {
         fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')));
+      }
       })
       .catch((err) => {
         console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);

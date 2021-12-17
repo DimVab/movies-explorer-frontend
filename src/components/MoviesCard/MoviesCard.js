@@ -1,4 +1,4 @@
-function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description, saveMovie, movieId, savedMovies, deleteMovie }) {
+function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description, link, saveMovie, movieId, savedMovies, deleteMovie }) {
 
   function getDuration(number) {
     return number/60 < 1 ? `${number%60}м` : `${Math.floor(number/60)}ч ${number%60 === 0 ? '' : `${number%60}м`}`;
@@ -32,7 +32,9 @@ function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description,
         </div>
         <button className={`movies-card__button ${isSaved ? "movies-card__button_saved" : `${isMarked ? "movies-card__button_marked" : "movies-card__button_unsaved"}`} `} type="button" aria-label={`${isSaved || isMarked ? "Удалить из списка сохранённых фильмов" : "Добавить в список сохранённых фильмов"}`} onClick={isSaved || isMarked ? deleteMovieHandler : saveMovieHandler}></button>
       </div>
-      <img className="movies-card__image" src={isSaved ? imageUrl : `https://api.nomoreparties.co${imageUrl}`} alt={description}/>
+      <a className="movies-card__link" href={link} target="_blank" rel="noreferrer">
+        <img className="movies-card__image" src={isSaved ? imageUrl : `https://api.nomoreparties.co${imageUrl}`} alt={description} />
+      </a>
     </li>
   );
 }

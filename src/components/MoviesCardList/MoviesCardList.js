@@ -15,7 +15,7 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie })
               duration={movie.duration}
               imageUrl={isSaved ? movie.image : movie.image.url}
               description={movie.description}
-              link={movie.trailerLink}
+              link={isSaved ? movie.trailer : movie.trailerLink}
               key={isSaved ? movie._id : movie.id}
               movieId={isSaved ? movie._id : movie.id}
               saveMovie={saveMovie}

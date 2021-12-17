@@ -9,11 +9,6 @@ function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage
 
   useEffect(() => {
     getSavedMovies();
-    if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
-      fillMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')));
-      console.log('Условие выполнено');
-      console.log(savedMovies);
-    }
   }, []);
 
   return(
