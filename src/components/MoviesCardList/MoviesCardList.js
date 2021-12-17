@@ -1,7 +1,7 @@
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie }) {
+function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, savedMovies, unmarkMovie }) {
 
   return(
     <>{isLoading ? <Preloader />
@@ -18,8 +18,10 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie })
               key={isSaved ? movie._id : movie.id}
               movieId={isSaved ? movie._id : movie.id}
               saveMovie={saveMovie}
-              savedMovies={movies}
+              movies={movies}
+              savedMovies={savedMovies}
               deleteMovie={deleteMovie}
+              unmarkMovie={unmarkMovie}
             />
           )
         })}

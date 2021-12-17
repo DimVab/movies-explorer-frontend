@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, saveMovie, movieId, savedMovies, deleteMovie }) {
+function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, saveMovie, movieId, movies, savedMovies, deleteMovie, unmarkMovie }) {
 
   const [isMarked, mark] = useState(false);
+
+  useEffect(() => {
+    if (!isSaved && savedMovies.some((savedMovie) => {
+      return savedMovie.movieId === movieId;
+    })) {
+      toggleMark();
+    }
+  }, [savedMovies]);
 
   function getDuration(number) {
     return number/60 < 1 ? `${number%60}м` : `${Math.floor(number/60)}ч ${number%60 === 0 ? '' : `${number%60}м`}`;
@@ -13,17 +21,25 @@ function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, sav
     saveMovie(foundMovies
       .find((movie) => {
         return movie.id === movieId;
-      })
+      }), toggleMark
     );
-    mark(true);
+  }
+
+  function toggleMark() {
+    isMarked ? mark(false) : mark(true);
   }
 
   function deleteMovieHandler () {
-    deleteMovie(savedMovies
-      .find((savedMovie) => {
-        return savedMovie._id === movieId;
-      })
-    );
+    if (isSaved) {
+      deleteMovie(movieId);
+    } else {
+      unmarkMovie(savedMovies
+        .find((savedMovie) => {
+          return savedMovie.movieId === movieId;
+        })
+      );
+      toggleMark();
+    }
   }
 
   const briefDuration = getDuration(duration);

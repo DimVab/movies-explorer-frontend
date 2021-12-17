@@ -34,6 +34,7 @@ function App() {
       .then((res) => {
         setLoginStatus(true);
         getUserInfo();
+        getSavedMovies();
       })
       .catch((err) => {
         console.log('Необходима авторизация');
@@ -164,27 +165,39 @@ function App() {
       });
   }
 
-  function saveMovie (movie) {
+  function saveMovie (movie, callback) {
     mainApi.addMovie(movie)
       .then((res) => {
         console.log('Фильм успешно сохранён');
+        // коллбэк на случай, если данные фильма не проходят валидацию на сервере (у некоторых фильмов отсутствует поле "country")
+        callback();
       })
       .catch((err) => {
-        console.log(err);
-        console.log('Не получилось сохранить фильм');
+        console.log(`Ошибка ${err}. Данные фильма не прошли валидацию на сервере`);
       });
   }
 
-  function deleteMovie (movie) {
-    mainApi.removeMovie(movie._id)
+  function deleteMovie (movieId) {
+    mainApi.removeMovie(movieId)
       .then(() => {
         localStorage.setItem('savedMovies', JSON.stringify(JSON.parse(localStorage.getItem('savedMovies'))
           .filter((savedMovie) => {
-            return savedMovie._id !== movie._id;
+            return savedMovie._id !== movieId;
           })
         ));
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')));
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
         console.log('Фильм успешно удалён');
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log('Не получилось удалить фильм');
+      });
+  }
+
+  function unmarkMovie (movie) {
+    mainApi.removeMovie(movie._id)
+      .then(() => {
+        console.log('Фильм удалён из сохранённых фильмов');
       })
       .catch((err) => {
         console.log(err);
@@ -231,6 +244,8 @@ function App() {
             moviesStorage={moviesStorage}
             fillMoviesStorage={fillMoviesStorage}
             saveMovie={saveMovie}
+            savedMovies={savedMovies}
+            unmarkMovie={unmarkMovie}
           />
         </Route>
         <Route exact path="/saved-movies">
