@@ -16,7 +16,11 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
       check(false);
       localStorage.removeItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`);
       localStorage.removeItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`);
-      fillMoviesStorage(JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`)));
+      if (isSaved) {
+        fillMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
+      } else {
+        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      }
 
     } else {
 
@@ -34,7 +38,11 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
               return movie.duration <= 40;
             })
         ));
-        fillMoviesStorage(JSON.parse(localStorage.getItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`)));
+        if (isSaved) {
+          fillMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
+        } else {
+          fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
+        }
       } /* else показать надпись "ничего не найдено" */
     }
   }

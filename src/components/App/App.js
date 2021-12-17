@@ -153,10 +153,10 @@ function App() {
       .then((movies) => {
         localStorage.setItem('savedMovies', JSON.stringify(movies));
       if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')));
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
         console.log(savedMovies);
       } else {
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')));
+        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
       }
       })
       .catch((err) => {

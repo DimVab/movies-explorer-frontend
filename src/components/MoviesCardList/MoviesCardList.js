@@ -10,7 +10,6 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie })
           return(
             <MoviesCard
               isSaved={isSaved}
-              isMarked={false}
               name={movie.nameRU}
               duration={movie.duration}
               imageUrl={isSaved ? movie.image : movie.image.url}

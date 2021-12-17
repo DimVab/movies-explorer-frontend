@@ -1,4 +1,8 @@
-function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description, link, saveMovie, movieId, savedMovies, deleteMovie }) {
+import { useState } from 'react';
+
+function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, saveMovie, movieId, savedMovies, deleteMovie }) {
+
+  const [isMarked, mark] = useState(false);
 
   function getDuration(number) {
     return number/60 < 1 ? `${number%60}м` : `${Math.floor(number/60)}ч ${number%60 === 0 ? '' : `${number%60}м`}`;
@@ -11,6 +15,7 @@ function MoviesCard ({ isSaved, isMarked, name, duration, imageUrl, description,
         return movie.id === movieId;
       })
     );
+    mark(true);
   }
 
   function deleteMovieHandler () {
