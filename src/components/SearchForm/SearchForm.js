@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function SearchForm ({ findMovies, type, fillSavedMoviesStorage }) {
+function SearchForm ({ findMovies, type, fillMoviesStorage }) {
 
   useEffect(() => {
     if (type === 'movies' && localStorage.getItem('moviesKeyword')) {
@@ -21,7 +21,7 @@ function SearchForm ({ findMovies, type, fillSavedMoviesStorage }) {
     }
     if (type === 'savedMovies') {
       localStorage.setItem('savedMoviesKeyword', keyword);
-      fillSavedMoviesStorage(localStorage.getItem('savedMovies')
+      fillMoviesStorage(localStorage.getItem('savedMovies')
       .filter((movie) => {
         return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
       }));

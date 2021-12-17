@@ -81,11 +81,13 @@ function App() {
     .then(() => {
       setLoginStatus(false);
       localStorage.removeItem('showShortMovies');
+      localStorage.removeItem('showShortSavedMovies');
       localStorage.removeItem('shortMovies');
       localStorage.removeItem('moviesKeyword');
       localStorage.removeItem('savedMoviesKeyword');
       localStorage.removeItem('movies');
       localStorage.removeItem('savedMovies');
+      localStorage.removeItem('shortSavedMovies');
       fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");
@@ -231,7 +233,7 @@ function App() {
             openMenu={handleOpenMenu} 
             getSavedMovies={getSavedMovies} 
             savedMovies={savedMovies}
-            fillSavedMoviesStorage={fillSavedMoviesStorage}
+            fillMoviesStorage={fillSavedMoviesStorage}
             deleteMovie={deleteMovie}
           />
         </Route>

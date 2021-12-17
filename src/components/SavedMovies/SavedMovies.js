@@ -5,18 +5,23 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillSavedMoviesStorage, deleteMovie }) {
+function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie }) {
 
   useEffect(() => {
     getSavedMovies();
+    if (localStorage.getItem('showShortSavedMovies') && localStorage.getItem('shortSavedMovies')) {
+      fillMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')));
+      console.log('Условие выполнено');
+      console.log(savedMovies);
+    }
   }, []);
 
   return(
     <div className="saved-movies">
     <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="saved-movies__container">
-      <SearchForm type="savedMovies" fillSavedMoviesStorage={fillSavedMoviesStorage} />
-      <FilterCheckbox />
+      <SearchForm type="savedMovies" fillMoviesStorage={fillMoviesStorage} />
+      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} isSaved={true} />
       <MoviesCardList isLoading={false} isSaved={true} movies={savedMovies} deleteMovie={deleteMovie} />
     </main>
     <Footer />

@@ -1,35 +1,40 @@
 import { useState, useEffect } from 'react';
 
-function FilterCheckbox ({ fillMoviesStorage }) {
+function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
 
   const [isChecked, check] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('showShortMovies')) {
+    if (localStorage.getItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`)) {
       check(true);
     }
   }, []);
 
   function handleCheck(e) {
     if (isChecked) {
+
       check(false);
-      localStorage.removeItem('showShortMovies');
-      localStorage.removeItem('shortMovies');
-      fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      localStorage.removeItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`);
+      localStorage.removeItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`);
+      fillMoviesStorage(JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`)));
+
     } else {
+
       check(true);
-      localStorage.setItem('showShortMovies', 'true');
-      if (JSON.parse(localStorage.getItem('movies'))
+      localStorage.setItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`, 'true');
+      if (JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`))
       .filter((movie) => {
         return movie.duration <= 40;
-      }).length > 0) {
-        localStorage.setItem('shortMovies', JSON.stringify(
-          JSON.parse(localStorage.getItem('movies'))
+      }).length > 0) 
+
+      {
+        localStorage.setItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`, JSON.stringify(
+          JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`))
             .filter((movie) => {
               return movie.duration <= 40;
             })
         ));
-        fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
+        fillMoviesStorage(JSON.parse(localStorage.getItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`)));
       } /* else показать надпись "ничего не найдено" */
     }
   }
