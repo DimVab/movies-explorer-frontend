@@ -8,6 +8,29 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
     if (localStorage.getItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`)) {
       check(true);
     }
+    // if (isSaved && localStorage.getItem('showShortSavedMovies')) {
+    // //  если фильтр был оставлен включённым, то при рендере сразу же произойдёт фильтрация
+    //   // если фильмы отфильтрованы по поиску, то они будут добавлены в локальное хранилище
+    //   if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+    //     localStorage.setItem('filteredShortSavedMovies', JSON.stringify(
+    //       JSON.parse(localStorage.getItem('filteredSavedMovies'))
+    //         .filter((movie) => {
+    //           return movie.duration <= 40;
+    //         })
+    //     ));
+    //     fillMoviesStorage((JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse()));
+    //   } else {
+    //     // если пользователь ничего не вводил
+    //     localStorage.setItem('shortSavedMovies', JSON.stringify(
+    //       JSON.parse(localStorage.getItem('savedMovies'))
+    //         .filter((movie) => {
+    //           return movie.duration <= 40;
+    //         })
+    //     ));
+    //     console.log(JSON.parse(localStorage.getItem('shortSavedMovies')));
+    //     fillMoviesStorage((JSON.parse(localStorage.getItem('shortSavedMovies')).reverse()));
+    //  }
+    // }
   }, []);
 
   function handleCheck(e) {
@@ -23,7 +46,7 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
         } else {
           fillMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
         }
-      } else {
+      } else if (JSON.parse(localStorage.getItem('movies'))) {
         fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       }
 
@@ -31,9 +54,10 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
 
       check(true);
       localStorage.setItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`, 'true');
-      if (JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`))
-      .filter((movie) => {
-        return movie.duration <= 40;
+      // проверяем, есть ли вообще фильмы и есть ли среди них короткометражки
+      if (JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`)) && JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`))
+        .filter((movie) => {
+          return movie.duration <= 40;
       }).length > 0) 
 
       {

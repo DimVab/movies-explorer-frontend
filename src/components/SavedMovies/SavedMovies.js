@@ -8,8 +8,11 @@ import Footer from '../Footer/Footer';
 function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie }) {
 
   useEffect(() => {
+    if (localStorage.getItem('savedMoviesKeyword') === '') {
+      localStorage.removeItem('filteredSavedMovies');
+    }
     // нужно для того, чтобы получать id добавленных фильмов
-    getSavedMovies(); 
+    getSavedMovies();
   }, []);
 
   return(
@@ -18,7 +21,12 @@ function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage
     <main className="saved-movies__container">
       <SearchForm type="savedMovies" fillMoviesStorage={fillMoviesStorage} />
       <FilterCheckbox fillMoviesStorage={fillMoviesStorage} isSaved={true} />
-      <MoviesCardList isLoading={false} isSaved={true} movies={savedMovies} deleteMovie={deleteMovie} />
+      <MoviesCardList 
+        isLoading={false} 
+        isSaved={true} 
+        movies={savedMovies} 
+        deleteMovie={deleteMovie} 
+      />
     </main>
     <Footer />
     </div>

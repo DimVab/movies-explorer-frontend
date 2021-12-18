@@ -207,7 +207,38 @@ function App() {
             return savedMovie._id !== movieId;
           })
         ));
-        fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
+        // #TODO вот здесь прописать различные условия
+        if (localStorage.getItem('showShortSavedMovies')) {
+          // 1.1 если был поиск по символам
+          if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
+            localStorage.setItem('filteredShortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredShortSavedMovies'))
+            .filter((savedMovie) => {
+              return savedMovie._id !== movieId;
+            })
+          ));
+            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
+          } else {
+            // 1.2 если не было поиска
+            localStorage.setItem('shortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('shortSavedMovies'))
+              .filter((savedMovie) => {
+                return savedMovie._id !== movieId;
+              })
+            ));
+            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
+          }
+        // 2. если фильтр НЕ включён
+        } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+          // 2.1 если был поиск по символам
+          localStorage.setItem('filteredSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredSavedMovies'))
+            .filter((savedMovie) => {
+              return savedMovie._id !== movieId;
+            })
+          ));
+          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
+        } else {
+          // 2.2 если не было поиска
+          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
+        }
         console.log('Фильм успешно удалён');
       })
       .catch((err) => {

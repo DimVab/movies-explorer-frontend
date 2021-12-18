@@ -28,7 +28,7 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
             return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
           })
       ));
-      fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')));
+      fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
 
       // если включён фильтр короткометражек
       if (localStorage.getItem('showShortSavedMovies')) {
@@ -37,7 +37,7 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
             return movie.duration <= 40;
           })
         ));
-        fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')));
+        fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
       }
     }
   }
