@@ -10,7 +10,7 @@ function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, sav
     })) {
       toggleMark();
     }
-  }, [savedMovies]);
+  }, []);
 
   function getDuration(number) {
     return number/60 < 1 ? `${number%60}м` : `${Math.floor(number/60)}ч ${number%60 === 0 ? '' : `${number%60}м`}`;
@@ -33,7 +33,7 @@ function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, sav
     if (isSaved) {
       deleteMovie(movieId);
     } else {
-      unmarkMovie(savedMovies
+      unmarkMovie(JSON.parse(localStorage.getItem('savedMovies'))
         .find((savedMovie) => {
           return savedMovie.movieId === movieId;
         })

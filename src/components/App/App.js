@@ -10,6 +10,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Menu from '../Menu/Menu';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import mainApi from '../../utils/MainApi';
 import getMovies from '../../utils/MoviesApi';
@@ -31,13 +32,14 @@ function App() {
   useEffect(() => {
     // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
     mainApi.checkToken()
-      .then((res) => {
+      .then(() => {
         setLoginStatus(true);
         getUserInfo();
         getSavedMovies();
       })
       .catch((err) => {
-        console.log('Необходима авторизация');
+        console.log('Вы не авторизированы');
+        // #FIXME потом, возможно убрать
       });
   }, []);
 
@@ -162,6 +164,12 @@ function App() {
 
   function getSavedMovies () {
     mainApi.getSavedMovies()
+    /* Правильный алгоритм:
+    1) получить фильмы и сохранить в saved-movies [есть]
+    2) исходя из if, провести соответствующие операции с массивами в локальных хранилищах
+    2.1) вынести в app.js все функции из нижних компонентов (фильтр, поиск и тп), чтобы можно было провести операции
+    3) обновить стейт-переменную с сохранёнными фильмами [есть]
+    */
       .then((movies) => {
         localStorage.setItem('savedMovies', JSON.stringify(movies));
         // 1. если включён фильтр по короткометражкам
@@ -248,6 +256,8 @@ function App() {
   }
 
   function unmarkMovie (movie) {
+    // #FIXME 
+    console.log(movie);
     mainApi.removeMovie(movie._id)
       .then(() => {
         console.log('Фильм удалён из сохранённых фильмов');
@@ -261,66 +271,73 @@ function App() {
   return (
     <CurrentUserContext.Provider value={userInfo}>
       <div className="app"><Switch>
+        <ProtectedRoute
+          path="/movies"
+          component={Movies}
+          loggedIn={loggedIn}
+          openMenu={handleOpenMenu}
+          isLoading={isLoading}
+          findMovies={findMovies}
+           moviesStorage={moviesStorage}
+          fillMoviesStorage={fillMoviesStorage}
+          saveMovie={saveMovie}
+          savedMovies={savedMovies}
+          unmarkMovie={unmarkMovie}          
+        />
+        <ProtectedRoute
+          path="/saved-movies"
+          component={SavedMovies}
+          loggedIn={loggedIn}
+          openMenu={handleOpenMenu} 
+          getSavedMovies={getSavedMovies} 
+          savedMovies={savedMovies}
+          fillMoviesStorage={fillSavedMoviesStorage}
+          deleteMovie={deleteMovie}       
+        />
+        <ProtectedRoute
+          path="/profile"
+          component={Profile}
+          loggedIn={loggedIn}
+          onEdit={onEdit}
+          setEdit={setEdit}
+          getUserInfo={getUserInfo}
+          openMenu={handleOpenMenu}
+          reqError={true}
+          reqErrorText="Ошибка запроса"
+          handleEditProfile={handleEditProfile}
+          handleSignOut={handleSignOut}  
+        />
         <Route exact path="/signup">
-          <Sign
-            isRegister={true}
-            greetingText="Добро пожаловать!"
-            reqError={true}
-            reqErrorText={reqErrorText}
-            buttonText="Зарегистрироваться"
-            link="/signin"
-            redirectText="Уже зарегистрированы?"
-            linkText="Войти"
-            onSubmit={handleRegister}
-          />
+          {loggedIn ?
+          <Redirect to='/'/>
+          : <Sign
+              isRegister={true}
+              greetingText="Добро пожаловать!"
+              reqError={true}
+              reqErrorText={reqErrorText}
+              buttonText="Зарегистрироваться"
+              link="/signin"
+              redirectText="Уже зарегистрированы?"
+              linkText="Войти"
+              onSubmit={handleRegister}
+          />}
         </Route>
         <Route exact path="/signin">
-          <Sign
-            greetingText="Рады видеть!"
-            reqError={true}
-            reqErrorText={reqErrorText}
-            buttonText="Войти"
-            link="/signup"
-            redirectText="Ещё не зарегистрированы?"
-            linkText="Регистрация"
-            onSubmit={handleAuthorize}
-          />
+          {loggedIn ?
+          <Redirect to='/'/>
+          : <Sign
+              greetingText="Рады видеть!"
+              reqError={true}
+              reqErrorText={reqErrorText}
+              buttonText="Войти"
+              link="/signup"
+              redirectText="Ещё не зарегистрированы?"
+              linkText="Регистрация"
+              onSubmit={handleAuthorize}
+          />}
         </Route>
         <Route exact path="/">
           <Main loggedIn={loggedIn} openMenu={handleOpenMenu}/>
-        </Route>
-        <Route exact path="/movies">
-          <Movies
-            openMenu={handleOpenMenu}
-            isLoading={isLoading}
-            findMovies={findMovies}
-            moviesStorage={moviesStorage}
-            fillMoviesStorage={fillMoviesStorage}
-            saveMovie={saveMovie}
-            savedMovies={savedMovies}
-            unmarkMovie={unmarkMovie}
-          />
-        </Route>
-        <Route exact path="/saved-movies">
-          <SavedMovies 
-            openMenu={handleOpenMenu} 
-            getSavedMovies={getSavedMovies} 
-            savedMovies={savedMovies}
-            fillMoviesStorage={fillSavedMoviesStorage}
-            deleteMovie={deleteMovie}
-          />
-        </Route>
-        <Route exact path="/profile">
-          <Profile
-            onEdit={onEdit}
-            setEdit={setEdit}
-            getUserInfo={getUserInfo}
-            openMenu={handleOpenMenu}
-            reqError={true}
-            reqErrorText="Ошибка запроса"
-            handleEditProfile={handleEditProfile}
-            handleSignOut={handleSignOut}
-          />
         </Route>
         <Route path="*">
           <NotFoundPage />
