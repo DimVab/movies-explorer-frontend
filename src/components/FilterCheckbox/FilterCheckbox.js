@@ -81,7 +81,6 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
             )); 
           }
         } else {
-          console.log('ОК');
           localStorage.setItem('shortMovies', JSON.stringify(
             JSON.parse(localStorage.getItem('allMovies'))
               .filter((movie) => {

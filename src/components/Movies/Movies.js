@@ -14,15 +14,6 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
     } else if (localStorage.getItem('movies')) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
     }
-
-    // вспоминаются сохранённые данные о кол-ве карточек в выдаче. Если их нет, то предустанавливаются стандартные
-    if (window.screen.width > 1024) {
-      localStorage.getItem('1280CardsLimiter') ? setSearchLimiter(Number(localStorage.getItem('1280CardsLimiter'))) : setSearchLimiter(12);
-    } else if (window.screen.width > 525) {
-      localStorage.getItem('768CardsLimiter') ? setSearchLimiter(Number(localStorage.getItem('768CardsLimiter'))) : setSearchLimiter(8);
-    } else if (window.screen.width <= 525) {
-      localStorage.getItem('320CardsLimiter') ? setSearchLimiter(Number(localStorage.getItem('320CardsLimiter'))) : setSearchLimiter(5);
-    }
   }, []);
 
   return(

@@ -32,6 +32,7 @@ function App() {
 
   useEffect(() => {
     // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
+    window.addEventListener('resize', handleResize);
     mainApi.checkToken()
       .then(() => {
         setLoginStatus(true);
@@ -60,19 +61,19 @@ function App() {
         // #TODO Возможно в будущем убрать прослойку в виде movies, подумать нужна ли она вообще
         fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       }
-
-      // здесь запоминается число карточек для использования при перезагрузке
-      // #FIXME потом возможно убрать, если сделаю resize
-        if (window.screen.width > 1024) {
-          localStorage.setItem('1280CardsLimiter', searchLimiter);
-        } else if (window.screen.width > 525) {
-          localStorage.setItem('768CardsLimiter', searchLimiter);
-        } else {
-          localStorage.setItem('320CardsLimiter', searchLimiter);
-        }
     }
 
   }, [searchLimiter]);
+
+  function handleResize(e) {
+    if (e.target.screen.width > 1024) {
+      setSearchLimiter(12);
+    } else if (e.target.screen.width > 525) {
+      setSearchLimiter(8);
+    } else {
+      setSearchLimiter(5);
+    }
+  }
 
   function handleOpenMenu () {
     isOpened ? openMenu(false) : openMenu(true);
@@ -114,20 +115,17 @@ function App() {
     mainApi.logout()
     .then(() => {
       setLoginStatus(false);
-      localStorage.removeItem('showShortMovies');
-      localStorage.removeItem('showShortSavedMovies');
-      localStorage.removeItem('shortMovies');
       localStorage.removeItem('moviesKeyword');
       localStorage.removeItem('savedMoviesKeyword');
-      localStorage.removeItem('movies');
+      localStorage.removeItem('showShortMovies');
+      localStorage.removeItem('showShortSavedMovies');
       localStorage.removeItem('allMovies');
+      localStorage.removeItem('movies');
+      localStorage.removeItem('shortMovies');
       localStorage.removeItem('savedMovies');
       localStorage.removeItem('shortSavedMovies');
       localStorage.removeItem('filteredSavedMovies');
       localStorage.removeItem('filteredShortSavedMovies');
-      localStorage.removeItem('1280CardsLimiter');
-      localStorage.removeItem('768CardsLimiter');
-      localStorage.removeItem('320CardsLimiter');
       fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");
