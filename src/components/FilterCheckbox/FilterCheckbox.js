@@ -55,7 +55,7 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
       check(true);
       localStorage.setItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`, 'true');
       // проверяем, есть ли вообще фильмы и есть ли среди них короткометражки
-      if (JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`)) && JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'movies'}`))
+      if (JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'allMovies'}`)) && JSON.parse(localStorage.getItem(`${isSaved ? 'savedMovies' : 'allMovies'}`))
         .filter((movie) => {
           return movie.duration <= 40;
       }).length > 0) 
@@ -81,8 +81,9 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
             )); 
           }
         } else {
+          console.log('ОК');
           localStorage.setItem('shortMovies', JSON.stringify(
-            JSON.parse(localStorage.getItem('movies'))
+            JSON.parse(localStorage.getItem('allMovies'))
               .filter((movie) => {
                 return movie.duration <= 40;
               })

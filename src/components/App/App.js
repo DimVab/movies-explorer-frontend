@@ -26,6 +26,7 @@ function App() {
   const [reqErrorText, setReqErrorText] = useState('');
   const [moviesStorage, fillMoviesStorage] = useState([]);
   const [savedMovies, fillSavedMoviesStorage] = useState([]);
+  const [searchLimiter, setSearchLimiter] = useState(12);
 
   const history = useHistory();
 
@@ -37,11 +38,41 @@ function App() {
         getUserInfo();
         getSavedMovies();
       })
-      .catch((err) => {
-        console.log('Вы не авторизированы');
-        // #FIXME потом, возможно убрать
+      .catch(() => {
+        console.log('Необходимо авторизироваться');
       });
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
+        fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies'))
+          .filter((movie, i) => {
+            return i < searchLimiter;
+          })  
+        );
+      } else if(JSON.parse(localStorage.getItem('allMovies'))) {
+        localStorage.setItem('movies', JSON.stringify(JSON.parse(localStorage.getItem('allMovies'))
+          .filter((movie, i) => {
+            return i < searchLimiter;
+          })  
+        ));
+        // #TODO Возможно в будущем убрать прослойку в виде movies, подумать нужна ли она вообще
+        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      }
+
+      // здесь запоминается число карточек для использования при перезагрузке
+      // #FIXME потом возможно убрать, если сделаю resize
+        if (window.screen.width > 1024) {
+          localStorage.setItem('1280CardsLimiter', searchLimiter);
+        } else if (window.screen.width > 525) {
+          localStorage.setItem('768CardsLimiter', searchLimiter);
+        } else {
+          localStorage.setItem('320CardsLimiter', searchLimiter);
+        }
+    }
+
+  }, [searchLimiter]);
 
   function handleOpenMenu () {
     isOpened ? openMenu(false) : openMenu(true);
@@ -89,10 +120,14 @@ function App() {
       localStorage.removeItem('moviesKeyword');
       localStorage.removeItem('savedMoviesKeyword');
       localStorage.removeItem('movies');
+      localStorage.removeItem('allMovies');
       localStorage.removeItem('savedMovies');
       localStorage.removeItem('shortSavedMovies');
       localStorage.removeItem('filteredSavedMovies');
       localStorage.removeItem('filteredShortSavedMovies');
+      localStorage.removeItem('1280CardsLimiter');
+      localStorage.removeItem('768CardsLimiter');
+      localStorage.removeItem('320CardsLimiter');
       fillMoviesStorage([]);
       history.push('./');
       console.log("Вы вышли из аккаунта");
@@ -145,7 +180,19 @@ function App() {
           console.log('Ничего не найдено');
           return;
         }
-        localStorage.setItem('movies', JSON.stringify(filteredMovies));
+        localStorage.setItem('allMovies', JSON.stringify(filteredMovies));
+        if (window.screen.width > 1024) {
+          setSearchLimiter(12);
+        } else if (window.screen.width > 525) {
+          setSearchLimiter(8);
+        } else {
+          setSearchLimiter(5);
+        }
+        localStorage.setItem('movies', JSON.stringify(JSON.parse(localStorage.getItem('allMovies'))
+          .filter((movie, i) => {
+            return i < searchLimiter;
+          })  
+        ));
         fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
         // если включён фильтр короткометражек
         if (localStorage.getItem('showShortMovies')) {
@@ -153,6 +200,9 @@ function App() {
             .filter((movie) => {
               return movie.duration <= 40;
             })
+            .filter((movie, i) => {
+              return i < searchLimiter;
+            }) 
           ));
           fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
         }
@@ -162,8 +212,17 @@ function App() {
       });
   }
 
+  function increaseSearchLimiter() {
+    if (window.screen.width > 1024) {
+      setSearchLimiter(searchLimiter + 3);
+    } else {
+      setSearchLimiter(searchLimiter + 2);
+    }
+  }
+
   function getSavedMovies () {
     mainApi.getSavedMovies()
+    // #TODO
     /* Правильный алгоритм:
     1) получить фильмы и сохранить в saved-movies [есть]
     2) исходя из if, провести соответствующие операции с массивами в локальных хранилищах
@@ -282,7 +341,10 @@ function App() {
           fillMoviesStorage={fillMoviesStorage}
           saveMovie={saveMovie}
           savedMovies={savedMovies}
-          unmarkMovie={unmarkMovie}          
+          unmarkMovie={unmarkMovie}
+          searchLimiter={searchLimiter}
+          setSearchLimiter={setSearchLimiter}
+          increaseSearchLimiter={increaseSearchLimiter}
         />
         <ProtectedRoute
           path="/saved-movies"

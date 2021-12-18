@@ -1,7 +1,9 @@
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, savedMovies, unmarkMovie }) {
+function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, savedMovies, unmarkMovie, searchLimiter, increaseSearchLimiter }) {
+
+  const allMovies = JSON.parse(localStorage.getItem('shortMovies')) ? JSON.parse(localStorage.getItem('shortMovies')) : JSON.parse(localStorage.getItem('allMovies'));
 
   return(
     <>{isLoading ? <Preloader />
@@ -26,7 +28,7 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, s
           )
         })}
       </ul>
-      {!isSaved && movies.length > 0 && <button className="movies-card-list__button" type="button">Ещё</button>}
+      {!isSaved && (allMovies && allMovies.length > searchLimiter) && <button className="movies-card-list__button" type="button" onClick={increaseSearchLimiter}>Ещё</button>}
       </>
     }</>
   );
