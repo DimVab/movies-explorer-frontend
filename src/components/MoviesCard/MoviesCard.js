@@ -5,7 +5,7 @@ function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, sav
   const [isMarked, mark] = useState(false);
 
   useEffect(() => {
-    if (!isSaved && savedMovies.some((savedMovie) => {
+    if (!isSaved && JSON.parse(localStorage.getItem('savedMovies')).some((savedMovie) => {
       return savedMovie.movieId === movieId;
     })) {
       toggleMark();
