@@ -25,6 +25,7 @@ function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEdi
 
   function setEditStatus () {
     onEdit ? setEdit(false) : setEdit(true);
+    console.log(onEdit);
   }
 
   function editProfile (e) {
@@ -51,20 +52,21 @@ function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEdi
           <div className="profile__form-field">
             <p className="profile__form-field-name">Имя</p>
             <input className="profile__form-input" type="text" name="name" minLength="2" maxLength="30" required disabled={!onEdit} value={onEdit ? profileData.name : userInfo.name} onChange={handleChange} />
-            <ErrorMessage error={validationError} errorText={validationMessage} type="profile-validation" />
+            <ErrorMessage errorText={validationMessage} type="profile-validation" />
           </div>
           <div className="profile__form-line"></div>
           <div className="profile__form-field">
             <p className="profile__form-field-name">E-mail</p>
             <input className="profile__form-input" type="email" name="email" minLength="2" maxLength="30" required disabled={!onEdit} value={onEdit ? profileData.email : userInfo.email} onChange={handleChange} />
-            <ErrorMessage error={validationError} errorText={validationMessage} type="profile-validation" />
+            <ErrorMessage errorText={validationMessage} type="profile-validation" />
           </div>
         </div>
         {onEdit ? <div>
           {reqError && <ErrorMessage errorText={reqErrorText} type="request" />}
           <input className="profile__save-button" type="submit" value="Сохранить" />
         </div>
-        : <div><input className="profile__button" type="button"  value="Редактировать" onClick={setEditStatus} />
+        : <div>
+        <input className="profile__button" type="button"  value="Редактировать" onClick={setEditStatus} />
         <input className="profile__button profile__button_color_pink" type="submit" value="Выйти из аккаунта"/></div>
         }
       </form>

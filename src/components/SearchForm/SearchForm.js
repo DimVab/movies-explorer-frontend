@@ -12,11 +12,23 @@ function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage })
   }, []);
 
   const [keyword, setKeyword] = useState('');
+  const [searchErrText, showSearchErrorText] = useState(false);
+
+  useEffect(() => {
+    if (keyword.length > 0) {
+      showSearchErrorText(false);
+    }
+  }, [keyword]);
 
   function handleSubmit (e) {
     e.preventDefault();
     if (type === 'movies') {
+      showSearchErrorText(false);
       localStorage.setItem('moviesKeyword', keyword);
+      if (keyword.length === 0) {
+        showSearchErrorText(true);
+        return;
+      }
       findMovies(keyword);
     }
     if (type === 'savedMovies') {
@@ -54,8 +66,9 @@ function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage })
   return(
     <>
       <form className="search-form" onSubmit={handleSubmit}>
-        <input className="search-form__input" placeholder="Фильм" type="text" name="movie" maxLength="50" required={type === "movies"} value={keyword} onChange={handleChange}/>
-        <input type="submit" className="search-form__submit" value="Найти"/>
+        <input className="search-form__input" placeholder="Фильм" type="text" name="movie" maxLength="50" value={keyword} onChange={handleChange}/>
+        <input type="submit" className="search-form__submit" value="Найти" disabled={searchErrText}/>
+        <p className="search-form__validation-message">{searchErrText && `Нужно ввести ключевое слово`}</p>
       </form>
     </>
   );

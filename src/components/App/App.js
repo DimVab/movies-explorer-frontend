@@ -31,7 +31,6 @@ function App() {
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
 
-
   const [moviesStorage, fillMoviesStorage] = useState([]);
   const [savedMovies, fillSavedMoviesStorage] = useState([]);
   const [searchLimiter, setSearchLimiter] = useState(12);

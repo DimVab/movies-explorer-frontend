@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage, saveMovie, savedMovies, unmarkMovie, searchLimiter, setSearchLimiter, increaseSearchLimiter, isEmpty, isError, throwEmptyMessage }) {
+function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage, saveMovie, savedMovies, unmarkMovie, searchLimiter, increaseSearchLimiter, isEmpty, isError, throwEmptyMessage }) {
 
   useEffect(() => {
     // вспоминаются карточки, которые искались ранее
@@ -18,10 +18,19 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
 
   return(
     <div className="movies">
-    <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
+    <Header bgColor="light" 
+      loggedIn={true} 
+      openMenu={openMenu} 
+    />
     <main className="movies-container">
-      <SearchForm findMovies={findMovies} type="movies" />
-      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} throwEmptyMessage={throwEmptyMessage} moviesStorage={moviesStorage} />
+      <SearchForm 
+        findMovies={findMovies} type="movies" 
+      />
+      <FilterCheckbox 
+        fillMoviesStorage={fillMoviesStorage} 
+        throwEmptyMessage={throwEmptyMessage} 
+        moviesStorage={moviesStorage} 
+      />
       <section>
         <MoviesCardList 
           isLoading={isLoading} 
