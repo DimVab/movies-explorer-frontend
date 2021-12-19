@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie }) {
+function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie, isEmpty, throwEmptyMessage }) {
 
   useEffect(() => {
     if (localStorage.getItem('savedMoviesKeyword') === '') {
@@ -19,13 +19,14 @@ function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage
     <div className="saved-movies">
     <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="saved-movies__container">
-      <SearchForm type="savedMovies" fillMoviesStorage={fillMoviesStorage} />
-      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} isSaved={true} />
+      <SearchForm type="savedMovies" fillMoviesStorage={fillMoviesStorage} throwEmptyMessage={throwEmptyMessage} />
+      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} isSaved={true} throwEmptyMessage={throwEmptyMessage} moviesStorage={savedMovies} />
       <MoviesCardList 
         isLoading={false} 
         isSaved={true} 
         movies={savedMovies} 
-        deleteMovie={deleteMovie} 
+        deleteMovie={deleteMovie}
+        isEmpty={isEmpty}
       />
     </main>
     <Footer />

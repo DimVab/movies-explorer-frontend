@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
+function FilterCheckbox ({ fillMoviesStorage, isSaved, throwEmptyMessage, moviesStorage }) {
 
   const [isChecked, check] = useState(false);
 
@@ -34,9 +34,12 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
   }, []);
 
   function handleCheck(e) {
+
     if (isChecked) {
 
       check(false);
+      // #TODO здесь повнимательнее, тк сообщение могло быть и без фильтра
+      throwEmptyMessage(false);
       localStorage.removeItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`);
       localStorage.removeItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`);
       localStorage.removeItem('filteredShortSavedMovies');
@@ -46,8 +49,8 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
         } else {
           fillMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
         }
-      } else if (JSON.parse(localStorage.getItem('movies'))) {
-        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      } else if (JSON.parse(localStorage.getItem('allMovies'))) {
+        fillMoviesStorage(JSON.parse(localStorage.getItem('allMovies')));
       }
 
     } else {
@@ -93,6 +96,10 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
           if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
             // если фильмы были отфильтрованы по поиску, то фильтрация происходит среди них
             fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
+            // #FIXME потом это внести в общее правило, ато сейчас это костыль
+            if(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).length === 0) {
+              throwEmptyMessage(true);
+            }
           } else {
             // иначе фильтрация происхоит по всем фильмам
             fillMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
@@ -100,7 +107,10 @@ function FilterCheckbox ({ fillMoviesStorage, isSaved }) {
         } else {
           fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
         }
-      } /* else показать надпись "ничего не найдено" */
+      } else {
+        throwEmptyMessage(true);
+        fillMoviesStorage([]);
+      }
     }
   }
 

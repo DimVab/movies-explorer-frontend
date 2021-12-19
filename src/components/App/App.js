@@ -27,6 +27,8 @@ function App() {
   const [moviesStorage, fillMoviesStorage] = useState([]);
   const [savedMovies, fillSavedMoviesStorage] = useState([]);
   const [searchLimiter, setSearchLimiter] = useState(12);
+  const [isError, throwErrorMessage] = useState(false);
+  const [isEmpty, throwEmptyMessage] = useState(false);
 
   const history = useHistory();
 
@@ -163,9 +165,11 @@ function App() {
   }
 
   function findMovies (keyword) {
+    throwEmptyMessage(false);
+    throwErrorMessage(false);
     setLoadingStatus(true);
     fillMoviesStorage([]);
-    localStorage.removeItem('movies');
+    localStorage.removeItem('allMovies');
     getMovies()
       .then((movies) => {
         return movies.filter((movie) => {
@@ -175,7 +179,7 @@ function App() {
       .then((filteredMovies) => {
         setLoadingStatus(false);
         if (filteredMovies.length === 0) {
-          console.log('Ничего не найдено');
+          throwEmptyMessage(true);
           return;
         }
         localStorage.setItem('allMovies', JSON.stringify(filteredMovies));
@@ -207,6 +211,8 @@ function App() {
       })
       .catch((err) => {
         console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
+        setLoadingStatus(false);
+        throwErrorMessage(true);
       });
   }
 
@@ -236,6 +242,7 @@ function App() {
             fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
           } else {
             // 1.2 если не было поиска
+            // FIXME это не правильно работает, тк загружает уже существующий список, а, если добавить новый фильм, то он сразу не обновится
             fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
           }
         // 2. если фильтр НЕ включён
@@ -253,6 +260,7 @@ function App() {
   }
 
   function saveMovie (movie, callback) {
+    console.log(movie);
     mainApi.addMovie(movie)
       .then((res) => {
         console.log('Фильм успешно сохранён');
@@ -343,6 +351,9 @@ function App() {
           searchLimiter={searchLimiter}
           setSearchLimiter={setSearchLimiter}
           increaseSearchLimiter={increaseSearchLimiter}
+          isEmpty={isEmpty}
+          isError={isError}
+          throwEmptyMessage={throwEmptyMessage}
         />
         <ProtectedRoute
           path="/saved-movies"
@@ -352,7 +363,9 @@ function App() {
           getSavedMovies={getSavedMovies} 
           savedMovies={savedMovies}
           fillMoviesStorage={fillSavedMoviesStorage}
-          deleteMovie={deleteMovie}       
+          deleteMovie={deleteMovie}
+          isEmpty={isEmpty}
+          throwEmptyMessage={throwEmptyMessage}
         />
         <ProtectedRoute
           path="/profile"

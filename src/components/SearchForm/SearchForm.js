@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function SearchForm ({ findMovies, type, fillMoviesStorage }) {
+function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage }) {
 
   useEffect(() => {
     if (type === 'movies' && localStorage.getItem('moviesKeyword')) {
@@ -21,6 +21,7 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
     }
     if (type === 'savedMovies') {
 
+      throwEmptyMessage(false);
       localStorage.setItem('savedMoviesKeyword', keyword);
       localStorage.setItem('filteredSavedMovies', JSON.stringify(
         JSON.parse(localStorage.getItem('savedMovies'))
@@ -29,6 +30,10 @@ function SearchForm ({ findMovies, type, fillMoviesStorage }) {
           })
       ));
       fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
+      if (JSON.parse(localStorage.getItem('filteredSavedMovies')).length === 0) {
+        throwEmptyMessage(true);
+        return;
+      }
 
       // если включён фильтр короткометражек
       if (localStorage.getItem('showShortSavedMovies')) {

@@ -17,7 +17,7 @@ function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, sav
   }
 
   function saveMovieHandler () {
-    const foundMovies = JSON.parse(localStorage.getItem('movies'));
+    const foundMovies = JSON.parse(localStorage.getItem('allMovies'));
     saveMovie(foundMovies
       .find((movie) => {
         return movie.id === movieId;

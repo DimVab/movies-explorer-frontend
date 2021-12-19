@@ -5,7 +5,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage, saveMovie, savedMovies, unmarkMovie, searchLimiter, setSearchLimiter, increaseSearchLimiter }) {
+function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesStorage, saveMovie, savedMovies, unmarkMovie, searchLimiter, setSearchLimiter, increaseSearchLimiter, isEmpty, isError, throwEmptyMessage }) {
 
   useEffect(() => {
     // вспоминаются карточки, которые искались ранее
@@ -21,17 +21,19 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
     <Header bgColor="light" loggedIn={true} openMenu={openMenu} />
     <main className="movies-container">
       <SearchForm findMovies={findMovies} type="movies" />
-      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} />
+      <FilterCheckbox fillMoviesStorage={fillMoviesStorage} throwEmptyMessage={throwEmptyMessage} moviesStorage={moviesStorage} />
       <section>
         <MoviesCardList 
-        isLoading={isLoading} 
-        isSaved={false} 
-        movies={moviesStorage} 
-        saveMovie={saveMovie} 
-        savedMovies={savedMovies}
-        unmarkMovie={unmarkMovie}
-        searchLimiter={searchLimiter}
-        increaseSearchLimiter={increaseSearchLimiter}
+          isLoading={isLoading} 
+          isSaved={false} 
+          movies={moviesStorage} 
+          saveMovie={saveMovie} 
+          savedMovies={savedMovies}
+          unmarkMovie={unmarkMovie}
+          searchLimiter={searchLimiter}
+          increaseSearchLimiter={increaseSearchLimiter}
+          isError={isError}
+          isEmpty={isEmpty}
         />
       </section>
     </main>
