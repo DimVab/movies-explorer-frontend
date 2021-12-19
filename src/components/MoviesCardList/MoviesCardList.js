@@ -7,7 +7,7 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, s
 
   return(
     <>
-    {isError && <p className="movies-card-list__message movies-card-list__message_type_error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раза</p>}
+    {isError && <p className="movies-card-list__message movies-card-list__message_type_error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</p>}
     {isEmpty && <p className="movies-card-list__message">Ничего не найдено</p>}
     {isLoading ? <Preloader />
     : <><ul className="movies-card-list">

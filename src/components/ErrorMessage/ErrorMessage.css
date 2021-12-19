@@ -8,8 +8,16 @@
 }
 
 .error-message_type_request {
+  width: 396px;
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 525px) {
+  .error-message_type_request {
+    width: 260px;
+  }
+}
+
 
 .error-message_type_sign-validation {
   position: absolute;

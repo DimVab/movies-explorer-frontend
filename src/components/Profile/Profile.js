@@ -61,7 +61,7 @@ function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEdi
           </div>
         </div>
         {onEdit ? <div>
-          <ErrorMessage error={reqError} errorText={reqErrorText} type="request" />
+          {reqError && <ErrorMessage errorText={reqErrorText} type="request" />}
           <input className="profile__save-button" type="submit" value="Сохранить" />
         </div>
         : <div><input className="profile__button" type="button"  value="Редактировать" onClick={setEditStatus} />

@@ -23,7 +23,15 @@ function App() {
   const [isLoading, setLoadingStatus] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [onEdit, setEdit] = useState(false);
-  const [reqErrorText, setReqErrorText] = useState('');
+  // переменные состояния ошибок
+  const [profileReqErrorText, setProfileReqErrorText] = useState('');
+  const [regReqErrorText, setRegReqErrorText] = useState('');
+  const [authReqErrorText, setAuthReqErrorText] = useState('');
+  const [profileReqError, showProfileReqError] = useState(false);
+  const [regReqError, showRegReqError] = useState(false);
+  const [authReqError, showAuthReqError] = useState(false);
+
+
   const [moviesStorage, fillMoviesStorage] = useState([]);
   const [savedMovies, fillSavedMoviesStorage] = useState([]);
   const [searchLimiter, setSearchLimiter] = useState(12);
@@ -82,6 +90,7 @@ function App() {
   }
 
   function handleRegister(name, email, password) {
+    showRegReqError(false);
     mainApi.register(name, email, password)
       .then(() => {
         console.log("Регистрация прошла успешно");
@@ -90,15 +99,25 @@ function App() {
         handleAuthorize(email, password);
       })
       .catch((err) => {
+        showRegReqError(true);
         if (err === "409") {
           console.log(`Ошибка ${err}: такой email уже занят`);
-        } else { 
-          console.log(`Ошибка ${err}: email или пароль не прошли валидацию на сервере при регистрации`);
+          setRegReqErrorText('Такой email уже существует');
+        } else if (err.name === 'TypeError') {
+          console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+          setRegReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        } else if (err === '400') { 
+          console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
+          setRegReqErrorText('Имя или email не прошли валидацию на сервере');
+        } else {
+          console.log(`Ошибка ${err}`);
+          setRegReqErrorText('Произошла ошибка');
         }
       });
   }
 
   function handleAuthorize(email, password) {
+    showAuthReqError(false);
     mainApi.authorize(email, password)
       .then(() => {
         setLoginStatus(true);
@@ -109,7 +128,20 @@ function App() {
         getUserInfo();
       })
       .catch((err) => {
-        console.log(`Ошиюка ${err}: неверный email или пароль`);
+        showAuthReqError(true);
+        if (err === "401") {
+          console.log(`Ошибка ${err}: неправильный email или пароль`);
+          setAuthReqErrorText('Неправильный email или пароль');
+        } else if (err.name === 'TypeError') {
+          console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+          setAuthReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        } else if (err === '400') { 
+          console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
+          setAuthReqErrorText('Имя или email не прошли валидацию на сервере');
+        } else {
+          console.log(`Ошибка ${err}`);
+          setAuthReqErrorText('Произошла ошибка');
+        }
       });
   }
 
@@ -148,6 +180,7 @@ function App() {
   }
 
   function handleEditProfile(userData) {
+    showProfileReqError(false);
     mainApi.editUserInfo(userData)
     .then((newUserInfo) => {
       setUserInfo({name: newUserInfo.name, email: newUserInfo.email});
@@ -156,10 +189,19 @@ function App() {
       setEdit(false);
     })
     .catch((err) => {
-      if (err === "409") {
+      showProfileReqError(true);
+      if (err === '409') {
         console.log(`Ошибка ${err}: такой email уже занят`);
-      } else { 
+        setProfileReqErrorText('Такой email уже существует');
+      } else if (err.name === 'TypeError') {
+        console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        setProfileReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      } else if (err === '400') { 
         console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
+        setProfileReqErrorText('Имя или email не прошли валидацию на сервере');
+      } else {
+        console.log(`Ошибка ${err}`);
+        setProfileReqErrorText('Произошла ошибка');
       }
     });
   }
@@ -375,8 +417,8 @@ function App() {
           setEdit={setEdit}
           getUserInfo={getUserInfo}
           openMenu={handleOpenMenu}
-          reqError={true}
-          reqErrorText="Ошибка запроса"
+          reqError={profileReqError}
+          reqErrorText={profileReqErrorText}
           handleEditProfile={handleEditProfile}
           handleSignOut={handleSignOut}  
         />
@@ -386,8 +428,8 @@ function App() {
           : <Sign
               isRegister={true}
               greetingText="Добро пожаловать!"
-              reqError={true}
-              reqErrorText={reqErrorText}
+              reqError={regReqError}
+              reqErrorText={regReqErrorText}
               buttonText="Зарегистрироваться"
               link="/signin"
               redirectText="Уже зарегистрированы?"
@@ -400,8 +442,8 @@ function App() {
           <Redirect to='/'/>
           : <Sign
               greetingText="Рады видеть!"
-              reqError={true}
-              reqErrorText={reqErrorText}
+              reqError={authReqError}
+              reqErrorText={authReqErrorText}
               buttonText="Войти"
               link="/signup"
               redirectText="Ещё не зарегистрированы?"

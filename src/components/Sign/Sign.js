@@ -56,7 +56,7 @@ function Sign ({ onSubmit, greetingText, isRegister, reqError, reqErrorText, but
           </div>
         </div>
         <div>
-          <ErrorMessage error={reqError} errorText={reqErrorText} type="request" />
+          {reqError && <ErrorMessage error={reqError} errorText={reqErrorText} type="request" />}
           <input className="sign__form-button" type="submit" value={buttonText} />
           <div className="sign__redirect-container">
             <p className="sign__redirect-text">{redirectText}</p>
