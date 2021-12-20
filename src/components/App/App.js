@@ -12,6 +12,9 @@ import Menu from '../Menu/Menu';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
+import Login from '../Login/Login';
+import Register from '../Register/Register';
+
 import mainApi from '../../utils/MainApi';
 import getMovies from '../../utils/MoviesApi';
 
@@ -424,7 +427,7 @@ function App() {
         <Route exact path="/signup">
           {loggedIn ?
           <Redirect to='/'/>
-          : <Sign
+          : <Register
               isRegister={true}
               greetingText="Добро пожаловать!"
               reqError={regReqError}
@@ -439,7 +442,8 @@ function App() {
         <Route exact path="/signin">
           {loggedIn ?
           <Redirect to='/'/>
-          : <Sign
+          : <Login
+              isAuthorization={true}
               greetingText="Рады видеть!"
               reqError={authReqError}
               reqErrorText={authReqErrorText}

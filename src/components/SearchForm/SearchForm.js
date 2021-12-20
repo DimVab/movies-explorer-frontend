@@ -23,7 +23,6 @@ function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage })
   function handleSubmit (e) {
     e.preventDefault();
     if (type === 'movies') {
-      showSearchErrorText(false);
       localStorage.setItem('moviesKeyword', keyword);
       if (keyword.length === 0) {
         showSearchErrorText(true);
