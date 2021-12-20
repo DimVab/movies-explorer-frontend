@@ -3,7 +3,6 @@ import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-import Sign from '../Sign/Sign';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -17,6 +16,8 @@ import Register from '../Register/Register';
 
 import mainApi from '../../utils/MainApi';
 import getMovies from '../../utils/MoviesApi';
+
+import { errorMessages } from '../../utils/messages';
 
 function App() {
 
@@ -49,11 +50,10 @@ function App() {
       .then(() => {
         setLoginStatus(true);
         getUserInfo();
-        getSavedMovies();
-      })
-      .catch(() => {
-        console.log('Необходимо авторизироваться');
+        // getSavedMovies();
+        // возможно, не нужно получать фильмы, потом ещё раз проверить
       });
+      // здесь не обрабатываются ошибки через catch, тк если пользователь не авторизирован, то ничего с этим делать не нужно
   }, []);
 
   useEffect(() => {
@@ -95,25 +95,18 @@ function App() {
     showRegReqError(false);
     mainApi.register(name, email, password)
       .then(() => {
-        console.log("Регистрация прошла успешно");
-      })
-      .then(() => {
         handleAuthorize(email, password);
       })
       .catch((err) => {
         showRegReqError(true);
         if (err === "409") {
-          console.log(`Ошибка ${err}: такой email уже занят`);
-          setRegReqErrorText('Такой email уже существует');
+          setRegReqErrorText(errorMessages.sign.email);
         } else if (err.name === 'TypeError') {
-          console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-          setRegReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+          setRegReqErrorText(errorMessages.sign.connect);
         } else if (err === '400') { 
-          console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
-          setRegReqErrorText('Имя или email не прошли валидацию на сервере');
+          setRegReqErrorText(errorMessages.sign.validation);
         } else {
-          console.log(`Ошибка ${err}`);
-          setRegReqErrorText('Произошла ошибка');
+          setRegReqErrorText(errorMessages.sign.default);
         }
       });
   }
@@ -124,7 +117,6 @@ function App() {
       .then(() => {
         setLoginStatus(true);
         history.push('./movies');
-        console.log("Авторизация прошла успешно");
       })
       .then(() => {
         getUserInfo();
@@ -132,17 +124,13 @@ function App() {
       .catch((err) => {
         showAuthReqError(true);
         if (err === "401") {
-          console.log(`Ошибка ${err}: неправильный email или пароль`);
-          setAuthReqErrorText('Неправильный email или пароль');
+          setAuthReqErrorText(errorMessages.sign.unathorized);
         } else if (err.name === 'TypeError') {
-          console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-          setAuthReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+          setAuthReqErrorText(errorMessages.sign.connect);
         } else if (err === '400') { 
-          console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
-          setAuthReqErrorText('Имя или email не прошли валидацию на сервере');
+          setAuthReqErrorText(errorMessages.sign.validation);
         } else {
-          console.log(`Ошибка ${err}`);
-          setAuthReqErrorText('Произошла ошибка');
+          setAuthReqErrorText(errorMessages.sign.default);
         }
       });
   }
@@ -164,10 +152,9 @@ function App() {
       localStorage.removeItem('filteredShortSavedMovies');
       fillMoviesStorage([]);
       history.push('./');
-      console.log("Вы вышли из аккаунта");
     })
     .catch((err) => {
-      console.log(err);
+      console.log(`Ошибка ${err}`);
     });
   }
 
@@ -177,7 +164,7 @@ function App() {
       setUserInfo({ name: user.name, email: user.email});
     })
     .catch((err) => {
-      console.log(err);
+      console.log(`Ошибка ${err}`);
     });
   }
 
@@ -186,24 +173,18 @@ function App() {
     mainApi.editUserInfo(userData)
     .then((newUserInfo) => {
       setUserInfo({name: newUserInfo.name, email: newUserInfo.email});
-      console.log('Данные о пользователе изменены успешно');
-      console.log(newUserInfo);
       setEdit(false);
     })
     .catch((err) => {
       showProfileReqError(true);
       if (err === '409') {
-        console.log(`Ошибка ${err}: такой email уже занят`);
-        setProfileReqErrorText('Такой email уже существует');
+        setProfileReqErrorText(errorMessages.sign.email);
       } else if (err.name === 'TypeError') {
-        console.log('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
-        setProfileReqErrorText('Произошла ошибка с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        setProfileReqErrorText(errorMessages.sign.connect);
       } else if (err === '400') { 
-        console.log(`Ошибка ${err}: имя или email не прошли валидацию на сервере`);
-        setProfileReqErrorText('Имя или email не прошли валидацию на сервере');
+        setProfileReqErrorText(errorMessages.sign.validation);
       } else {
-        console.log(`Ошибка ${err}`);
-        setProfileReqErrorText('Произошла ошибка');
+        setProfileReqErrorText(errorMessages.sign.default);
       }
     });
   }
@@ -254,7 +235,6 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
         setLoadingStatus(false);
         throwErrorMessage(true);
       });
@@ -299,20 +279,20 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(`Во время запроса произошла ошибка ${err}. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз`);
+        // #TODO
+        // вот здесь включить errorMessage как в movies
       });
   }
 
   function saveMovie (movie, callback) {
-    console.log(movie);
     mainApi.addMovie(movie)
       .then((res) => {
-        console.log('Фильм успешно сохранён');
         // коллбэк на случай, если данные фильма не проходят валидацию на сервере (у некоторых фильмов отсутствует поле "country")
         callback();
       })
       .catch((err) => {
-        console.log(`Ошибка ${err}. Данные фильма не прошли валидацию на сервере`);
+        // #TODO возможно, стоит выводить errorMessage, что фильм не получилось сохранить
+        console.log(`Ошибка ${err}`);
       });
   }
 
@@ -356,24 +336,17 @@ function App() {
           // 2.2 если не было поиска
           fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
         }
-        console.log('Фильм успешно удалён');
       })
       .catch((err) => {
-        console.log(err);
-        console.log('Не получилось удалить фильм');
+        console.log(`Ошибка ${err}`);
       });
   }
 
   function unmarkMovie (movie) {
     // #FIXME 
-    console.log(movie);
     mainApi.removeMovie(movie._id)
-      .then(() => {
-        console.log('Фильм удалён из сохранённых фильмов');
-      })
       .catch((err) => {
-        console.log(err);
-        console.log('Не получилось удалить фильм');
+        console.log(`Ошибка ${err}`);
       });
   }
 

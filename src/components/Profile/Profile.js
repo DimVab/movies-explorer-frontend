@@ -3,7 +3,7 @@ import Header from '../Header/Header';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import validators from '../Validators/Validators';
-import errorMessages from '../../utils/errorMessages';
+import { errorMessages } from '../../utils/messages';
 
 function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEditProfile, handleSignOut }) {
 

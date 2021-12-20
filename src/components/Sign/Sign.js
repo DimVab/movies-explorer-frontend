@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import headerLogo from '../../images/icons/logo.svg';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import validators from '../Validators/Validators';
-import errorMessages from '../../utils/errorMessages';
+import { errorMessages } from '../../utils/messages';
 
 function Sign ({ onSubmit, greetingText, isRegister, isAuthorization, reqError, reqErrorText, buttonText, redirectText, linkText, link }) {
 
