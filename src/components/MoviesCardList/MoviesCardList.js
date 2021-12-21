@@ -2,7 +2,19 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { errorMessages, messages } from '../../utils/messages';
 
-function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, savedMovies, unmarkMovie, searchLimiter, increaseSearchLimiter, isError, isEmpty }) {
+function MoviesCardList ({ 
+  isLoading, 
+  isSaved, 
+  currentMovies, 
+  saveMovie, 
+  deleteMovie, 
+  savedMovies, 
+  unmarkMovie, 
+  searchLimiter, 
+  increaseSearchLimiter, 
+  isError, 
+  isEmpty
+ }) {
 
   const allMovies = JSON.parse(localStorage.getItem('shortMovies')) ? JSON.parse(localStorage.getItem('shortMovies')) : JSON.parse(localStorage.getItem('allMovies'));
 
@@ -12,7 +24,7 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, s
     {isEmpty && <p className="movies-card-list__message">{messages.movies.empty}</p>}
     {isLoading ? <Preloader />
     : <><ul className="movies-card-list">
-        {movies.map((movie) => {
+        {currentMovies.map((movie) => {
           return(
             <MoviesCard
               isSaved={isSaved}
@@ -24,7 +36,7 @@ function MoviesCardList ({ isLoading, isSaved, movies, saveMovie, deleteMovie, s
               key={isSaved ? movie._id : movie.id}
               movieId={isSaved ? movie._id : movie.id}
               saveMovie={saveMovie}
-              movies={movies}
+              currentMovies={currentMovies}
               savedMovies={savedMovies}
               deleteMovie={deleteMovie}
               unmarkMovie={unmarkMovie}

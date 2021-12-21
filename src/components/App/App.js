@@ -35,11 +35,17 @@ function App() {
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
 
+  // Хранилища фильмов и отображаемых фильмов
   const [moviesStorage, fillMoviesStorage] = useState([]);
-  const [savedMovies, fillSavedMoviesStorage] = useState([]);
+  const [savedMoviesStorage, fillSavedMoviesStorage] = useState([]);
+  const [currentMovies, setCurrentMovies] = useState([]);
+  const [currentSavedMovies, setCurrentSavedMovies] = useState([]);
+
   const [searchLimiter, setSearchLimiter] = useState(12);
   const [isError, throwErrorMessage] = useState(false);
   const [isEmpty, throwEmptyMessage] = useState(false);
+  const [moviesKeyword, setMoviesKeyword] = useState('');
+  const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
 
   const [isAuthSent, setAuth] = useState(false);
 
@@ -52,8 +58,7 @@ function App() {
       .then(() => {
         setLoginStatus(true);
         getUserInfo();
-        // getSavedMovies();
-        // возможно, не нужно получать фильмы, потом ещё раз проверить
+
       })
       .catch(() => {
         setAuth(true);
@@ -62,6 +67,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+      // #TODO обернуть в функцию filterBySearchLimiter
       if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
         fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies'))
           .filter((movie, i) => {
@@ -69,6 +75,7 @@ function App() {
           })  
         );
       } else if(JSON.parse(localStorage.getItem('allMovies'))) {
+        // #TODO обернуть в функцию filterBySearchLimiter
         localStorage.setItem('movies', JSON.stringify(JSON.parse(localStorage.getItem('allMovies'))
           .filter((movie, i) => {
             return i < searchLimiter;
@@ -81,20 +88,28 @@ function App() {
 
   }, [searchLimiter]);
 
-  function handleResize(e) {
-    if (e.target.screen.width > 1024) {
+  function handleResize() {
+    if (window.screen.width > 1024) {
       setSearchLimiter(12);
-    } else if (e.target.screen.width > 525) {
+    } else if (window.screen.width > 525) {
       setSearchLimiter(8);
     } else {
       setSearchLimiter(5);
     }
+    // #TODO проверить  работоспособность здесь без (e) и e.target.screen.width
+  }
+
+  function filterBySearchLimiter(movies) {
+    return movies.filter((movie, i) => {
+      return i < searchLimiter;
+    });
   }
 
   function handleOpenMenu (e) {
     isOpened ? openMenu(false) : openMenu(true);
   }
 
+  // Функции, связанные с регистрацией и авторизацией
   function handleRegister(name, email, password) {
     showRegReqError(false);
     mainApi.register(name, email, password)
@@ -147,13 +162,7 @@ function App() {
       localStorage.removeItem('savedMoviesKeyword');
       localStorage.removeItem('showShortMovies');
       localStorage.removeItem('showShortSavedMovies');
-      localStorage.removeItem('allMovies');
       localStorage.removeItem('movies');
-      localStorage.removeItem('shortMovies');
-      localStorage.removeItem('savedMovies');
-      localStorage.removeItem('shortSavedMovies');
-      localStorage.removeItem('filteredSavedMovies');
-      localStorage.removeItem('filteredShortSavedMovies');
       fillMoviesStorage([]);
       history.push('./');
     })
@@ -194,54 +203,34 @@ function App() {
     });
   }
 
-  function findMovies (keyword) {
+  function findMovies (moviesKeyword) {
     throwEmptyMessage(false);
     throwErrorMessage(false);
     setLoadingStatus(true);
     fillMoviesStorage([]);
-    localStorage.removeItem('allMovies');
+    setCurrentMovies([]);
+    localStorage.removeItem('movies');
     getMovies()
       .then((movies) => {
-        return movies.filter((movie) => {
-          return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
-        });
+        return filterMoviesBySymbols(movies, moviesKeyword);
       })
       .then((filteredMovies) => {
-        setLoadingStatus(false);
-        if (filteredMovies.length === 0) {
-          throwEmptyMessage(true);
-          return;
-        }
-        localStorage.setItem('allMovies', JSON.stringify(filteredMovies));
-        if (window.screen.width > 1024) {
-          setSearchLimiter(12);
-        } else if (window.screen.width > 525) {
-          setSearchLimiter(8);
-        } else {
-          setSearchLimiter(5);
-        }
-        localStorage.setItem('movies', JSON.stringify(JSON.parse(localStorage.getItem('allMovies'))
-          .filter((movie, i) => {
-            return i < searchLimiter;
-          })  
-        ));
-        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+        localStorage.setItem('movies', JSON.stringify(filteredMovies));
+        fillMoviesStorage(filteredMovies);
+        // проверяем ширину экрана
+        handleResize();
         // если включён фильтр короткометражек
         if (localStorage.getItem('showShortMovies')) {
-          localStorage.setItem('shortMovies', JSON.stringify(filteredMovies
-            .filter((movie) => {
-              return movie.duration <= 40;
-            })
-            .filter((movie, i) => {
-              return i < searchLimiter;
-            }) 
-          ));
-          fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies')));
+          setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies)));
+        } else {
+          setCurrentMovies(filterBySearchLimiter(filteredMovies));
         }
       })
-      .catch((err) => {
-        setLoadingStatus(false);
+      .catch(() => {
         throwErrorMessage(true);
+      })
+      .finally(() => {
+        setLoadingStatus(false);
       });
   }
 
@@ -255,48 +244,64 @@ function App() {
 
   function getSavedMovies () {
     mainApi.getSavedMovies()
-    // #TODO
-    /* Правильный алгоритм:
-    1) получить фильмы и сохранить в saved-movies [есть]
-    2) исходя из if, провести соответствующие операции с массивами в локальных хранилищах
-    2.1) вынести в app.js все функции из нижних компонентов (фильтр, поиск и тп), чтобы можно было провести операции
-    3) обновить стейт-переменную с сохранёнными фильмами [есть]
-    */
-      .then((movies) => {
-        localStorage.setItem('savedMovies', JSON.stringify(movies));
+      .then((savedMovies) => {
+        // заполнить хранилище сохранённых фильмов
+        fillSavedMoviesStorage(savedMovies);
         // 1. если включён фильтр по короткометражкам
         if (localStorage.getItem('showShortSavedMovies')) {
           // 1.1 если был поиск по символам
-          if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
-            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
+          if (localStorage.getItem('savedMoviesKeyword')) {
+            // фильтруем и по символаи и по длительности
+            setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMovies, savedMoviesKeyword)).reverse());
           } else {
             // 1.2 если не было поиска
-            // FIXME это не правильно работает, тк загружает уже существующий список, а, если добавить новый фильм, то он сразу не обновится
-            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
+            setCurrentSavedMovies(filterMoviesByDuration(savedMovies).reverse());
           }
         // 2. если фильтр НЕ включён
-        } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
+        } else if (localStorage.getItem('savedMoviesKeyword')) {
           // 2.1 если был поиск по символам
-          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
+          setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword).reverse());
         } else {
           // 2.2 если не было поиска
-          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
+          setCurrentSavedMovies(savedMovies).reverse();
         }
       })
-      .catch((err) => {
-        // #TODO
-        // вот здесь включить errorMessage как в movies
+      .catch(() => {
+        throwErrorMessage(true);
       });
+  }
+
+  // отфильтровать по длине
+  function filterMoviesByDuration(movies) {
+    const result = movies.filter((movie) => {
+      return movie.duration <= 40;
+    });
+
+    if (result.length === 0) {
+      throwEmptyMessage(true);
+    }
+    return result;
+  }
+
+  // отфильтровать по символам
+  function filterMoviesBySymbols(movies, keyword) {
+    const result = movies.filter((movie) => {
+      return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
+    });
+
+    if (result.length === 0) {
+      throwEmptyMessage(true);
+    }
+    return result;
   }
 
   function saveMovie (movie, callback) {
     mainApi.addMovie(movie)
-      .then((res) => {
+      .then(() => {
         // коллбэк на случай, если данные фильма не проходят валидацию на сервере (у некоторых фильмов отсутствует поле "country")
         callback();
       })
       .catch((err) => {
-        // #TODO возможно, стоит выводить errorMessage, что фильм не получилось сохранить
         console.log(`Ошибка ${err}`);
       });
   }
@@ -365,10 +370,10 @@ function App() {
           openMenu={handleOpenMenu}
           isLoading={isLoading}
           findMovies={findMovies}
-           moviesStorage={moviesStorage}
-          fillMoviesStorage={fillMoviesStorage}
+          currentMovies={currentMovies}
+          setCurrentMovies={setCurrentMovies}
           saveMovie={saveMovie}
-          savedMovies={savedMovies}
+          savedMoviesStorage={savedMoviesStorage}
           unmarkMovie={unmarkMovie}
           searchLimiter={searchLimiter}
           setSearchLimiter={setSearchLimiter}
@@ -385,7 +390,7 @@ function App() {
           loggedIn={loggedIn}
           openMenu={handleOpenMenu} 
           getSavedMovies={getSavedMovies} 
-          savedMovies={savedMovies}
+          currentSavedMovies={currentSavedMovies}
           fillMoviesStorage={fillSavedMoviesStorage}
           deleteMovie={deleteMovie}
           setLoginStatus={setLoginStatus}

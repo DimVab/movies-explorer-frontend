@@ -5,11 +5,12 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage, deleteMovie }) {
+function SavedMovies ({ openMenu, getSavedMovies, currentSavedMovies, fillMoviesStorage, deleteMovie }) {
 
   const [isEmpty, throwEmptyMessage] = useState(false);
   
   useEffect(() => {
+    // если в поиске по символам не было символов, удалить его идентификатор
     if (localStorage.getItem('savedMoviesKeyword') === '') {
       localStorage.removeItem('filteredSavedMovies');
     }
@@ -34,13 +35,13 @@ function SavedMovies ({ openMenu, getSavedMovies, savedMovies, fillMoviesStorage
         fillMoviesStorage={fillMoviesStorage} 
         isSaved={true} 
         throwEmptyMessage={throwEmptyMessage} 
-        moviesStorage={savedMovies} 
+        currentMovies={currentSavedMovies} 
       />
       <section className="saved-movies__section">
         <MoviesCardList 
           isLoading={false} 
           isSaved={true} 
-          movies={savedMovies} 
+          currentMovies={currentSavedMovies} 
           deleteMovie={deleteMovie}
           isEmpty={isEmpty}
         />
