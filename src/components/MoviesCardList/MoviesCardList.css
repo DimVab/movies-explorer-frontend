@@ -85,7 +85,7 @@
   }
 }
 
-@media screen and (max-width: 525px) {
+@media screen and (max-width: 1024px) {
   .movies-card-list__message {
     top: 10px;
   }

@@ -91,7 +91,7 @@ function App() {
     }
   }
 
-  function handleOpenMenu () {
+  function handleOpenMenu (e) {
     isOpened ? openMenu(false) : openMenu(true);
   }
 
@@ -444,7 +444,9 @@ function App() {
         </Route>
       </Switch>
 
-      <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" /></div>
+      <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" />
+
+      </div>
 
     </CurrentUserContext.Provider>
   );

@@ -1,7 +1,13 @@
 .movies-card {
   background-color: #FFF;
   height: 100%;
-  max-width: 364px;
+  min-width: 100%;
+}
+
+@media screen and (min-width: 1280px) {
+  .movies-card {
+    max-width: 364px;
+  }
 }
 
 .movies-card__container {
@@ -12,6 +18,7 @@
 }
 
 .movies-card__info {
+  max-width: calc(100% - 28px - 26px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
