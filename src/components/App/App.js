@@ -41,6 +41,8 @@ function App() {
   const [isError, throwErrorMessage] = useState(false);
   const [isEmpty, throwEmptyMessage] = useState(false);
 
+  const [isAuthSent, setAuth] = useState(false);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -52,8 +54,10 @@ function App() {
         getUserInfo();
         // getSavedMovies();
         // возможно, не нужно получать фильмы, потом ещё раз проверить
+      })
+      .catch(() => {
+        setAuth(true);
       });
-      // здесь не обрабатываются ошибки через catch, тк если пользователь не авторизирован, то ничего с этим делать не нужно
   }, []);
 
   useEffect(() => {
@@ -162,6 +166,7 @@ function App() {
     mainApi.getUserInfo()
     .then((user) => {
       setUserInfo({ name: user.name, email: user.email});
+      setAuth(true);
     })
     .catch((err) => {
       console.log(`Ошибка ${err}`);
@@ -371,6 +376,8 @@ function App() {
           isEmpty={isEmpty}
           isError={isError}
           throwEmptyMessage={throwEmptyMessage}
+          setLoginStatus={setLoginStatus}
+          isAuthSent={isAuthSent}
         />
         <ProtectedRoute
           path="/saved-movies"
@@ -383,6 +390,8 @@ function App() {
           deleteMovie={deleteMovie}
           isEmpty={isEmpty}
           throwEmptyMessage={throwEmptyMessage}
+          setLoginStatus={setLoginStatus}
+          isAuthSent={isAuthSent}
         />
         <ProtectedRoute
           path="/profile"
@@ -395,7 +404,9 @@ function App() {
           reqError={profileReqError}
           reqErrorText={profileReqErrorText}
           handleEditProfile={handleEditProfile}
-          handleSignOut={handleSignOut}  
+          handleSignOut={handleSignOut}
+          setLoginStatus={setLoginStatus}
+          isAuthSent={isAuthSent}
         />
         <Route exact path="/signup">
           {loggedIn ?
