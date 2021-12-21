@@ -1,44 +1,46 @@
 import { useState, useEffect } from 'react';
 
-function MoviesCard ({ isSaved, name, duration, imageUrl, description, link, saveMovie, movieId, movies, savedMovies, deleteMovie, unmarkMovie }) {
+function MoviesCard ({ 
+  isSaved, 
+  savedMoviesStorage,
+  movie,
+  name, 
+  duration, 
+  imageUrl, 
+  description, 
+  link, 
+  saveMovie, 
+  deleteMovie
+ }) {
 
   const [isMarked, mark] = useState(false);
 
   useEffect(() => {
-    if (!isSaved && JSON.parse(localStorage.getItem('savedMovies')) && JSON.parse(localStorage.getItem('savedMovies')).some((savedMovie) => {
-      return savedMovie.movieId === movieId;
+    if (!isSaved && savedMoviesStorage.some((savedMovie) => {
+      return savedMovie.movieId === movie.id;
     })) {
-      toggleMark();
+      mark(true);
     }
-  }, []);
+  }, [savedMoviesStorage]);
 
   function getDuration(number) {
     return number/60 < 1 ? `${number%60}м` : `${Math.floor(number/60)}ч ${number%60 === 0 ? '' : `${number%60}м`}`;
   }
 
   function saveMovieHandler () {
-    const foundMovies = JSON.parse(localStorage.getItem('allMovies'));
-    saveMovie(foundMovies
-      .find((movie) => {
-        return movie.id === movieId;
-      }), toggleMark
-    );
-  }
-
-  function toggleMark() {
-    isMarked ? mark(false) : mark(true);
+    saveMovie(movie);
   }
 
   function deleteMovieHandler () {
     if (isSaved) {
-      deleteMovie(movieId);
+      deleteMovie(movie);
     } else {
-      unmarkMovie(JSON.parse(localStorage.getItem('savedMovies'))
+      deleteMovie(savedMoviesStorage
         .find((savedMovie) => {
-          return savedMovie.movieId === movieId;
+          return savedMovie.movieId === movie.id;
         })
       );
-      toggleMark();
+      mark(false);
     }
   }
 

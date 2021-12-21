@@ -13,16 +13,18 @@ function Movies ({
   setCurrentMovies, 
   saveMovie, 
   savedMovies, 
-  unmarkMovie, 
   searchLimiter, 
   increaseSearchLimiter, 
   isEmpty, 
   isError, 
   throwEmptyMessage,
+  savedMoviesStorage,
+  deleteMovie
  }) {
 
   useEffect(() => {
     // вспоминаются карточки, которые искались ранее
+    // #TODO переработать, чтобы карточки не брались из local Storage, а вычислялись
     if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
       setCurrentMovies(JSON.parse(localStorage.getItem('shortMovies')));
     } else if (localStorage.getItem('movies')) {
@@ -52,11 +54,12 @@ function Movies ({
           currentMovies={currentMovies} 
           saveMovie={saveMovie} 
           savedMovies={savedMovies}
-          unmarkMovie={unmarkMovie}
           searchLimiter={searchLimiter}
           increaseSearchLimiter={increaseSearchLimiter}
           isError={isError}
           isEmpty={isEmpty}
+          savedMoviesStorage={savedMoviesStorage}
+          deleteMovie={deleteMovie}
         />
       </section>
     </main>

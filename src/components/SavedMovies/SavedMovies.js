@@ -11,6 +11,7 @@ function SavedMovies ({ openMenu, getSavedMovies, currentSavedMovies, fillMovies
   
   useEffect(() => {
     // если в поиске по символам не было символов, удалить его идентификатор
+    // #TODO перетащить в searchForm
     if (localStorage.getItem('savedMoviesKeyword') === '') {
       localStorage.removeItem('filteredSavedMovies');
     }

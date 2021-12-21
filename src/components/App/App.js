@@ -34,9 +34,9 @@ function App() {
   const [profileReqError, showProfileReqError] = useState(false);
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
-
   // Хранилища фильмов и отображаемых фильмов
   const [moviesStorage, fillMoviesStorage] = useState([]);
+  // нужен только для того, чтобы искать сохранённые фильмы для удаления в movies:
   const [savedMoviesStorage, fillSavedMoviesStorage] = useState([]);
   const [currentMovies, setCurrentMovies] = useState([]);
   const [currentSavedMovies, setCurrentSavedMovies] = useState([]);
@@ -58,7 +58,8 @@ function App() {
       .then(() => {
         setLoginStatus(true);
         getUserInfo();
-
+        // нужно, чтобы иметь доступ к хранилищу сохранённых фильмов в movies
+        getSavedMovies();
       })
       .catch(() => {
         setAuth(true);
@@ -263,7 +264,7 @@ function App() {
           setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword).reverse());
         } else {
           // 2.2 если не было поиска
-          setCurrentSavedMovies(savedMovies).reverse();
+          setCurrentSavedMovies(savedMovies.reverse());
         }
       })
       .catch(() => {
@@ -298,63 +299,29 @@ function App() {
   function saveMovie (movie, callback) {
     mainApi.addMovie(movie)
       .then(() => {
-        // коллбэк на случай, если данные фильма не проходят валидацию на сервере (у некоторых фильмов отсутствует поле "country")
-        callback();
+        // для того, чтобы получить MovieId и иметь возможность удалить фильм сразу же
+        getSavedMovies();
       })
       .catch((err) => {
         console.log(`Ошибка ${err}`);
       });
   }
 
-  function deleteMovie (movieId) {
-    mainApi.removeMovie(movieId)
-      .then(() => {
-        localStorage.setItem('savedMovies', JSON.stringify(JSON.parse(localStorage.getItem('savedMovies'))
-          .filter((savedMovie) => {
-            return savedMovie._id !== movieId;
-          })
-        ));
-        // #TODO вот здесь прописать различные условия
-        if (localStorage.getItem('showShortSavedMovies')) {
-          // 1.1 если был поиск по символам
-          if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
-            localStorage.setItem('filteredShortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredShortSavedMovies'))
-            .filter((savedMovie) => {
-              return savedMovie._id !== movieId;
-            })
-          ));
-            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
-          } else {
-            // 1.2 если не было поиска
-            localStorage.setItem('shortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('shortSavedMovies'))
-              .filter((savedMovie) => {
-                return savedMovie._id !== movieId;
-              })
-            ));
-            fillSavedMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
-          }
-        // 2. если фильтр НЕ включён
-        } else if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
-          // 2.1 если был поиск по символам
-          localStorage.setItem('filteredSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredSavedMovies'))
-            .filter((savedMovie) => {
-              return savedMovie._id !== movieId;
-            })
-          ));
-          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
-        } else {
-          // 2.2 если не было поиска
-          fillSavedMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
-        }
-      })
-      .catch((err) => {
-        console.log(`Ошибка ${err}`);
-      });
-  }
-
-  function unmarkMovie (movie) {
-    // #FIXME 
+  function deleteMovie (movie) {
     mainApi.removeMovie(movie._id)
+      .then(() => {
+        fillSavedMoviesStorage(savedMoviesStorage
+          .filter((savedMovie) => {
+            return savedMovie !== movie;
+          })
+        );
+
+        setCurrentSavedMovies(savedMoviesStorage
+          .filter((savedMovie) => {
+            return savedMovie !== movie;
+          })
+        );
+      })
       .catch((err) => {
         console.log(`Ошибка ${err}`);
       });
@@ -374,7 +341,6 @@ function App() {
           setCurrentMovies={setCurrentMovies}
           saveMovie={saveMovie}
           savedMoviesStorage={savedMoviesStorage}
-          unmarkMovie={unmarkMovie}
           searchLimiter={searchLimiter}
           setSearchLimiter={setSearchLimiter}
           increaseSearchLimiter={increaseSearchLimiter}
@@ -383,6 +349,7 @@ function App() {
           throwEmptyMessage={throwEmptyMessage}
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
+          deleteMovie={deleteMovie}
         />
         <ProtectedRoute
           path="/saved-movies"

@@ -3,17 +3,16 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import { errorMessages, messages } from '../../utils/messages';
 
 function MoviesCardList ({ 
+  isError, 
+  isEmpty,
   isLoading, 
   isSaved, 
-  currentMovies, 
+  currentMovies,
+  savedMoviesStorage,
   saveMovie, 
   deleteMovie, 
-  savedMovies, 
-  unmarkMovie, 
   searchLimiter, 
-  increaseSearchLimiter, 
-  isError, 
-  isEmpty
+  increaseSearchLimiter
  }) {
 
   const allMovies = JSON.parse(localStorage.getItem('shortMovies')) ? JSON.parse(localStorage.getItem('shortMovies')) : JSON.parse(localStorage.getItem('allMovies'));
@@ -28,18 +27,15 @@ function MoviesCardList ({
           return(
             <MoviesCard
               isSaved={isSaved}
+              savedMoviesStorage={savedMoviesStorage}
+              movie={movie}
               name={movie.nameRU}
               duration={movie.duration}
               imageUrl={isSaved ? movie.image : movie.image.url}
               description={movie.description}
               link={isSaved ? movie.trailer : movie.trailerLink}
-              key={isSaved ? movie._id : movie.id}
-              movieId={isSaved ? movie._id : movie.id}
               saveMovie={saveMovie}
-              currentMovies={currentMovies}
-              savedMovies={savedMovies}
               deleteMovie={deleteMovie}
-              unmarkMovie={unmarkMovie}
             />
           )
         })}
