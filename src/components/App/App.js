@@ -388,8 +388,6 @@ function App() {
           savedMovies={savedMovies}
           fillMoviesStorage={fillSavedMoviesStorage}
           deleteMovie={deleteMovie}
-          isEmpty={isEmpty}
-          throwEmptyMessage={throwEmptyMessage}
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
         />

@@ -31,7 +31,7 @@ function Movies ({ isLoading, openMenu, findMovies, moviesStorage, fillMoviesSto
         throwEmptyMessage={throwEmptyMessage} 
         moviesStorage={moviesStorage} 
       />
-      <section>
+      <section className="movies__section">
         <MoviesCardList 
           isLoading={isLoading} 
           isSaved={false} 

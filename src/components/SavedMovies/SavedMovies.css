@@ -22,3 +22,7 @@
     padding: 84px 10px 131px;
   }
 }
+
+.saved-movies__section {
+  position: relative;
+}
