@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 
-function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage }) {
+function SearchForm ({ 
+  findMovies, 
+  type,
+  keyword,
+  setKeyword,
+  throwEmptyMessage
+ }) {
 
   useEffect(() => {
     if (type === 'movies' && localStorage.getItem('moviesKeyword')) {
@@ -11,7 +17,6 @@ function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage })
     }
   }, []);
 
-  const [keyword, setKeyword] = useState('');
   const [searchErrText, showSearchErrorText] = useState(false);
 
   useEffect(() => {
@@ -22,40 +27,11 @@ function SearchForm ({ findMovies, type, fillMoviesStorage, throwEmptyMessage })
 
   function handleSubmit (e) {
     e.preventDefault();
-    if (type === 'movies') {
-      localStorage.setItem('moviesKeyword', keyword);
-      if (keyword.length === 0) {
-        showSearchErrorText(true);
-        return;
-      }
-      findMovies(keyword);
+    if (type === 'movies' && keyword.length === 0) {
+      showSearchErrorText(true);
+      return;
     }
-    if (type === 'savedMovies') {
-
-      throwEmptyMessage(false);
-      localStorage.setItem('savedMoviesKeyword', keyword);
-      localStorage.setItem('filteredSavedMovies', JSON.stringify(
-        JSON.parse(localStorage.getItem('savedMovies'))
-          .filter((movie) => {
-            return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
-          })
-      ));
-      fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
-      if (JSON.parse(localStorage.getItem('filteredSavedMovies')).length === 0) {
-        throwEmptyMessage(true);
-        return;
-      }
-
-      // если включён фильтр короткометражек
-      if (localStorage.getItem('showShortSavedMovies')) {
-        localStorage.setItem('filteredShortSavedMovies', JSON.stringify(JSON.parse(localStorage.getItem('filteredSavedMovies'))
-          .filter((movie) => {
-            return movie.duration <= 40;
-          })
-        ));
-        fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
-      }
-    }
+    findMovies(keyword, throwEmptyMessage(true));
   }
 
   function handleChange (e) {

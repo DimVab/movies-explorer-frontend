@@ -5,18 +5,22 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-function SavedMovies ({ openMenu, getSavedMovies, currentSavedMovies, fillMoviesStorage, deleteMovie }) {
-
-  const [isEmpty, throwEmptyMessage] = useState(false);
+function SavedMovies ({ 
+  openMenu, 
+  getSavedMovies, 
+  currentSavedMovies, 
+  fillMoviesStorage, 
+  deleteMovie,
+  savedMoviesKeyword,
+  setSavedMoviesKeyword,
+  findSavedMovies,
+  isEmpty,
+  throwSavedMoviesEmptyMessage
+ }) {
   
   useEffect(() => {
-    // если в поиске по символам не было символов, удалить его идентификатор
-    // #TODO перетащить в searchForm
-    if (localStorage.getItem('savedMoviesKeyword') === '') {
-      localStorage.removeItem('filteredSavedMovies');
-    }
     // нужно для того, чтобы получать id добавленных фильмов
-    getSavedMovies();
+    getSavedMovies(savedMoviesKeyword, throwSavedMoviesEmptyMessage(true));
   }, []);
 
   return(
@@ -30,12 +34,14 @@ function SavedMovies ({ openMenu, getSavedMovies, currentSavedMovies, fillMovies
       <SearchForm 
         type="savedMovies" 
         fillMoviesStorage={fillMoviesStorage} 
-        throwEmptyMessage={throwEmptyMessage} 
+        keyword={savedMoviesKeyword}
+        setKeyword={setSavedMoviesKeyword}
+        findMovies={findSavedMovies}
+        throwEmptyMessage={throwSavedMoviesEmptyMessage}
       />
       <FilterCheckbox 
         fillMoviesStorage={fillMoviesStorage} 
         isSaved={true} 
-        throwEmptyMessage={throwEmptyMessage} 
         currentMovies={currentSavedMovies} 
       />
       <section className="saved-movies__section">

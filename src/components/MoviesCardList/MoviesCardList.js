@@ -21,10 +21,12 @@ function MoviesCardList ({
   const [maximumMovies, setMaximumMovies] = useState(0);
 
   useEffect(() => {
-    if (localStorage.getItem('showShortMovies')) {
-      setMaximumMovies(filterMoviesByDuration(moviesStorage).length);
-    } else if (moviesStorage.length > 0) {
-      setMaximumMovies(moviesStorage.length);
+    if (!isSaved) {
+      if (localStorage.getItem('showShortMovies')) {
+        setMaximumMovies(filterMoviesByDuration(moviesStorage).length);
+      } else if (moviesStorage.length > 0) {
+        setMaximumMovies(moviesStorage.length);
+      }
     }
   }, [moviesStorage]);
 

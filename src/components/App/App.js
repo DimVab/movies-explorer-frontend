@@ -44,11 +44,10 @@ function App() {
 
   const [searchLimiter, setSearchLimiter] = useState(12);
   const [isError, throwErrorMessage] = useState(false);
-  const [isEmpty, throwEmptyMessage] = useState(false);
-  // const [moviesKeyword, setMoviesKeyword] = useState('');
-  // возможно, movies keyword не нужна; использовать в search
+  const [isMoviesEmpty, throwMoviesEmptyMessage] = useState(false);
+  const [isSavedMoviesEmpty, throwSavedMoviesEmptyMessage] = useState(false);
+  const [moviesKeyword, setMoviesKeyword] = useState('');
   const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
-  // savedMoviesKeyword тоже вынести в search, а функции добавить аргумент - keyword
 
   const [isAuthSent, setAuth] = useState(false);
 
@@ -67,7 +66,7 @@ function App() {
         setLoginStatus(true);
         getUserInfo();
         // нужно, чтобы иметь доступ к хранилищу сохранённых фильмов в movies
-        getSavedMovies();
+        getSavedMovies(savedMoviesKeyword, throwSavedMoviesEmptyMessage(true));
       })
       .catch(() => {
         setAuth(true);
@@ -189,17 +188,18 @@ function App() {
     });
   }
 
-  function findMovies (moviesKeyword) {
-    throwEmptyMessage(false);
+  function findMovies (moviesKeyword, message) {
+    throwMoviesEmptyMessage(false);
     throwErrorMessage(false);
     setLoadingStatus(true);
     fillMoviesStorage([]);
     setCurrentMovies([]);
     localStorage.removeItem('movies');
     localStorage.removeItem('currentSearchLimiter');
+    localStorage.setItem('moviesKeyword', moviesKeyword);
     getMovies()
       .then((movies) => {
-        return filterMoviesBySymbols(movies, moviesKeyword);
+        return filterMoviesBySymbols(movies, moviesKeyword, message);
       })
       .then((filteredMovies) => {
         localStorage.setItem('movies', JSON.stringify(filteredMovies));
@@ -208,7 +208,7 @@ function App() {
         handleResize();
         // если включён фильтр короткометражек
         if (localStorage.getItem('showShortMovies')) {
-          setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies)));
+          setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies, message)));
         } else {
           setCurrentMovies(filterBySearchLimiter(filteredMovies));
         }
@@ -221,6 +221,16 @@ function App() {
       });
   }
 
+  function findSavedMovies(savedMoviesKeyword, message) {
+    throwSavedMoviesEmptyMessage(false);
+    localStorage.setItem('savedMoviesKeyword', savedMoviesKeyword);
+    if (localStorage.getItem('showShortSavedMovies')) {
+      setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword, message), message));
+    } else {
+      setCurrentSavedMovies(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword, message));
+    }
+  }
+
   function increaseSearchLimiter() {
     if (window.screen.width > 1024) {
       setSearchLimiter(searchLimiter + 3);
@@ -229,7 +239,14 @@ function App() {
     }
   }
 
-  function getSavedMovies () {
+  function getSavedMovies (savedMoviesKeyword, message) {
+    
+    if (localStorage.getItem('savedMoviesKeyword') === '') {
+      localStorage.removeItem('savedMoviesKeyword');
+    } else if (localStorage.getItem('savedMoviesKeyword')) {
+      setSavedMoviesKeyword(localStorage.getItem('savedMoviesKeyword'));
+    }
+
     mainApi.getSavedMovies()
       .then((savedMovies) => {
         // заполнить хранилище сохранённых фильмов
@@ -239,45 +256,45 @@ function App() {
           // 1.1 если был поиск по символам
           if (localStorage.getItem('savedMoviesKeyword')) {
             // фильтруем и по символаи и по длительности
-            setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMovies, savedMoviesKeyword)).reverse());
+            setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMovies, savedMoviesKeyword, message), message).reverse());
           } else {
             // 1.2 если не было поиска
-            setCurrentSavedMovies(filterMoviesByDuration(savedMovies).reverse());
+            setCurrentSavedMovies(filterMoviesByDuration(savedMovies, message).reverse());
           }
         // 2. если фильтр НЕ включён
         } else if (localStorage.getItem('savedMoviesKeyword')) {
           // 2.1 если был поиск по символам
-          setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword).reverse());
+          setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword, message).reverse());
         } else {
           // 2.2 если не было поиска
           setCurrentSavedMovies(savedMovies.reverse());
         }
       })
-      .catch(() => {
+      .catch((e) => {
         throwErrorMessage(true);
       });
   }
 
   // отфильтровать по длине
-  function filterMoviesByDuration(movies) {
+  function filterMoviesByDuration(movies, message) {
     const result = movies.filter((movie) => {
       return movie.duration <= 40;
     });
 
     if (result.length === 0) {
-      throwEmptyMessage(true);
+      message;
     }
     return result;
   }
 
   // отфильтровать по символам
-  function filterMoviesBySymbols(movies, keyword) {
+  function filterMoviesBySymbols(movies, keyword, message) {
     const result = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
     });
 
     if (result.length === 0) {
-      throwEmptyMessage(true);
+      message;
     }
     return result;
   }
@@ -330,9 +347,8 @@ function App() {
           searchLimiter={searchLimiter}
           setSearchLimiter={setSearchLimiter}
           increaseSearchLimiter={increaseSearchLimiter}
-          isEmpty={isEmpty}
+          isEmpty={isMoviesEmpty}
           isError={isError}
-          throwEmptyMessage={throwEmptyMessage}
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
           deleteMovie={deleteMovie}
@@ -340,6 +356,9 @@ function App() {
           fillMoviesStorage={fillMoviesStorage}
           filterBySearchLimiter={filterBySearchLimiter}
           filterMoviesByDuration={filterMoviesByDuration}
+          moviesKeyword={moviesKeyword}
+          setMoviesKeyword={setMoviesKeyword}
+          throwMoviesEmptyMessage={throwMoviesEmptyMessage}
         />
         <ProtectedRoute
           path="/saved-movies"
@@ -352,6 +371,11 @@ function App() {
           deleteMovie={deleteMovie}
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
+          savedMoviesKeyword={savedMoviesKeyword}
+          setSavedMoviesKeyword={setSavedMoviesKeyword}
+          findSavedMovies={findSavedMovies}
+          isEmpty={isSavedMoviesEmpty}
+          throwSavedMoviesEmptyMessage={throwSavedMoviesEmptyMessage}
         />
         <ProtectedRoute
           path="/profile"

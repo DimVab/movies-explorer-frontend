@@ -17,13 +17,15 @@ function Movies ({
   increaseSearchLimiter, 
   isEmpty, 
   isError, 
-  throwEmptyMessage,
   savedMoviesStorage,
   deleteMovie,
   moviesStorage,
   fillMoviesStorage,
   filterBySearchLimiter,
-  filterMoviesByDuration
+  filterMoviesByDuration,
+  moviesKeyword,
+  setMoviesKeyword,
+  throwMoviesEmptyMessage
  }) {
   useEffect(() => {
     // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана
@@ -47,10 +49,12 @@ function Movies ({
     <main className="movies-container">
       <SearchForm 
         findMovies={findMovies} type="movies"
+        keyword={moviesKeyword}
+        setKeyword={setMoviesKeyword}
+        throwEmptyMessage={throwMoviesEmptyMessage}
       />
       <FilterCheckbox 
         setCurrentMovies={setCurrentMovies} 
-        throwEmptyMessage={throwEmptyMessage} 
         currentMovies={currentMovies}
       />
       <section className="movies__section">
