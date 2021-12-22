@@ -24,13 +24,16 @@ function Movies ({
   filterBySearchLimiter,
   filterMoviesByDuration,
   moviesKeyword,
-  setMoviesKeyword
+  setMoviesKeyword,
+  findShortMovies,
+  restoreMovies,
  }) {
   useEffect(() => {
     // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана
     if (localStorage.getItem('showShortMovies') && JSON.parse(localStorage.getItem('movies'))) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies')))));
+      console.log(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies'))));
     } else if(JSON.parse(localStorage.getItem('movies'))) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       setCurrentMovies(filterBySearchLimiter(JSON.parse(localStorage.getItem('movies'))));
@@ -54,6 +57,8 @@ function Movies ({
       <FilterCheckbox 
         setCurrentMovies={setCurrentMovies} 
         currentMovies={currentMovies}
+        findShortMovies={findShortMovies}
+        restoreMovies={restoreMovies}
       />
       <section className="movies__section">
         <MoviesCardList 
@@ -69,7 +74,6 @@ function Movies ({
           savedMoviesStorage={savedMoviesStorage}
           deleteMovie={deleteMovie}
           moviesStorage={moviesStorage}
-          filterMoviesByDuration={filterMoviesByDuration}
         />
       </section>
     </main>

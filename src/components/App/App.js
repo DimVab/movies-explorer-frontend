@@ -35,9 +35,7 @@ function App() {
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
   // Хранилища фильмов и отображаемых фильмов
-  // нужно только для того, чтобы расчитывать рендеринг кнопки "ещё":
   const [moviesStorage, fillMoviesStorage] = useState([]);
-  // нужно только для того, чтобы искать сохранённые фильмы для удаления в movies:
   const [savedMoviesStorage, fillSavedMoviesStorage] = useState([]);
   const [currentMovies, setCurrentMovies] = useState([]);
   const [currentSavedMovies, setCurrentSavedMovies] = useState([]);
@@ -275,6 +273,16 @@ function App() {
       });
   }
 
+  function findShortMovies () {
+    localStorage.setItem('showShortMovies', 'true');
+    setCurrentMovies(filterMoviesByDuration(moviesStorage));
+  }
+
+  function restoreMovies () {
+    localStorage.removeItem('showShortMovies');
+    setCurrentMovies(moviesStorage);
+  }
+
   // отфильтровать по длине
   function filterMoviesByDuration(movies) {
     const result = movies.filter((movie) => {
@@ -384,6 +392,8 @@ function App() {
           filterMoviesByDuration={filterMoviesByDuration}
           moviesKeyword={moviesKeyword}
           setMoviesKeyword={setMoviesKeyword}
+          findShortMovies={findShortMovies}
+          restoreMovies={restoreMovies}
         />
         <ProtectedRoute
           path="/saved-movies"

@@ -14,18 +14,22 @@ function MoviesCardList ({
   deleteMovie, 
   searchLimiter, 
   increaseSearchLimiter,
-  moviesStorage,
-  filterMoviesByDuration
+  moviesStorage
  }) {
 
   const [maximumMovies, setMaximumMovies] = useState(0);
+
+  function filterMoviesByDuration(movies) {
+    return movies.filter((movie) => {
+      return movie.duration <= 40;
+    });
+  }
 
   useEffect(() => {
     if (!isSaved) {
       if (localStorage.getItem('showShortMovies')) {
         setMaximumMovies(filterMoviesByDuration(moviesStorage).length);
       } else if (moviesStorage.length > 0) {
-        setMaximumMovies(moviesStorage.length);
       }
     }
   }, [moviesStorage]);
