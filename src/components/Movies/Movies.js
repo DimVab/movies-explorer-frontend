@@ -19,18 +19,24 @@ function Movies ({
   isError, 
   throwEmptyMessage,
   savedMoviesStorage,
-  deleteMovie
+  deleteMovie,
+  moviesStorage,
+  fillMoviesStorage,
+  filterBySearchLimiter,
+  filterMoviesByDuration
  }) {
-
   useEffect(() => {
-    // вспоминаются карточки, которые искались ранее
-    // #TODO переработать, чтобы карточки не брались из local Storage, а вычислялись
-    if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
-      setCurrentMovies(JSON.parse(localStorage.getItem('shortMovies')));
-    } else if (localStorage.getItem('movies')) {
-      setCurrentMovies(JSON.parse(localStorage.getItem('movies')));
+    // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана
+    if (localStorage.getItem('showShortMovies') && JSON.parse(localStorage.getItem('movies'))) {
+      fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies')))));
+    } else if(JSON.parse(localStorage.getItem('movies'))) {
+      fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
+      setCurrentMovies(filterBySearchLimiter(JSON.parse(localStorage.getItem('movies'))));
     }
-  }, []);
+    // запоминаем количество отображаемых фильмов
+    localStorage.setItem('currentSearchLimiter', searchLimiter);
+  }, [searchLimiter]);
 
   return(
     <div className="movies">
@@ -60,6 +66,8 @@ function Movies ({
           isEmpty={isEmpty}
           savedMoviesStorage={savedMoviesStorage}
           deleteMovie={deleteMovie}
+          moviesStorage={moviesStorage}
+          filterMoviesByDuration={filterMoviesByDuration}
         />
       </section>
     </main>

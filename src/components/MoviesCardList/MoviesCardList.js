@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { errorMessages, messages } from '../../utils/messages';
@@ -12,10 +13,20 @@ function MoviesCardList ({
   saveMovie, 
   deleteMovie, 
   searchLimiter, 
-  increaseSearchLimiter
+  increaseSearchLimiter,
+  moviesStorage,
+  filterMoviesByDuration
  }) {
 
-  const allMovies = JSON.parse(localStorage.getItem('shortMovies')) ? JSON.parse(localStorage.getItem('shortMovies')) : JSON.parse(localStorage.getItem('allMovies'));
+  const [maximumMovies, setMaximumMovies] = useState(0);
+
+  useEffect(() => {
+    if (localStorage.getItem('showShortMovies')) {
+      setMaximumMovies(filterMoviesByDuration(moviesStorage).length);
+    } else if (moviesStorage.length > 0) {
+      setMaximumMovies(moviesStorage.length);
+    }
+  }, [moviesStorage]);
 
   return(
     <>
@@ -40,7 +51,7 @@ function MoviesCardList ({
           )
         })}
       </ul>
-      {!isSaved && (allMovies && allMovies.length > searchLimiter) && <button className="movies-card-list__button" type="button" onClick={increaseSearchLimiter}>Ещё</button>}
+      {!isSaved && maximumMovies > searchLimiter && <button className="movies-card-list__button" type="button" onClick={increaseSearchLimiter}>Ещё</button>}
       </>
     }</>
   );

@@ -35,8 +35,9 @@ function App() {
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
   // Хранилища фильмов и отображаемых фильмов
+  // нужно только для того, чтобы расчитывать рендеринг кнопки "ещё":
   const [moviesStorage, fillMoviesStorage] = useState([]);
-  // нужен только для того, чтобы искать сохранённые фильмы для удаления в movies:
+  // нужно только для того, чтобы искать сохранённые фильмы для удаления в movies:
   const [savedMoviesStorage, fillSavedMoviesStorage] = useState([]);
   const [currentMovies, setCurrentMovies] = useState([]);
   const [currentSavedMovies, setCurrentSavedMovies] = useState([]);
@@ -44,16 +45,23 @@ function App() {
   const [searchLimiter, setSearchLimiter] = useState(12);
   const [isError, throwErrorMessage] = useState(false);
   const [isEmpty, throwEmptyMessage] = useState(false);
-  const [moviesKeyword, setMoviesKeyword] = useState('');
+  // const [moviesKeyword, setMoviesKeyword] = useState('');
+  // возможно, movies keyword не нужна; использовать в search
   const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
+  // savedMoviesKeyword тоже вынести в search, а функции добавить аргумент - keyword
 
   const [isAuthSent, setAuth] = useState(false);
 
   const history = useHistory();
 
   useEffect(() => {
-    // в самом начале получаем информацию о пользователе либо сообщение о необходимости авторизации
     window.addEventListener('resize', handleResize);
+    if (localStorage.getItem('currentSearchLimiter')) {
+      // если ранее пользователь искал фильмы, то при перезагрузке страницы приложение отобразит такое же количество фильмов, какое было до перезагрузки несмотря на размер экрана
+      setSearchLimiter(Number(localStorage.getItem('currentSearchLimiter')));
+    } else {
+      handleResize();
+    }
     mainApi.checkToken()
       .then(() => {
         setLoginStatus(true);
@@ -66,29 +74,6 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    if (loggedIn) {
-      // #TODO обернуть в функцию filterBySearchLimiter
-      if (localStorage.getItem('showShortMovies') && localStorage.getItem('shortMovies')) {
-        fillMoviesStorage(JSON.parse(localStorage.getItem('shortMovies'))
-          .filter((movie, i) => {
-            return i < searchLimiter;
-          })  
-        );
-      } else if(JSON.parse(localStorage.getItem('allMovies'))) {
-        // #TODO обернуть в функцию filterBySearchLimiter
-        localStorage.setItem('movies', JSON.stringify(JSON.parse(localStorage.getItem('allMovies'))
-          .filter((movie, i) => {
-            return i < searchLimiter;
-          })  
-        ));
-        // #TODO Возможно в будущем убрать прослойку в виде movies, подумать нужна ли она вообще
-        fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
-      }
-    }
-
-  }, [searchLimiter]);
-
   function handleResize() {
     if (window.screen.width > 1024) {
       setSearchLimiter(12);
@@ -97,7 +82,6 @@ function App() {
     } else {
       setSearchLimiter(5);
     }
-    // #TODO проверить  работоспособность здесь без (e) и e.target.screen.width
   }
 
   function filterBySearchLimiter(movies) {
@@ -164,6 +148,7 @@ function App() {
       localStorage.removeItem('showShortMovies');
       localStorage.removeItem('showShortSavedMovies');
       localStorage.removeItem('movies');
+      localStorage.removeItem('currentSearchLimiter');
       fillMoviesStorage([]);
       history.push('./');
     })
@@ -211,6 +196,7 @@ function App() {
     fillMoviesStorage([]);
     setCurrentMovies([]);
     localStorage.removeItem('movies');
+    localStorage.removeItem('currentSearchLimiter');
     getMovies()
       .then((movies) => {
         return filterMoviesBySymbols(movies, moviesKeyword);
@@ -350,6 +336,10 @@ function App() {
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
           deleteMovie={deleteMovie}
+          moviesStorage={moviesStorage}
+          fillMoviesStorage={fillMoviesStorage}
+          filterBySearchLimiter={filterBySearchLimiter}
+          filterMoviesByDuration={filterMoviesByDuration}
         />
         <ProtectedRoute
           path="/saved-movies"
