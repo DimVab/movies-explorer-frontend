@@ -4,8 +4,7 @@ function SearchForm ({
   findMovies, 
   type,
   keyword,
-  setKeyword,
-  throwEmptyMessage
+  setKeyword
  }) {
 
   useEffect(() => {
@@ -31,7 +30,7 @@ function SearchForm ({
       showSearchErrorText(true);
       return;
     }
-    findMovies(keyword, throwEmptyMessage(true));
+    findMovies(keyword);
   }
 
   function handleChange (e) {

@@ -14,13 +14,12 @@ function SavedMovies ({
   savedMoviesKeyword,
   setSavedMoviesKeyword,
   findSavedMovies,
-  isEmpty,
-  throwSavedMoviesEmptyMessage
+  isEmpty
  }) {
   
   useEffect(() => {
     // нужно для того, чтобы получать id добавленных фильмов
-    getSavedMovies(savedMoviesKeyword, throwSavedMoviesEmptyMessage(true));
+    getSavedMovies(savedMoviesKeyword);
   }, []);
 
   return(
@@ -37,7 +36,6 @@ function SavedMovies ({
         keyword={savedMoviesKeyword}
         setKeyword={setSavedMoviesKeyword}
         findMovies={findSavedMovies}
-        throwEmptyMessage={throwSavedMoviesEmptyMessage}
       />
       <FilterCheckbox 
         fillMoviesStorage={fillMoviesStorage} 

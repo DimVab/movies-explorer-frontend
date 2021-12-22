@@ -24,8 +24,7 @@ function Movies ({
   filterBySearchLimiter,
   filterMoviesByDuration,
   moviesKeyword,
-  setMoviesKeyword,
-  throwMoviesEmptyMessage
+  setMoviesKeyword
  }) {
   useEffect(() => {
     // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана
@@ -51,7 +50,6 @@ function Movies ({
         findMovies={findMovies} type="movies"
         keyword={moviesKeyword}
         setKeyword={setMoviesKeyword}
-        throwEmptyMessage={throwMoviesEmptyMessage}
       />
       <FilterCheckbox 
         setCurrentMovies={setCurrentMovies} 

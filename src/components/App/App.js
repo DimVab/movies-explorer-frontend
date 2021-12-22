@@ -66,7 +66,7 @@ function App() {
         setLoginStatus(true);
         getUserInfo();
         // нужно, чтобы иметь доступ к хранилищу сохранённых фильмов в movies
-        getSavedMovies(savedMoviesKeyword, throwSavedMoviesEmptyMessage(true));
+        getSavedMovies(savedMoviesKeyword);
       })
       .catch(() => {
         setAuth(true);
@@ -188,8 +188,8 @@ function App() {
     });
   }
 
-  function findMovies (moviesKeyword, message) {
-    throwMoviesEmptyMessage(false);
+  function findMovies (moviesKeyword) {
+    throwEmptyMessage(false);
     throwErrorMessage(false);
     setLoadingStatus(true);
     fillMoviesStorage([]);
@@ -199,7 +199,7 @@ function App() {
     localStorage.setItem('moviesKeyword', moviesKeyword);
     getMovies()
       .then((movies) => {
-        return filterMoviesBySymbols(movies, moviesKeyword, message);
+        return filterMoviesBySymbols(movies, moviesKeyword);
       })
       .then((filteredMovies) => {
         localStorage.setItem('movies', JSON.stringify(filteredMovies));
@@ -208,7 +208,7 @@ function App() {
         handleResize();
         // если включён фильтр короткометражек
         if (localStorage.getItem('showShortMovies')) {
-          setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies, message)));
+          setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies)));
         } else {
           setCurrentMovies(filterBySearchLimiter(filteredMovies));
         }
@@ -221,13 +221,13 @@ function App() {
       });
   }
 
-  function findSavedMovies(savedMoviesKeyword, message) {
-    throwSavedMoviesEmptyMessage(false);
+  function findSavedMovies(savedMoviesKeyword) {
+    throwEmptyMessage(false);
     localStorage.setItem('savedMoviesKeyword', savedMoviesKeyword);
     if (localStorage.getItem('showShortSavedMovies')) {
-      setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword, message), message));
+      setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)));
     } else {
-      setCurrentSavedMovies(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword, message));
+      setCurrentSavedMovies(filterMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword));
     }
   }
 
@@ -239,7 +239,7 @@ function App() {
     }
   }
 
-  function getSavedMovies (savedMoviesKeyword, message) {
+  function getSavedMovies (savedMoviesKeyword) {
     
     if (localStorage.getItem('savedMoviesKeyword') === '') {
       localStorage.removeItem('savedMoviesKeyword');
@@ -256,15 +256,15 @@ function App() {
           // 1.1 если был поиск по символам
           if (localStorage.getItem('savedMoviesKeyword')) {
             // фильтруем и по символаи и по длительности
-            setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMovies, savedMoviesKeyword, message), message).reverse());
+            setCurrentSavedMovies(filterMoviesByDuration(filterMoviesBySymbols(savedMovies, savedMoviesKeyword)).reverse());
           } else {
             // 1.2 если не было поиска
-            setCurrentSavedMovies(filterMoviesByDuration(savedMovies, message).reverse());
+            setCurrentSavedMovies(filterMoviesByDuration(savedMovies).reverse());
           }
         // 2. если фильтр НЕ включён
         } else if (localStorage.getItem('savedMoviesKeyword')) {
           // 2.1 если был поиск по символам
-          setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword, message).reverse());
+          setCurrentSavedMovies(filterMoviesBySymbols(savedMovies, savedMoviesKeyword).reverse());
         } else {
           // 2.2 если не было поиска
           setCurrentSavedMovies(savedMovies.reverse());
@@ -276,25 +276,25 @@ function App() {
   }
 
   // отфильтровать по длине
-  function filterMoviesByDuration(movies, message) {
+  function filterMoviesByDuration(movies) {
     const result = movies.filter((movie) => {
       return movie.duration <= 40;
     });
 
     if (result.length === 0) {
-      message;
+      throwEmptyMessage(true);
     }
     return result;
   }
 
   // отфильтровать по символам
-  function filterMoviesBySymbols(movies, keyword, message) {
+  function filterMoviesBySymbols(movies, keyword) {
     const result = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
     });
 
     if (result.length === 0) {
-      message;
+      throwEmptyMessage(true);
     }
     return result;
   }
@@ -347,7 +347,7 @@ function App() {
           searchLimiter={searchLimiter}
           setSearchLimiter={setSearchLimiter}
           increaseSearchLimiter={increaseSearchLimiter}
-          isEmpty={isMoviesEmpty}
+          isEmpty={isEmpty}
           isError={isError}
           setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
@@ -358,7 +358,6 @@ function App() {
           filterMoviesByDuration={filterMoviesByDuration}
           moviesKeyword={moviesKeyword}
           setMoviesKeyword={setMoviesKeyword}
-          throwMoviesEmptyMessage={throwMoviesEmptyMessage}
         />
         <ProtectedRoute
           path="/saved-movies"
@@ -374,8 +373,7 @@ function App() {
           savedMoviesKeyword={savedMoviesKeyword}
           setSavedMoviesKeyword={setSavedMoviesKeyword}
           findSavedMovies={findSavedMovies}
-          isEmpty={isSavedMoviesEmpty}
-          throwSavedMoviesEmptyMessage={throwSavedMoviesEmptyMessage}
+          isEmpty={isEmpty}
         />
         <ProtectedRoute
           path="/profile"
