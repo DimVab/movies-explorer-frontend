@@ -321,14 +321,18 @@ function App() {
     return result;
   }
 
-  function saveMovie (movie, callback) {
+  function saveMovie (movie) {
     mainApi.addMovie(movie)
       .then(() => {
         // для того, чтобы получить MovieId и иметь возможность удалить фильм сразу же
         getSavedMovies();
       })
       .catch((err) => {
-        console.log(`Ошибка ${err}`);
+        if (err === '400') {
+          console.log(errorMessages.movies.validation);
+        } else {
+          console.log(`Ошибка ${err}`);
+        }
       });
   }
 
