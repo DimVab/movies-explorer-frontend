@@ -113,7 +113,7 @@ class MainApi {
 }
   
 const mainApi = new MainApi ({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://api.movies-explorer.vab.nomoredomains.work',
   headers: {
     'Content-Type': 'application/json',
   }

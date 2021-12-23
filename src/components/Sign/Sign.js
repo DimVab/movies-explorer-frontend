@@ -24,6 +24,15 @@ function Sign ({
     userPassword: ''
   });
 
+  // 
+  useEffect(() => {
+    setSignData({
+      userName: '',
+      userEmail: '',
+      userPassword: ''
+    });
+  }, []);
+
   const [errors, setErrors] = useState({
     userName: {
       required: false,
@@ -41,12 +50,6 @@ function Sign ({
   });
 
   const [isSubmitDisabled, setSubmitDisabled] = useState(true);
-
-  const [errorTexts, setErrorTexts] = useState({
-    userNameErrorText: '',
-    userEmailErrorText: '',
-    userPassowrdErrorText: '',
-  });
 
   useEffect(() => {
     const isNameInputValid = !Object.values(errors.userName).some(Boolean) && signData.userName !== '';
