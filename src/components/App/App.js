@@ -248,24 +248,24 @@ function App() {
     mainApi.getSavedMovies()
       .then((savedMovies) => {
         // заполнить хранилище сохранённых фильмов
-        fillSavedMoviesStorage(savedMovies);
+        fillSavedMoviesStorage(savedMovies.reverse());
         // 1. если включён фильтр по короткометражкам
         if (localStorage.getItem('showShortSavedMovies')) {
           // 1.1 если был поиск по символам
           if (localStorage.getItem('savedMoviesKeyword')) {
             // фильтруем и по символаи и по длительности
-            setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMovies, savedMoviesKeyword)).reverse());
+            setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMovies, savedMoviesKeyword)));
           } else {
             // 1.2 если не было поиска
-            setCurrentSavedMovies(filterSavedMoviesByDuration(savedMovies).reverse());
+            setCurrentSavedMovies(filterSavedMoviesByDuration(savedMovies));
           }
         // 2. если фильтр НЕ включён
         } else if (localStorage.getItem('savedMoviesKeyword')) {
           // 2.1 если был поиск по символам
-          setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMovies, savedMoviesKeyword).reverse());
+          setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMovies, savedMoviesKeyword));
         } else {
           // 2.2 если не было поиска
-          setCurrentSavedMovies(savedMovies.reverse());
+          setCurrentSavedMovies(savedMovies);
         }
       })
       .catch((e) => {
@@ -286,18 +286,18 @@ function App() {
   function findShortSavedMovies() {
     localStorage.setItem('showShortSavedMovies', 'true');
     if (localStorage.getItem('savedMoviesKeyword')) {
-      setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)).reverse());
+      setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)));
     } else {
-      setCurrentSavedMovies(filterSavedMoviesByDuration(savedMoviesStorage).reverse());
+      setCurrentSavedMovies(filterSavedMoviesByDuration(savedMoviesStorage));
     }
   }
 
   function restoreSavedMovies() {
     localStorage.removeItem('showShortSavedMovies');
     if (localStorage.getItem('savedMoviesKeyword')) {
-      setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword).reverse());
+      setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword));
     } else {
-      setCurrentSavedMovies(savedMoviesStorage.reverse());
+      setCurrentSavedMovies(savedMoviesStorage);
     }
   }
 
