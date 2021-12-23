@@ -31,6 +31,7 @@ function MoviesCardList ({
       if (localStorage.getItem('showShortMovies')) {
         setMaximumMovies(filterMoviesByDuration(moviesStorage).length);
       } else if (moviesStorage.length > 0) {
+        setMaximumMovies(moviesStorage.length);
       }
     }
   }, [moviesStorage]);

@@ -284,6 +284,9 @@ function App() {
   function restoreMovies () {
     localStorage.removeItem('showShortMovies');
     setCurrentMovies(filterBySearchLimiter(moviesStorage));
+    if (filterBySearchLimiter(moviesStorage).length > 0) {
+      showMoviesEmptyMessage(false);
+    }
   }
 
   function findShortSavedMovies() {
@@ -299,8 +302,12 @@ function App() {
     localStorage.removeItem('showShortSavedMovies');
     if (localStorage.getItem('savedMoviesKeyword')) {
       setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword));
+      if (filterBySearchLimiter(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)).length > 0) {
+        showSavedMoviesEmptyMessage(false);
+      }
     } else {
       setCurrentSavedMovies(savedMoviesStorage);
+      showSavedMoviesEmptyMessage(false);
     }
   }
 

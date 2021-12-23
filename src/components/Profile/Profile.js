@@ -125,6 +125,7 @@ function Profile ({
   function editProfile (e) {
     e.preventDefault();
     handleEditProfile(profileData);
+    setSubmitDisabled(true);
   }
 
   function signOut (e) {
