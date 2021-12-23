@@ -24,15 +24,6 @@ function Sign ({
     userPassword: ''
   });
 
-  // точно не помню, зачем продублировал #TODO подумать над удалением
-  useEffect(() => {
-    setSignData({
-      userName: '',
-      userEmail: '',
-      userPassword: ''
-    });
-  }, []);
-
   const [errors, setErrors] = useState({
     userName: {
       required: false,
