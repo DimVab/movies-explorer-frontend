@@ -47,5 +47,5 @@
 * `npm run build` - собирает проект
 
 **Ссылки на приложение:**  
-http://movies-explorer.vab.nomoredomains.work
+http://movies-explorer.vab.nomoredomains.work  
 https://movies-explorer.vab.nomoredomains.work
