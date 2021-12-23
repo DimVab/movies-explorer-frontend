@@ -33,7 +33,6 @@ function Movies ({
     if (localStorage.getItem('showShortMovies') && JSON.parse(localStorage.getItem('movies'))) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies')))));
-      console.log(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies'))));
     } else if(JSON.parse(localStorage.getItem('movies'))) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       setCurrentMovies(filterBySearchLimiter(JSON.parse(localStorage.getItem('movies'))));

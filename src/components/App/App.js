@@ -268,7 +268,8 @@ function App() {
           setCurrentSavedMovies(savedMovies);
         }
       })
-      .catch((e) => {
+      .catch(() => {
+        console.log(errorMessages.movies.connect);
         throwErrorMessage(true);
       });
   }
@@ -300,10 +301,6 @@ function App() {
       setCurrentSavedMovies(savedMoviesStorage);
     }
   }
-
-  useEffect(() => {
-    console.log(savedMoviesStorage);
-  }, [savedMoviesStorage]);
 
   // отфильтровать по длине
   function filterMoviesByDuration(movies) {
@@ -355,7 +352,15 @@ function App() {
     mainApi.addMovie(movie)
       .then(() => {
         // для того, чтобы получить MovieId и иметь возможность удалить фильм сразу же
-        getSavedMovies();
+        mainApi.getSavedMovies()
+        .then((savedMovies) => {
+          fillSavedMoviesStorage(savedMovies.reverse());
+        })
+        .catch((e) => {
+          console.log(() => {
+            console.log(errorMessages.movies.connect);
+          });
+        });
       })
       .catch((err) => {
         if (err === '400') {
