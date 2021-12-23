@@ -28,8 +28,9 @@ function Movies ({
   findShortMovies,
   restoreMovies,
  }) {
+
   useEffect(() => {
-    // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана
+    // здесь меняется количество отображаемых фильмов в зависимости от размеров экрана, а также "вспоминаются" фильмы при перезагрузке
     if (localStorage.getItem('showShortMovies') && JSON.parse(localStorage.getItem('movies'))) {
       fillMoviesStorage(JSON.parse(localStorage.getItem('movies')));
       setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(JSON.parse(localStorage.getItem('movies')))));

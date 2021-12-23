@@ -1,53 +1,53 @@
 import { useState, useEffect } from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
-
+// контекст
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-
+// компоненты с вёрсткой
 import Main from '../Main/Main';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Menu from '../Menu/Menu';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import Login from '../Login/Login';
 import Register from '../Register/Register';
-
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
+// компоненты API
 import mainApi from '../../utils/MainApi';
 import getMovies from '../../utils/MoviesApi';
-
+// utils
 import { errorMessages } from '../../utils/messages';
 
 function App() {
 
-// переменные состояния
+  // общие переменные состояния
+  const [isAuthSent, setAuth] = useState(false);
   const [loggedIn, setLoginStatus] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
   const [isOpened, openMenu] = useState(false);
   const [isLoading, setLoadingStatus] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
   const [onEdit, setEdit] = useState(false);
-  // переменные состояния ошибок
+  const [searchLimiter, setSearchLimiter] = useState(12);
+  // поисковые слова:
+  const [moviesKeyword, setMoviesKeyword] = useState('');
+  const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
+  // переменные состояния ошибок и сообщений
+  // регистрации, авторизации и профиля:
   const [profileReqErrorText, setProfileReqErrorText] = useState('');
   const [regReqErrorText, setRegReqErrorText] = useState('');
   const [authReqErrorText, setAuthReqErrorText] = useState('');
   const [profileReqError, showProfileReqError] = useState(false);
   const [regReqError, showRegReqError] = useState(false);
   const [authReqError, showAuthReqError] = useState(false);
-  // Хранилища фильмов и отображаемых фильмов
+  // поиска фильмов:
+  const [isError, showErrorMessage] = useState(false);
+  const [isMoviesEmpty, showMoviesEmptyMessage] = useState(false);
+  const [isSavedMoviesEmpty, showSavedMoviesEmptyMessage] = useState(false);
+  // Хранилища фильмов и отображаемых фильмов:
   const [moviesStorage, fillMoviesStorage] = useState([]);
   const [savedMoviesStorage, fillSavedMoviesStorage] = useState([]);
   const [currentMovies, setCurrentMovies] = useState([]);
   const [currentSavedMovies, setCurrentSavedMovies] = useState([]);
-
-  const [searchLimiter, setSearchLimiter] = useState(12);
-  const [isError, throwErrorMessage] = useState(false);
-  const [isMoviesEmpty, throwMoviesEmptyMessage] = useState(false);
-  const [isSavedMoviesEmpty, throwSavedMoviesEmptyMessage] = useState(false);
-  const [moviesKeyword, setMoviesKeyword] = useState('');
-  const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
-
-  const [isAuthSent, setAuth] = useState(false);
 
   const history = useHistory();
 
@@ -71,6 +71,10 @@ function App() {
       });
   }, []);
 
+  function toggleMenu (e) {
+    isOpened ? openMenu(false) : openMenu(true);
+  }
+
   function handleResize() {
     if (window.screen.width > 1024) {
       setSearchLimiter(12);
@@ -81,17 +85,16 @@ function App() {
     }
   }
 
-  function filterBySearchLimiter(movies) {
-    return movies.filter((movie, i) => {
-      return i < searchLimiter;
-    });
+  function increaseSearchLimiter() {
+    if (window.screen.width > 1024) {
+      setSearchLimiter(searchLimiter + 3);
+    } else {
+      setSearchLimiter(searchLimiter + 2);
+    }
   }
 
-  function handleOpenMenu (e) {
-    isOpened ? openMenu(false) : openMenu(true);
-  }
+  // Функции, связанные с регистрацией и авторизацией:
 
-  // Функции, связанные с регистрацией и авторизацией
   function handleRegister(name, email, password) {
     showRegReqError(false);
     mainApi.register(name, email, password)
@@ -186,9 +189,11 @@ function App() {
     });
   }
 
+  // функции, связанные с поиском, сохранением и удалением фильмов:
+
   function findMovies (moviesKeyword) {
-    throwMoviesEmptyMessage(false);
-    throwErrorMessage(false);
+    showMoviesEmptyMessage(false);
+    showErrorMessage(false);
     setLoadingStatus(true);
     fillMoviesStorage([]);
     setCurrentMovies([]);
@@ -204,7 +209,7 @@ function App() {
         fillMoviesStorage(filteredMovies);
         // проверяем ширину экрана
         handleResize();
-        // если включён фильтр короткометражек
+        // если включён фильтр короткометражек:
         if (localStorage.getItem('showShortMovies')) {
           setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(filteredMovies)));
         } else {
@@ -212,15 +217,21 @@ function App() {
         }
       })
       .catch(() => {
-        throwErrorMessage(true);
+        showErrorMessage(true);
       })
       .finally(() => {
         setLoadingStatus(false);
       });
   }
 
+  function filterBySearchLimiter(movies) {
+    return movies.filter((movie, i) => {
+      return i < searchLimiter;
+    });
+  }
+
   function findSavedMovies(savedMoviesKeyword) {
-    throwSavedMoviesEmptyMessage(false);
+    showSavedMoviesEmptyMessage(false);
     localStorage.setItem('savedMoviesKeyword', savedMoviesKeyword);
     if (localStorage.getItem('showShortSavedMovies')) {
       setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)));
@@ -229,16 +240,7 @@ function App() {
     }
   }
 
-  function increaseSearchLimiter() {
-    if (window.screen.width > 1024) {
-      setSearchLimiter(searchLimiter + 3);
-    } else {
-      setSearchLimiter(searchLimiter + 2);
-    }
-  }
-
   function getSavedMovies (savedMoviesKeyword) {
-    
     if (localStorage.getItem('savedMoviesKeyword') === '') {
       localStorage.removeItem('savedMoviesKeyword');
     } else if (localStorage.getItem('savedMoviesKeyword')) {
@@ -270,7 +272,7 @@ function App() {
       })
       .catch(() => {
         console.log(errorMessages.movies.connect);
-        throwErrorMessage(true);
+        showErrorMessage(true);
       });
   }
 
@@ -309,7 +311,7 @@ function App() {
     });
 
     if (result.length === 0) {
-      throwMoviesEmptyMessage(true);
+      showMoviesEmptyMessage(true);
     }
     return result;
   }
@@ -320,7 +322,7 @@ function App() {
     });
 
     if (result.length === 0) {
-      throwSavedMoviesEmptyMessage(true);
+      showSavedMoviesEmptyMessage(true);
     }
     return result;
   }
@@ -332,7 +334,7 @@ function App() {
     });
 
     if (result.length === 0) {
-      throwMoviesEmptyMessage(true);
+      showMoviesEmptyMessage(true);
     }
     return result;
   }
@@ -343,7 +345,7 @@ function App() {
     });
 
     if (result.length === 0) {
-      throwSavedMoviesEmptyMessage(true);
+      showSavedMoviesEmptyMessage(true);
     }
     return result;
   }
@@ -411,7 +413,7 @@ function App() {
           path="/movies"
           component={Movies}
           loggedIn={loggedIn}
-          openMenu={handleOpenMenu}
+          openMenu={toggleMenu}
           isLoading={isLoading}
           findMovies={findMovies}
           currentMovies={currentMovies}
@@ -439,7 +441,7 @@ function App() {
           path="/saved-movies"
           component={SavedMovies}
           loggedIn={loggedIn}
-          openMenu={handleOpenMenu} 
+          openMenu={toggleMenu} 
           getSavedMovies={getSavedMovies} 
           currentSavedMovies={currentSavedMovies}
           fillMoviesStorage={fillSavedMoviesStorage}
@@ -460,7 +462,7 @@ function App() {
           onEdit={onEdit}
           setEdit={setEdit}
           getUserInfo={getUserInfo}
-          openMenu={handleOpenMenu}
+          openMenu={toggleMenu}
           reqError={profileReqError}
           reqErrorText={profileReqErrorText}
           handleEditProfile={handleEditProfile}
@@ -499,14 +501,14 @@ function App() {
           />}
         </Route>
         <Route exact path="/">
-          <Main loggedIn={loggedIn} openMenu={handleOpenMenu}/>
+          <Main loggedIn={loggedIn} openMenu={toggleMenu}/>
         </Route>
         <Route path="*">
           <NotFoundPage />
         </Route>
       </Switch>
 
-      <Menu openMenu={handleOpenMenu} isOpened={isOpened} currentPage="menu" />
+      <Menu openMenu={toggleMenu} isOpened={isOpened} currentPage="menu" />
 
       </div>
 

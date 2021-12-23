@@ -1,11 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import validators from '../Validators/Validators';
 import { errorMessages } from '../../utils/messages';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEditProfile, handleSignOut }) {
+function Profile ({ 
+  onEdit, 
+  setEdit, 
+  reqError, 
+  reqErrorText, 
+  openMenu, 
+  handleEditProfile, 
+  handleSignOut 
+}) {
 
   const userInfo = useContext(CurrentUserContext);
 
@@ -49,7 +57,7 @@ function Profile ({ onEdit, setEdit, reqError, reqErrorText, openMenu, handleEdi
     }
   }, [errors]);
 
-    // реагирует на изменение имени
+  // реагирует на изменение имени
   useEffect(() => {
     const { name } = profileData;
 

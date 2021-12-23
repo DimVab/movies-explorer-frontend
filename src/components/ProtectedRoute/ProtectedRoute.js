@@ -1,6 +1,4 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useState } from 'react';
-import mainApi from '../../utils/MainApi';
 
 function ProtectedRoute ({component: Component, loggedIn, setLoginStatus, isAuthSent, ...props }) {
 

@@ -5,7 +5,18 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import validators from '../Validators/Validators';
 import { errorMessages } from '../../utils/messages';
 
-function Sign ({ onSubmit, greetingText, isRegister, isAuthorization, reqError, reqErrorText, buttonText, redirectText, linkText, link }) {
+function Sign ({ 
+  onSubmit, 
+  greetingText, 
+  isRegister, 
+  isAuthorization, 
+  reqError, 
+  reqErrorText, 
+  buttonText, 
+  redirectText, 
+  linkText, 
+  link 
+}) {
 
   const [signData, setSignData] = useState({
     userName: '',
@@ -13,12 +24,13 @@ function Sign ({ onSubmit, greetingText, isRegister, isAuthorization, reqError, 
     userPassword: ''
   });
 
+  // точно не помню, зачем продублировал #TODO подумать над удалением
   useEffect(() => {
     setSignData({
       userName: '',
       userEmail: '',
       userPassword: ''
-    })
+    });
   }, []);
 
   const [errors, setErrors] = useState({
@@ -49,6 +61,7 @@ function Sign ({ onSubmit, greetingText, isRegister, isAuthorization, reqError, 
     const isNameInputValid = !Object.values(errors.userName).some(Boolean) && signData.userName !== '';
     const isEmailInputValid = !Object.values(errors.userEmail).some(Boolean) && signData.userEmail !== '';
     const isPasswordInputValid = !Object.values(errors.userPassword).some(Boolean) && signData.userPassword !== '';
+
     if (isRegister && isNameInputValid && isEmailInputValid && isPasswordInputValid) {
       setSubmitDisabled(false);
     } else if (isAuthorization && isEmailInputValid && isPasswordInputValid) {

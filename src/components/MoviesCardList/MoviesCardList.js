@@ -19,6 +19,7 @@ function MoviesCardList ({
 
   const [maximumMovies, setMaximumMovies] = useState(0);
 
+  // в отличии от одноимённой функции в app, не выводит ошибку, тк здесь это не нужно
   function filterMoviesByDuration(movies) {
     return movies.filter((movie) => {
       return movie.duration <= 40;
