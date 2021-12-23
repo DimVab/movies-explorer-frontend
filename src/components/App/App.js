@@ -410,44 +410,49 @@ function App() {
     <CurrentUserContext.Provider value={userInfo}>
       <div className="app"><Switch>
         <ProtectedRoute
+          // для ProtectedRoute:
           path="/movies"
           component={Movies}
-          loggedIn={loggedIn}
-          openMenu={toggleMenu}
-          isLoading={isLoading}
-          findMovies={findMovies}
-          currentMovies={currentMovies}
-          setCurrentMovies={setCurrentMovies}
-          saveMovie={saveMovie}
-          savedMoviesStorage={savedMoviesStorage}
-          searchLimiter={searchLimiter}
-          setSearchLimiter={setSearchLimiter}
-          increaseSearchLimiter={increaseSearchLimiter}
-          isEmpty={isMoviesEmpty}
-          isError={isError}
-          setLoginStatus={setLoginStatus}
           isAuthSent={isAuthSent}
-          deleteMovie={deleteMovie}
-          moviesStorage={moviesStorage}
+          loggedIn={loggedIn}
+          // для Movies
+          openMenu={toggleMenu}
+          setCurrentMovies={setCurrentMovies}
           fillMoviesStorage={fillMoviesStorage}
           filterBySearchLimiter={filterBySearchLimiter}
           filterMoviesByDuration={filterMoviesByDuration}
+
+          findMovies={findMovies}
           moviesKeyword={moviesKeyword}
           setMoviesKeyword={setMoviesKeyword}
+
+          isLoading={isLoading}
+          isEmpty={isMoviesEmpty}
+          isError={isError}
+          currentMovies={currentMovies}
+          saveMovie={saveMovie}
+          searchLimiter={searchLimiter}
+          increaseSearchLimiter={increaseSearchLimiter}
+          savedMoviesStorage={savedMoviesStorage}
+          deleteMovie={deleteMovie}
+          moviesStorage={moviesStorage}
+
+          setSearchLimiter={setSearchLimiter}
+
           findShortMovies={findShortMovies}
           restoreMovies={restoreMovies}
         />
         <ProtectedRoute
+          // для ProtectedRoute:
           path="/saved-movies"
           component={SavedMovies}
+          isAuthSent={isAuthSent}
           loggedIn={loggedIn}
+          // для SavedMovies
           openMenu={toggleMenu} 
           getSavedMovies={getSavedMovies} 
           currentSavedMovies={currentSavedMovies}
-          fillMoviesStorage={fillSavedMoviesStorage}
           deleteMovie={deleteMovie}
-          setLoginStatus={setLoginStatus}
-          isAuthSent={isAuthSent}
           savedMoviesKeyword={savedMoviesKeyword}
           setSavedMoviesKeyword={setSavedMoviesKeyword}
           findSavedMovies={findSavedMovies}
@@ -456,19 +461,19 @@ function App() {
           restoreSavedMovies={restoreSavedMovies}
         />
         <ProtectedRoute
+          // для ProtectedRoute:
           path="/profile"
           component={Profile}
+          isAuthSent={isAuthSent}
           loggedIn={loggedIn}
+          // Для Profile:
           onEdit={onEdit}
           setEdit={setEdit}
-          getUserInfo={getUserInfo}
           openMenu={toggleMenu}
           reqError={profileReqError}
           reqErrorText={profileReqErrorText}
           handleEditProfile={handleEditProfile}
           handleSignOut={handleSignOut}
-          setLoginStatus={setLoginStatus}
-          isAuthSent={isAuthSent}
         />
         <Route exact path="/signup">
           {loggedIn ?
@@ -476,13 +481,13 @@ function App() {
           : <Register
               isRegister={true}
               greetingText="Добро пожаловать!"
-              reqError={regReqError}
-              reqErrorText={regReqErrorText}
               buttonText="Зарегистрироваться"
               link="/signin"
               redirectText="Уже зарегистрированы?"
               linkText="Войти"
               onSubmit={handleRegister}
+              reqError={regReqError}
+              reqErrorText={regReqErrorText}
           />}
         </Route>
         <Route exact path="/signin">
@@ -491,13 +496,13 @@ function App() {
           : <Login
               isAuthorization={true}
               greetingText="Рады видеть!"
-              reqError={authReqError}
-              reqErrorText={authReqErrorText}
               buttonText="Войти"
               link="/signup"
               redirectText="Ещё не зарегистрированы?"
               linkText="Регистрация"
               onSubmit={handleAuthorize}
+              reqError={authReqError}
+              reqErrorText={authReqErrorText}
           />}
         </Route>
         <Route exact path="/">

@@ -8,15 +8,17 @@ import Footer from '../Footer/Footer';
 function SavedMovies ({ 
   openMenu, 
   getSavedMovies, 
-  currentSavedMovies, 
-  fillMoviesStorage, 
-  deleteMovie,
+  // для searchForm:
   savedMoviesKeyword,
   setSavedMoviesKeyword,
   findSavedMovies,
-  isEmpty,
+  // для filterCheckbox:
   findShortSavedMovies,
-  restoreSavedMovies
+  restoreSavedMovies,
+  // для moviesCardList:
+  isEmpty,
+  currentSavedMovies,
+  deleteMovie
  }) {
   
   useEffect(() => {
@@ -33,8 +35,7 @@ function SavedMovies ({
     />
     <main className="saved-movies__container">
       <SearchForm 
-        type="savedMovies" 
-        fillMoviesStorage={fillMoviesStorage} 
+        isSaved={true}
         keyword={savedMoviesKeyword}
         setKeyword={setSavedMoviesKeyword}
         findMovies={findSavedMovies}
@@ -47,10 +48,10 @@ function SavedMovies ({
       <section className="saved-movies__section">
         <MoviesCardList 
           isLoading={false} 
-          isSaved={true} 
+          isSaved={true}
+          isEmpty={isEmpty}
           currentMovies={currentSavedMovies} 
           deleteMovie={deleteMovie}
-          isEmpty={isEmpty}
         />
       </section>
     </main>

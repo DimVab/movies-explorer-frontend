@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react';
 
 function SearchForm ({ 
+  isSaved,
   findMovies, 
-  type,
   keyword,
   setKeyword
  }) {
 
   useEffect(() => {
-    if (type === 'movies' && localStorage.getItem('moviesKeyword')) {
+    if (!isSaved && localStorage.getItem('moviesKeyword')) {
       setKeyword(localStorage.getItem('moviesKeyword'));
     }
-    if (type === 'savedMovies' && localStorage.getItem('savedMoviesKeyword')) {
+    if (isSaved && localStorage.getItem('savedMoviesKeyword')) {
       setKeyword(localStorage.getItem('savedMoviesKeyword'));
     }
   }, []);
@@ -26,7 +26,7 @@ function SearchForm ({
 
   function handleSubmit (e) {
     e.preventDefault();
-    if (type === 'movies' && keyword.length === 0) {
+    if (!isSaved && keyword.length === 0) {
       showSearchErrorText(true);
       return;
     }

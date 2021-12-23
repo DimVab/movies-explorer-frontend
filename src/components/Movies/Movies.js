@@ -6,27 +6,29 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
 function Movies ({ 
-  isLoading, 
-  openMenu, 
-  findMovies, 
-  currentMovies,
-  setCurrentMovies, 
-  saveMovie, 
-  savedMovies, 
-  searchLimiter, 
-  increaseSearchLimiter, 
-  isEmpty, 
-  isError, 
-  savedMoviesStorage,
-  deleteMovie,
-  moviesStorage,
+  openMenu,
+  setCurrentMovies,
   fillMoviesStorage,
   filterBySearchLimiter,
   filterMoviesByDuration,
+  // для searchForm:
+  findMovies,
   moviesKeyword,
   setMoviesKeyword,
+  // для filterCheckbox:
   findShortMovies,
   restoreMovies,
+  // для moviesCardList:
+  isLoading, 
+  isEmpty, 
+  isError,
+  currentMovies,
+  saveMovie, 
+  searchLimiter, 
+  increaseSearchLimiter, 
+  savedMoviesStorage,
+  deleteMovie,
+  moviesStorage,
  }) {
 
   useEffect(() => {
@@ -50,7 +52,7 @@ function Movies ({
     />
     <main className="movies-container">
       <SearchForm 
-        findMovies={findMovies} type="movies"
+        findMovies={findMovies}
         keyword={moviesKeyword}
         setKeyword={setMoviesKeyword}
       />
@@ -60,15 +62,14 @@ function Movies ({
       />
       <section className="movies__section">
         <MoviesCardList 
-          isLoading={isLoading} 
           isSaved={false} 
-          currentMovies={currentMovies} 
-          saveMovie={saveMovie} 
-          savedMovies={savedMovies}
-          searchLimiter={searchLimiter}
-          increaseSearchLimiter={increaseSearchLimiter}
+          isLoading={isLoading}
           isError={isError}
           isEmpty={isEmpty}
+          currentMovies={currentMovies} 
+          saveMovie={saveMovie} 
+          searchLimiter={searchLimiter}
+          increaseSearchLimiter={increaseSearchLimiter}
           savedMoviesStorage={savedMoviesStorage}
           deleteMovie={deleteMovie}
           moviesStorage={moviesStorage}

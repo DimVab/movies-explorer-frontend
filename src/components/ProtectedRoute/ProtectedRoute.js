@@ -1,6 +1,6 @@
 import { Route, Redirect } from 'react-router-dom';
 
-function ProtectedRoute ({component: Component, loggedIn, setLoginStatus, isAuthSent, ...props }) {
+function ProtectedRoute ({component: Component, loggedIn, isAuthSent, ...props }) {
 
   return (
       <Route>

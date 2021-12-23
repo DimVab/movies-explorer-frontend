@@ -3,11 +3,11 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { errorMessages, messages } from '../../utils/messages';
 
-function MoviesCardList ({ 
+function MoviesCardList ({
+  isSaved,
   isError, 
   isEmpty,
   isLoading, 
-  isSaved, 
   currentMovies,
   savedMoviesStorage,
   saveMovie, 
@@ -47,13 +47,11 @@ function MoviesCardList ({
               isSaved={isSaved}
               savedMoviesStorage={savedMoviesStorage}
               movie={movie}
-              name={movie.nameRU}
-              duration={movie.duration}
               imageUrl={isSaved ? movie.image : movie.image.url}
-              description={movie.description}
               link={isSaved ? movie.trailer : movie.trailerLink}
               saveMovie={saveMovie}
               deleteMovie={deleteMovie}
+              key={isSaved ? movie._id : movie.id}
             />
           )
         })}

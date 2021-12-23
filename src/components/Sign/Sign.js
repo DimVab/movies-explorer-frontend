@@ -10,12 +10,12 @@ function Sign ({
   greetingText, 
   isRegister, 
   isAuthorization, 
-  reqError, 
-  reqErrorText, 
   buttonText, 
   redirectText, 
   linkText, 
-  link 
+  link,
+  reqError, 
+  reqErrorText
 }) {
 
   const [signData, setSignData] = useState({

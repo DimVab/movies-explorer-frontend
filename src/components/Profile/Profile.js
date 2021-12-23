@@ -10,7 +10,7 @@ function Profile ({
   setEdit, 
   reqError, 
   reqErrorText, 
-  openMenu, 
+  openMenu,
   handleEditProfile, 
   handleSignOut 
 }) {
