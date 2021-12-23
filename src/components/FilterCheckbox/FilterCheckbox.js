@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 
 function FilterCheckbox ({ 
-  fillMoviesStorage, 
   isSaved,  
   findShortMovies, 
-  restoreMovies 
+  restoreMovies
 }) {
 
   const [isChecked, check] = useState(false);
@@ -16,61 +15,12 @@ function FilterCheckbox ({
   }, []);
 
   function handleCheck(e) {
-
     if (isChecked) {
-
       check(false);
-      localStorage.removeItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`);
-      localStorage.removeItem(`${isSaved ? 'shortSavedMovies' : 'shortMovies'}`);
-      localStorage.removeItem('filteredShortSavedMovies');
-      if (isSaved) {
-        if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
-          fillMoviesStorage(JSON.parse(localStorage.getItem('filteredSavedMovies')).reverse());
-        } else {
-          fillMoviesStorage(JSON.parse(localStorage.getItem('savedMovies')).reverse());
-        }
-      } else {
-        restoreMovies();
-      }
-
+      restoreMovies();
     } else {
-
       check(true);
-      localStorage.setItem(`${isSaved ? 'showShortSavedMovies' : 'showShortMovies'}`, 'true');
-
-        if (isSaved) {
-          // если фильмы отфильтрованы по поиску, то они будут добавлены в локальное хранилище
-          if (JSON.parse(localStorage.getItem('filteredSavedMovies'))) {
-            localStorage.setItem('filteredShortSavedMovies', JSON.stringify(
-              JSON.parse(localStorage.getItem('filteredSavedMovies'))
-                .filter((movie) => {
-                  return movie.duration <= 40;
-                })
-            ));
-          } else {
-            // если пользователь ничего не вводил
-            localStorage.setItem('shortSavedMovies', JSON.stringify(
-              JSON.parse(localStorage.getItem('savedMovies'))
-                .filter((movie) => {
-                  return movie.duration <= 40;
-                })
-            )); 
-          }
-        }
-        
-        if (isSaved) {
-          if (JSON.parse(localStorage.getItem('filteredShortSavedMovies'))) {
-            // если фильмы были отфильтрованы по поиску, то фильтрация происходит среди них
-            fillMoviesStorage(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).reverse());
-            if(JSON.parse(localStorage.getItem('filteredShortSavedMovies')).length === 0) {
-            }
-          } else {
-            // иначе фильтрация происхоит по всем фильмам
-            fillMoviesStorage(JSON.parse(localStorage.getItem('shortSavedMovies')).reverse());
-          }
-        } else {
-          findShortMovies();
-        }
+      findShortMovies();
     }
   }
 

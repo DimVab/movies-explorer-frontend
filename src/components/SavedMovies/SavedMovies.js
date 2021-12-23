@@ -14,7 +14,9 @@ function SavedMovies ({
   savedMoviesKeyword,
   setSavedMoviesKeyword,
   findSavedMovies,
-  isEmpty
+  isEmpty,
+  findShortSavedMovies,
+  restoreSavedMovies
  }) {
   
   useEffect(() => {
@@ -38,9 +40,9 @@ function SavedMovies ({
         findMovies={findSavedMovies}
       />
       <FilterCheckbox 
-        fillMoviesStorage={fillMoviesStorage} 
         isSaved={true} 
-        currentMovies={currentSavedMovies} 
+        findShortMovies={findShortSavedMovies}
+        restoreMovies={restoreSavedMovies}
       />
       <section className="saved-movies__section">
         <MoviesCardList 

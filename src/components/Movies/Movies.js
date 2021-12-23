@@ -55,8 +55,6 @@ function Movies ({
         setKeyword={setMoviesKeyword}
       />
       <FilterCheckbox 
-        setCurrentMovies={setCurrentMovies} 
-        currentMovies={currentMovies}
         findShortMovies={findShortMovies}
         restoreMovies={restoreMovies}
       />

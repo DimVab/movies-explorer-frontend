@@ -275,13 +275,35 @@ function App() {
 
   function findShortMovies () {
     localStorage.setItem('showShortMovies', 'true');
-    setCurrentMovies(filterMoviesByDuration(moviesStorage));
+    setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(moviesStorage)));
   }
 
   function restoreMovies () {
     localStorage.removeItem('showShortMovies');
-    setCurrentMovies(moviesStorage);
+    setCurrentMovies(filterBySearchLimiter(moviesStorage));
   }
+
+  function findShortSavedMovies() {
+    localStorage.setItem('showShortSavedMovies', 'true');
+    if (localStorage.getItem('savedMoviesKeyword')) {
+      setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword)).reverse());
+    } else {
+      setCurrentSavedMovies(filterSavedMoviesByDuration(savedMoviesStorage).reverse());
+    }
+  }
+
+  function restoreSavedMovies() {
+    localStorage.removeItem('showShortSavedMovies');
+    if (localStorage.getItem('savedMoviesKeyword')) {
+      setCurrentSavedMovies(filterSavedMoviesBySymbols(savedMoviesStorage, savedMoviesKeyword).reverse());
+    } else {
+      setCurrentSavedMovies(savedMoviesStorage.reverse());
+    }
+  }
+
+  useEffect(() => {
+    console.log(savedMoviesStorage);
+  }, [savedMoviesStorage]);
 
   // отфильтровать по длине
   function filterMoviesByDuration(movies) {
@@ -410,6 +432,8 @@ function App() {
           setSavedMoviesKeyword={setSavedMoviesKeyword}
           findSavedMovies={findSavedMovies}
           isEmpty={isSavedMoviesEmpty}
+          findShortSavedMovies={findShortSavedMovies}
+          restoreSavedMovies={restoreSavedMovies}
         />
         <ProtectedRoute
           path="/profile"
