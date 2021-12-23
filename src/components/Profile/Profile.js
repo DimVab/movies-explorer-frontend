@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import Header from '../Header/Header';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import validators from '../Validators/Validators';
-import { errorMessages } from '../../utils/messages';
+import { errorMessages, messages } from '../../utils/messages';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile ({ 
@@ -12,13 +12,16 @@ function Profile ({
   reqErrorText, 
   openMenu,
   handleEditProfile, 
-  handleSignOut 
+  handleSignOut,
+  successMessage,
+  showSuccessMessage
 }) {
 
   const userInfo = useContext(CurrentUserContext);
 
   useEffect(() => {
     setEdit(false);
+    showSuccessMessage(false);
   }, []);
 
   const [profileData, setProfileData] = useState({
@@ -156,7 +159,8 @@ function Profile ({
           {reqError && <ErrorMessage errorText={reqErrorText} type="request" />}
           <input className="profile__save-button" type="submit" value="Сохранить" disabled={isSubmitDisabled} />
         </div>
-        : <div>
+        : <div className="profile__buttons-container">
+        {successMessage && <p className="profile__success-message">{messages.profile.success}</p>}
         <input className="profile__button" type="button"  value="Редактировать" onClick={setEditStatus} />
         <input className="profile__button profile__button_color_pink" type="submit" value="Выйти из аккаунта"/></div>
         }

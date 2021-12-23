@@ -28,6 +28,9 @@ const errorMessages = {
 const messages = {
   movies: {
     empty: 'Ничего не найдено'
+  },
+  profile: {
+    success: 'Профиль успешно изменён'
   }
 };
 

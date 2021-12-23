@@ -28,6 +28,7 @@ function App() {
   const [isLoading, setLoadingStatus] = useState(false);
   const [onEdit, setEdit] = useState(false);
   const [searchLimiter, setSearchLimiter] = useState(12);
+  const [successMessage, showSuccessMessage] = useState(false);
   // поисковые слова:
   const [moviesKeyword, setMoviesKeyword] = useState('');
   const [savedMoviesKeyword, setSavedMoviesKeyword] = useState('');
@@ -170,10 +171,12 @@ function App() {
 
   function handleEditProfile(userData) {
     showProfileReqError(false);
+    showSuccessMessage(false);
     mainApi.editUserInfo(userData)
     .then((newUserInfo) => {
       setUserInfo({name: newUserInfo.name, email: newUserInfo.email});
       setEdit(false);
+      showSuccessMessage(true);
     })
     .catch((err) => {
       showProfileReqError(true);
@@ -476,6 +479,8 @@ function App() {
           reqErrorText={profileReqErrorText}
           handleEditProfile={handleEditProfile}
           handleSignOut={handleSignOut}
+          successMessage={successMessage}
+          showSuccessMessage={showSuccessMessage}
         />
         <Route exact path="/signup">
           {loggedIn ?
