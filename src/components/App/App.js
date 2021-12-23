@@ -369,17 +369,30 @@ function App() {
   function deleteMovie (movie) {
     mainApi.removeMovie(movie._id)
       .then(() => {
-        fillSavedMoviesStorage(savedMoviesStorage
+        const updatedMoviesStorage = savedMoviesStorage
           .filter((savedMovie) => {
             return savedMovie !== movie;
-          })
-        );
+          });
 
-        setCurrentSavedMovies(savedMoviesStorage
-          .filter((savedMovie) => {
-            return savedMovie !== movie;
-          })
-        );
+        fillSavedMoviesStorage(updatedMoviesStorage);
+        // в зависимости от состояния фильтров переделывается отображение сохранённых фильмов
+        if (localStorage.getItem('showShortSavedMovies')) {
+          // 1.1 если был поиск по символам
+          if (localStorage.getItem('savedMoviesKeyword')) {
+            // фильтруем и по символаи и по длительности
+            setCurrentSavedMovies(filterSavedMoviesByDuration(filterSavedMoviesBySymbols(updatedMoviesStorage, savedMoviesKeyword)));
+          } else {
+            // 1.2 если не было поиска
+            setCurrentSavedMovies(filterSavedMoviesByDuration(updatedMoviesStorage));
+          }
+        // 2. если фильтр НЕ включён
+        } else if (localStorage.getItem('savedMoviesKeyword')) {
+          // 2.1 если был поиск по символам
+          setCurrentSavedMovies(filterSavedMoviesBySymbols(updatedMoviesStorage, savedMoviesKeyword));
+        } else {
+          // 2.2 если не было поиска
+          setCurrentSavedMovies(updatedMoviesStorage);
+        }
       })
       .catch((err) => {
         console.log(`Ошибка ${err}`);
