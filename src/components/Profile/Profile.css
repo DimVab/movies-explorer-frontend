@@ -51,6 +51,7 @@
 .profile__form-field {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .profile__form-line {
