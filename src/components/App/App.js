@@ -72,7 +72,7 @@ function App() {
       });
   }, []);
 
-  function toggleMenu (e) {
+  function toggleMenu(e) {
     isOpened ? openMenu(false) : openMenu(true);
   }
 
@@ -104,7 +104,7 @@ function App() {
       })
       .catch((err) => {
         showRegReqError(true);
-        if (err === "409") {
+        if (err === '409') {
           setRegReqErrorText(errorMessages.sign.email);
         } else if (err.name === 'TypeError') {
           setRegReqErrorText(errorMessages.sign.connect);
@@ -128,7 +128,7 @@ function App() {
       })
       .catch((err) => {
         showAuthReqError(true);
-        if (err === "401") {
+        if (err === '401') {
           setAuthReqErrorText(errorMessages.sign.unathorized);
         } else if (err.name === 'TypeError') {
           setAuthReqErrorText(errorMessages.sign.connect);
@@ -137,6 +137,7 @@ function App() {
         } else {
           setAuthReqErrorText(errorMessages.sign.default);
         }
+        console.log(`Ошибка ${err}`);
       });
   }
 
@@ -189,12 +190,13 @@ function App() {
       } else {
         setProfileReqErrorText(errorMessages.sign.default);
       }
+      console.log(`Ошибка ${err}`);
     });
   }
 
   // функции, связанные с поиском, сохранением и удалением фильмов:
 
-  function findMovies (moviesKeyword) {
+  function findMovies(moviesKeyword) {
     showMoviesEmptyMessage(false);
     showErrorMessage(false);
     setLoadingStatus(true);
@@ -219,8 +221,9 @@ function App() {
           setCurrentMovies(filterBySearchLimiter(filteredMovies));
         }
       })
-      .catch(() => {
+      .catch((err) => {
         showErrorMessage(true);
+        console.log(`Ошибка ${err}`);
       })
       .finally(() => {
         setLoadingStatus(false);
@@ -243,7 +246,7 @@ function App() {
     }
   }
 
-  function getSavedMovies (savedMoviesKeyword) {
+  function getSavedMovies(savedMoviesKeyword) {
     if (localStorage.getItem('savedMoviesKeyword') === '') {
       localStorage.removeItem('savedMoviesKeyword');
     } else if (localStorage.getItem('savedMoviesKeyword')) {
@@ -279,12 +282,12 @@ function App() {
       });
   }
 
-  function findShortMovies () {
+  function findShortMovies() {
     localStorage.setItem('showShortMovies', 'true');
     setCurrentMovies(filterBySearchLimiter(filterMoviesByDuration(moviesStorage)));
   }
 
-  function restoreMovies () {
+  function restoreMovies() {
     localStorage.removeItem('showShortMovies');
     setCurrentMovies(filterBySearchLimiter(moviesStorage));
     if (filterBySearchLimiter(moviesStorage).length > 0) {
@@ -360,7 +363,7 @@ function App() {
     return result;
   }
 
-  function saveMovie (movie) {
+  function saveMovie(movie) {
     mainApi.addMovie(movie)
       .then(() => {
         // для того, чтобы получить MovieId и иметь возможность удалить фильм сразу же
@@ -383,7 +386,7 @@ function App() {
       });
   }
 
-  function deleteMovie (movie) {
+  function deleteMovie(movie) {
     mainApi.removeMovie(movie._id)
       .then(() => {
         const updatedMoviesStorage = savedMoviesStorage
