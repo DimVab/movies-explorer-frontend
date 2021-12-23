@@ -1,6 +1,6 @@
 import Sign from '../Sign/Sign';
 
-function Login ({ ... props }) {
+function Login ({ ...props }) {
 
   return(
     <Sign {...props}></Sign>

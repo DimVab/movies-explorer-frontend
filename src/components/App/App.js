@@ -421,11 +421,9 @@ function App() {
           fillMoviesStorage={fillMoviesStorage}
           filterBySearchLimiter={filterBySearchLimiter}
           filterMoviesByDuration={filterMoviesByDuration}
-
           findMovies={findMovies}
           moviesKeyword={moviesKeyword}
           setMoviesKeyword={setMoviesKeyword}
-
           isLoading={isLoading}
           isEmpty={isMoviesEmpty}
           isError={isError}
@@ -436,9 +434,6 @@ function App() {
           savedMoviesStorage={savedMoviesStorage}
           deleteMovie={deleteMovie}
           moviesStorage={moviesStorage}
-
-          setSearchLimiter={setSearchLimiter}
-
           findShortMovies={findShortMovies}
           restoreMovies={restoreMovies}
         />
