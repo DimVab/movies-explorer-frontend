@@ -148,3 +148,21 @@
     width: 260px;
   }
 }
+
+.profile__buttons-container {
+  position: relative;
+}
+
+.profile__success-message {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.23;
+  color: #2BE080;
+}
+
+@media screen and (max-width: 525px) {
+  .profile__success-message {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

@@ -1,5 +1,5 @@
 .error-message {
-  display: none;
+  display: block;
   margin: 0;
   text-align: center;
   color: #FF004C;
@@ -7,13 +7,17 @@
   line-height: 1.18;
 }
 
-.error-message_visible {
-  display: block;
-}
-
 .error-message_type_request {
+  width: 396px;
   margin-bottom: 20px;
 }
+
+@media screen and (max-width: 525px) {
+  .error-message_type_request {
+    width: 260px;
+  }
+}
+
 
 .error-message_type_sign-validation {
   position: absolute;
